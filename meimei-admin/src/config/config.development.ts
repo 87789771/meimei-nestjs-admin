@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-01-06 18:07:00
+ * @LastEditTime: 2022-01-15 15:58:49
  * @LastEditors: Sheng.Jiang
  * @Description: 测试环境配置文件
- * @FilePath: \meimei\src\config\config.development.ts
+ * @FilePath: \meimei-nestjs-admin\meimei-admin\src\config\config.development.ts
  * You can you up，no can no bb！！
  */
 import { defineConfig } from './defineConfig';
@@ -19,7 +19,7 @@ export default defineConfig({
     host: process.env.MYSQL_HOST || 'localhost',
     port: process.env.MYSQL_PORT || 3306,
     username: process.env.MYSQL_USERNAME || 'root',
-    password: process.env.MYSQL_PASSWORD || 'jiangsheng1314',
+    password: process.env.MYSQL_PASSWORD || 'admin',
     database: process.env.MYSQL_DATABASE || 'mei-mei',
     autoLoadModels: true,
     synchronize: true,
