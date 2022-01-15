@@ -9,7 +9,7 @@ export default {
   name: 'RuoYiGit',
   data() {
     return {
-      url: 'https://github.com/87789771/meimei-nestjs-admine'
+      url: 'https://github.com/87789771/meimei-nestjs-admin'
     }
   },
   methods: {
