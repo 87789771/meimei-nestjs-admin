@@ -9,7 +9,7 @@ export default {
   name: 'RuoYiDoc',
   data() {
     return {
-      url: 'http://doc.mei-mei.vip/mei-mei-vue'
+      url: 'https://87789771.github.io/#/'
     }
   },
   methods: {
