@@ -4,6 +4,7 @@
 
 ## 在线体验
   - [演示地址](http://42.192.136.154:3000/#/login?redirect=%2Findex)
+  - [文档地址](https://87789771.github.io/#/)
   - [码源地址](https://github.com/87789771/meimei-nestjs-admin)
 
 
