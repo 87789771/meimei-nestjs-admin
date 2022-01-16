@@ -1,9 +1,9 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2022-01-16 14:18:32
- * @LastEditTime: 2022-01-16 16:28:58
+ * @LastEditTime: 2022-01-16 17:11:28
  * @LastEditors: Sheng.Jiang
- * @Description: 演示环境的拦截器。   如果是演示环境，只放过get请求或者登陆请求进入方法体。
+ * @Description: 演示环境的拦截器。   如果是演示环境，只放过get请求或者登陆和退出请求进入方法体。
  * @FilePath: \meimei-admin\src\common\interceptors\demo-environment.interceptor.ts
  * You can you up，no can no bb！！
  */
@@ -21,7 +21,8 @@ export class DemoEnvironmentInterceptor implements NestInterceptor {
     const request: Request = context.switchToHttp().getRequest()
     const isDemoEnvironment = this.configService.get<Boolean>('isDemoEnvironment')
     if (isDemoEnvironment) {
-      if (request.method.toLocaleLowerCase() != 'get' && request.url != "/login")
+      const allowUrlArr = ['/login', '/logout']   //放过的路由
+      if (request.method.toLocaleLowerCase() != 'get' && !allowUrlArr.includes(request.url))
         throw new ApiException('演示环境,不允许操作')
     }
     return next
