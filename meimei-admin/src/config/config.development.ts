@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-01-15 15:58:49
+ * @LastEditTime: 2022-01-16 16:40:34
  * @LastEditors: Sheng.Jiang
  * @Description: 测试环境配置文件
- * @FilePath: \meimei-nestjs-admin\meimei-admin\src\config\config.development.ts
+ * @FilePath: \meimei-admin\src\config\config.development.ts
  * You can you up，no can no bb！！
  */
 import { defineConfig } from './defineConfig';
@@ -35,5 +35,7 @@ export default defineConfig({
   bullRedis: {
     host: 'localhost',
     port: '6379'
-  }
+  },
+
+  isDemoEnvironment: true,
 });

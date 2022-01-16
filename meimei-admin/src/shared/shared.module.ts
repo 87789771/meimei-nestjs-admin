@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 16:44:29
- * @LastEditTime: 2022-01-05 20:04:36
+ * @LastEditTime: 2022-01-16 14:17:08
  * @LastEditors: Sheng.Jiang
  * @Description: 公共模块
- * @FilePath: \meimei\src\shared\shared.module.ts
+ * @FilePath: \meimei-admin\src\shared\shared.module.ts
  * You can you up，no can no bb！！
  */
 import { SharedService } from './shared.service';
@@ -21,6 +21,7 @@ import { RoleAuthGuard } from 'src/common/guards/role-auth.guard';
 import { LogModule } from 'src/modules/monitor/log/log.module';
 import { BullModule } from '@nestjs/bull';
 import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interceptor';
+import { DemoEnvironmentInterceptor } from 'src/common/interceptors/demo-environment.interceptor';
 
 @Global()
 @Module({
@@ -83,7 +84,7 @@ import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interce
         },
 
 
-        /* 操作日志拦截器 , 拦截器中的 handle 从下往上执行（ReponseTransformInterceptor ----> OperationLogInterceptor），返回值值依次传递 */
+        /* 操作日志拦截器 。 注：拦截器中的 handle 从下往上执行（ReponseTransformInterceptor ----> OperationLogInterceptor），返回值值依次传递 */
         {
             provide: APP_INTERCEPTOR,
             useClass: OperationLogInterceptor
@@ -98,7 +99,12 @@ import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interce
         {
             provide: APP_INTERCEPTOR,
             useClass: DataScopeInterceptor
-        }
+        },
+        /* 是否开发演示环境拦截器 */
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: DemoEnvironmentInterceptor
+        },
     ],
     exports: [
         SharedService,

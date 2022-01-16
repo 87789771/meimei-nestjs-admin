@@ -46,7 +46,7 @@ export class JobConsumer {
     jobLog.jobGroup = oneJob.jobGroup
     jobLog.invokeTarget = oneJob.invokeTarget
     jobLog.jobMessage = '执行失败了'
-    jobLog.exceptionInfo = err.getResponse().toString()
+    jobLog.exceptionInfo = err instanceof ApiException ? err.getResponse().toString() : err
     jobLog.status = '1'
     jobLog.createTime = new Date()
     await this.jobService.addJobLog(jobLog)

@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-01-06 17:49:38
+ * @LastEditTime: 2022-01-16 14:18:32
  * @LastEditors: Sheng.Jiang
  * @Description: 正式环境配置文件
- * @FilePath: \meimei\src\config\config.production.ts
+ * @FilePath: \meimei-admin\src\config\config.production.ts
  * You can you up，no can no bb！！
  */
 import { defineConfig } from './defineConfig';
@@ -35,5 +35,7 @@ export default defineConfig({
   bullRedis: {
     host: 'localhost',
     port: '6379'
-  }
+  },
+
+  isDemoEnvironment: true,
 });

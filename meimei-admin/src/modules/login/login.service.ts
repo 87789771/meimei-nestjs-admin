@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:30:53
- * @LastEditTime: 2022-01-05 21:19:44
+ * @LastEditTime: 2022-01-16 16:15:04
  * @LastEditors: Sheng.Jiang
  * @Description: 登录 service
- * @FilePath: \meimei\src\modules\login\login.service.ts
+ * @FilePath: \meimei-admin\src\modules\login\login.service.ts
  * You can you up，no can no bb！！
  */
 
@@ -22,6 +22,7 @@ import { UserService } from '../system/user/user.service';
 import { ResInfo } from './dto/res-login.dto';
 import { Request } from 'express';
 import { LogService } from '../monitor/log/log.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class LoginService {
@@ -31,7 +32,8 @@ export class LoginService {
         private readonly jwtService: JwtService,
         private readonly userService: UserService,
         private readonly menuService: MenuService,
-        private readonly logService: LogService
+        private readonly logService: LogService,
+        private readonly configService: ConfigService
     ) { }
 
     /* 创建验证码图片 */
@@ -60,6 +62,13 @@ export class LoginService {
         const payload: Payload = { userId: user.userId, pv: 1, };
         //生成token
         let jwtSign = this.jwtService.sign(payload)
+        //演示环境 复用 token，取消单点登录。
+        if (this.configService.get<Boolean>('isDemoEnvironment')) {
+            const token = await this.redis.get(`${USER_TOKEN_KEY}:${user.userId}`)
+            if (token) {
+                jwtSign = token
+            }
+        }
         //存储密码版本号，防止登录期间 密码被管理员更改后 还能继续登录
         await this.redis.set(`${USER_VERSION_KEY}:${user.userId}`, 1)
         //存储token, 防止重复登录问题，设置token过期时间(1天后 token 自动过期)，以及主动注销token。

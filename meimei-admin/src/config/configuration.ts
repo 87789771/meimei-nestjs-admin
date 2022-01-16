@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-10-18 13:21:16
- * @LastEditTime: 2021-12-27 13:23:57
+ * @LastEditTime: 2022-01-16 14:10:54
  * @LastEditors: Sheng.Jiang
  * @Description: 
- * @FilePath: \meimei\src\config\configuration.ts
+ * @FilePath: \meimei-admin\src\config\configuration.ts
  * You can you up，no can no bb！！
  */
 
@@ -70,4 +70,7 @@ export interface IConfig {
         host: string,
         port: string
     }
+
+    /* 是否演示环境 */
+    isDemoEnvironment?: Boolean;
 }
