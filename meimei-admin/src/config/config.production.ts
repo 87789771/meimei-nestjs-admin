@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-01-16 14:18:32
+ * @LastEditTime: 2022-01-16 16:44:36
  * @LastEditors: Sheng.Jiang
  * @Description: 正式环境配置文件
  * @FilePath: \meimei-admin\src\config\config.production.ts
@@ -37,5 +37,5 @@ export default defineConfig({
     port: '6379'
   },
 
-  isDemoEnvironment: true,
+  isDemoEnvironment: false,
 });
