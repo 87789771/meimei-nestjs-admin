@@ -226,7 +226,7 @@ export class MenuService {
             router.meta = {
                 title: item.menuName,
                 icon: item.icon,
-                noCache: item.isCache == 0 ? true : false,
+                noCache: item.isCache == 0 ? false : true,
                 link: item.isFrame == 0 ? item.component : null
             }
             return router
