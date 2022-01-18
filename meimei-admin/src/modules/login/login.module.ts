@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:29:45
- * @LastEditTime: 2021-12-24 13:20:01
+ * @LastEditTime: 2022-01-18 09:53:49
  * @LastEditors: Sheng.Jiang
  * @Description: 登录模块
- * @FilePath: \meimei\src\modules\login\login.module.ts
+ * @FilePath: \meimei-admin\src\modules\login\login.module.ts
  * You can you up，no can no bb！！
  */
 
@@ -23,7 +23,7 @@ import { LogModule } from '../monitor/log/log.module';
     imports: [
         JwtModule.register({
             secret: jwtConstants.secret,
-            signOptions: { expiresIn: '24h' },
+            signOptions: { expiresIn: '168h' },
         }),
         AuthModule,
         UserModule,
