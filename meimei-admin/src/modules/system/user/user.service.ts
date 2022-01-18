@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-09 14:49:35
- * @LastEditTime: 2022-01-16 16:36:31
+ * @LastEditTime: 2022-01-18 11:13:34
  * @LastEditors: Sheng.Jiang
  * @Description: 用户管理 service
  * @FilePath: \meimei-admin\src\modules\system\user\user.service.ts
@@ -36,11 +36,6 @@ export class UserService {
         private readonly sharedService: SharedService,
         @InjectRedis() private readonly redis: Redis
     ) { }
-
-    onModuleInit() {
-        console.log(this.sharedService.md5('admin123Y2uPc7hyq8Vi5qBc879Ut'));
-        
-    }
 
     /* 通过用户名获取用户,排除停用和删除的,用于登录 */
     async findOneByUsername(username: string) {
