@@ -24,8 +24,8 @@ export class NoticeController {
         private readonly noticeService: NoticeService
     ) { }
     /* 新增公告 */
-    @Post()
     @RepeatSubmit()
+    @Post()
     @RequiresPermissions('system:notice:add')
     @Log({
         title: '通知公告',
@@ -54,6 +54,7 @@ export class NoticeController {
     }
 
     /* 更新公告 */
+    @RepeatSubmit()
     @Put()
     @RequiresPermissions('system:notice:edit')
     @Log({

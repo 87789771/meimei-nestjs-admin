@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:30:39
- * @LastEditTime: 2021-12-30 11:12:17
+ * @LastEditTime: 2022-01-19 14:18:00
  * @LastEditors: Sheng.Jiang
  * @Description: 登录 controller
- * @FilePath: \meimei\src\modules\login\login.controller.ts
+ * @FilePath: \meimei-admin\src\modules\login\login.controller.ts
  * You can you up，no can no bb！！
  */
 

@@ -9,6 +9,7 @@ import { ApiDataResponse, typeEnum } from 'src/common/decorators/api-data-respon
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { Keep } from 'src/common/decorators/keep.decorator';
 import { BusinessTypeEnum, Log } from 'src/common/decorators/log.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
 import { User, UserEnum } from 'src/common/decorators/user.decorator';
 import { PaginationPipe } from 'src/common/pipes/pagination.pipe';
@@ -27,6 +28,7 @@ export class SysConfigController {
     ) { }
 
     /* 新增参数 */
+    @RepeatSubmit()
     @Post()
     @Log({
         title: '参数设置',
@@ -74,6 +76,7 @@ export class SysConfigController {
     }
 
     /* 修改参数 */
+    @RepeatSubmit()
     @Put()
     @Log({
         title: '参数设置',
@@ -97,6 +100,7 @@ export class SysConfigController {
     }
 
     /* 导出 */
+    @RepeatSubmit()
     @Post("export")
     @RequiresPermissions('system:config:export')
     @Log({

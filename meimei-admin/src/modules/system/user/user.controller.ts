@@ -25,6 +25,7 @@ import { BusinessTypeEnum, Log } from 'src/common/decorators/log.decorator';
 import { DataScope } from 'src/common/decorators/datascope.decorator';
 import { DataScopeSql } from 'src/common/decorators/data-scope-sql.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 
 @ApiTags('用户管理')
 @Controller('system/user')
@@ -70,6 +71,7 @@ export class UserController {
     }
 
     /* 更改个人用户信息 */
+    @RepeatSubmit()
     @Put('profile')
     @Log({
         title: '用户管理',
@@ -80,6 +82,7 @@ export class UserController {
     }
 
     /* 更改个人密码 */
+    @RepeatSubmit()
     @Put('profile/updatePwd')
     @Log({
         title: '用户管理',
@@ -90,6 +93,7 @@ export class UserController {
     }
 
     /* 上传头像 */
+    @RepeatSubmit()
     @Post('profile/avatar')
     @UseInterceptors(FileInterceptor('avatarfile'))
     async avatar(@UploadedFile() file: Express.Multer.File, @Query('fileName') fileName, @UserDec(UserEnum.userId) userId: number) {
@@ -123,6 +127,7 @@ export class UserController {
     }
 
     /* 新增用户 */
+    @RepeatSubmit()
     @Post()
     @RequiresPermissions('system:user:add')
     @Log({
@@ -137,6 +142,7 @@ export class UserController {
     }
 
     /* 编辑用户 */
+    @RepeatSubmit()
     @Put()
     @RequiresPermissions('system:user:edit')
     @Log({
@@ -163,6 +169,7 @@ export class UserController {
 
 
     //重置密码
+    @RepeatSubmit()
     @Put('resetPwd')
     @RequiresPermissions('system:user:resetPwd')
     async resetPwd(@Body() reqResetPwdDto: ReqResetPwdDto, @UserDec(UserEnum.userName) userName: string) {
@@ -176,6 +183,7 @@ export class UserController {
     }
 
     /* 给用户分配角色 */
+    @RepeatSubmit()
     @Put('authRole')
     async updateAuthRole(@Query() reqUpdateAuthRoleDto: ReqUpdateAuthRoleDto, @UserDec(UserEnum.userName) userName: string) {
         const roleIdArr = reqUpdateAuthRoleDto.roleIds.split(',').map(item => Number(item))
@@ -183,12 +191,14 @@ export class UserController {
     }
 
     /* 改变用户状态 */
+    @RepeatSubmit()
     @Put("changeStatus")
     async changeStatus(@Body() reqChangeStatusDto: ReqChangeStatusDto, @UserDec(UserEnum.userName) userName: string) {
         await this.userService.changeStatus(reqChangeStatusDto.userId, reqChangeStatusDto.status, userName)
     }
 
     /* 导出用户 */
+    @RepeatSubmit()
     @Post('export')
     @RequiresPermissions('system:user:export')
     @Keep()
@@ -204,6 +214,7 @@ export class UserController {
     }
 
     /* 下载模板 */
+    @RepeatSubmit()
     @Post('importTemplate')
     @Keep()
     async importTemplate() {
@@ -212,6 +223,7 @@ export class UserController {
     }
 
     /* 用户导入 */
+    @RepeatSubmit()
     @Post('importData')
     @RequiresPermissions('system:user:import')
     @UseInterceptors(FileInterceptor('file'))

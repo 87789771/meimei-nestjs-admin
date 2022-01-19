@@ -8,6 +8,7 @@ import { DataObj } from 'src/common/class/data-obj.class';
 import { ApiDataResponse, typeEnum } from 'src/common/decorators/api-data-response.decorator';
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { Keep } from 'src/common/decorators/keep.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
 import { User, UserEnum } from 'src/common/decorators/user.decorator';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
@@ -30,6 +31,7 @@ export class DictController {
     ) { }
 
     /* 新增字典类型 */
+    @RepeatSubmit()
     @Post('dict/type')
     @RequiresPermissions('system:dict:add')
     async addType(@Body() reqAddDictTypeDto: ReqAddDictTypeDto, @User(UserEnum.userName, UserInfoPipe) userName: string) {
@@ -68,6 +70,7 @@ export class DictController {
     }
 
     /* 编辑字典类型 */
+    @RepeatSubmit()
     @Put('dict/type')
     @RequiresPermissions('system:dict:edit')
     async updateDictType(@Body() dictType: DictType, @User(UserEnum.userName, UserInfoPipe) userName: string) {
@@ -90,6 +93,7 @@ export class DictController {
     }
 
     /* 新增字典数据 */
+    @RepeatSubmit()
     @Post('dict/data')
     async addDictData(@Body() reqAddDictDataDto: ReqAddDictDataDto, @User(UserEnum.userName, UserInfoPipe) userName: string) {
         const dictData = await this.dictService.getDictDataByTypeOrValue(reqAddDictDataDto.dictType, reqAddDictDataDto.dictValue)
@@ -107,6 +111,7 @@ export class DictController {
     }
 
     /* 编辑字典数据 */
+    @RepeatSubmit()
     @Put('dict/data')
     async updateDictData(@Body() reqUpdateDictDataDto: ReqUpdateDictDataDto, @User(UserEnum.userName, UserInfoPipe) userName: string) {
         reqUpdateDictDataDto.updateBy = userName
@@ -120,6 +125,7 @@ export class DictController {
     }
 
     /* 导出字典 */
+    @RepeatSubmit()
     @Post('dict/type/export')
     @RequiresPermissions('system:dict:export')
     @Keep()
@@ -131,6 +137,7 @@ export class DictController {
     }
 
     /* 导出字典 */
+    @RepeatSubmit()
     @Post('dict/data/export')
     @Keep()
     @ApiPaginatedResponse(DictType)

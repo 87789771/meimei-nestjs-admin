@@ -18,6 +18,7 @@ import { Keep } from 'src/common/decorators/keep.decorator';
 import { ExcelService } from 'src/modules/common/excel/excel.service';
 import { BusinessTypeEnum, Log } from 'src/common/decorators/log.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 
 @ApiTags('岗位管理')
 @Controller('system/post')
@@ -28,6 +29,7 @@ export class PostController {
     ) { }
 
     /* 新增岗位 */
+    @RepeatSubmit()
     @Post()
     @RequiresPermissions('system:post:add')
     @Log({
@@ -59,6 +61,7 @@ export class PostController {
     }
 
     /* 修改岗位 */
+    @RepeatSubmit()
     @Put()
     @RequiresPermissions('system:post:edit')
     @Log({
@@ -82,6 +85,7 @@ export class PostController {
     }
 
     /* 导出岗位 */
+    @RepeatSubmit()
     @Post('export')
     @RequiresPermissions('system:post:export')
     @Keep()

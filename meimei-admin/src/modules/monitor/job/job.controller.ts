@@ -8,6 +8,7 @@ import { DataObj } from 'src/common/class/data-obj.class';
 import { ApiDataResponse, typeEnum } from 'src/common/decorators/api-data-response.decorator';
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { Keep } from 'src/common/decorators/keep.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
 import { User, UserEnum } from 'src/common/decorators/user.decorator';
 import { PaginationPipe } from 'src/common/pipes/pagination.pipe';
@@ -28,6 +29,7 @@ export class JobController {
     ) { }
 
     /* 新增任务 */
+    @RepeatSubmit()
     @Post('job')
     @RequiresPermissions('monitor:job:add')
     async addJob(@Body() reqAddJob: ReqAddJob, @User(UserEnum.userName, UserInfoPipe) userName: string) {
@@ -53,6 +55,7 @@ export class JobController {
     }
 
     /* 编辑任务 */
+    @RepeatSubmit()
     @Put('job')
     @RequiresPermissions('monitor:job:edit')
     async updataJob(@Body() job: Job, @User(UserEnum.userName, UserInfoPipe) userName: string) {
@@ -61,6 +64,7 @@ export class JobController {
     }
 
     /* 执行一次 */
+    @RepeatSubmit()
     @Put('job/run')
     @RequiresPermissions('monitor:job:edit')
     async run(@Body() reqJobRunDto: ReqJobRunDto) {
@@ -76,6 +80,7 @@ export class JobController {
     }
 
     /* 更改任务状态 */
+    @RepeatSubmit()
     @Put('job/changeStatus')
     @RequiresPermissions('monitor:job:changeStatus')
     async changeStatus(@Body() reqChangStatusDto: ReqChangStatusDto, @User(UserEnum.userName, UserInfoPipe) userName: string) {
@@ -83,6 +88,7 @@ export class JobController {
     }
 
     /* 导出定时任务 */
+    @RepeatSubmit()
     @Post('job/export')
     @RequiresPermissions('monitor:job:export')
     @Keep()
@@ -112,6 +118,7 @@ export class JobController {
     }
 
     /* 导出定时任务日志 */
+    @RepeatSubmit()
     @Post('jobLog/export')
     @Keep()
     async exportJobLog(@Body(PaginationPipe) reqJobLogList: ReqJobLogList) {

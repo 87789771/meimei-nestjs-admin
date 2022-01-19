@@ -6,6 +6,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { ApiTags } from '@nestjs/swagger';
 import { DataObj } from 'src/common/class/data-obj.class';
 import { ApiDataResponse, typeEnum } from 'src/common/decorators/api-data-response.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
 import { User, UserEnum } from 'src/common/decorators/user.decorator';
 import { TreeDataDto } from 'src/common/dto/tree-data.dto';
@@ -22,6 +23,7 @@ export class MenuController {
         private readonly menuService: MenuService
     ) { }
     /* 新增菜单 */
+    @RepeatSubmit()
     @Post()
     @RequiresPermissions('system:menu:add')
     async add(@Body() reqAddMenuDto: ReqAddMenuDto, @User(UserEnum.userName, UserInfoPipe) userName: string) {
@@ -64,6 +66,7 @@ export class MenuController {
     }
 
     /* 修改菜单 */
+    @RepeatSubmit()
     @Put()
     @RequiresPermissions('system:menu:edit')
     async update(@Body() reqUpdateMenu: ReqUpdateMenu, @User(UserEnum.userName, UserInfoPipe) userName: string) {

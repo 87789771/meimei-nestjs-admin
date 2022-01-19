@@ -7,6 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { DataObj } from 'src/common/class/data-obj.class';
 import { ApiDataResponse, typeEnum } from 'src/common/decorators/api-data-response.decorator';
 import { BusinessTypeEnum, Log } from 'src/common/decorators/log.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
 import { User, UserEnum } from 'src/common/decorators/user.decorator';
 import { TreeDataDto } from 'src/common/dto/tree-data.dto';
@@ -24,6 +25,7 @@ export class DeptController {
     ) { }
 
     /* 新增部门 */
+    @RepeatSubmit()
     @Post()
     @RequiresPermissions('system:dept:add')
     @Log({
@@ -70,6 +72,7 @@ export class DeptController {
     }
 
     /* 修改部门 */
+    @RepeatSubmit()
     @Put()
     @RequiresPermissions('system:dept:edit')
     @Log({

@@ -9,6 +9,7 @@ import { ApiDataResponse, typeEnum } from 'src/common/decorators/api-data-respon
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { Keep } from 'src/common/decorators/keep.decorator';
 import { BusinessTypeEnum, Log } from 'src/common/decorators/log.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
 import { User, UserEnum } from 'src/common/decorators/user.decorator';
 import { PaginationPipe } from 'src/common/pipes/pagination.pipe';
@@ -28,6 +29,7 @@ export class RoleController {
     ) { }
 
     /* 新增角色 */
+    @RepeatSubmit()
     @Post()
     @RequiresPermissions('system:role:add')
     @Log({
@@ -57,6 +59,7 @@ export class RoleController {
     }
 
     /* 编辑角色 */
+    @RepeatSubmit()
     @Put()
     @RequiresPermissions('system:role:edit')
     @Log({
@@ -69,6 +72,7 @@ export class RoleController {
     }
 
     /* 分配数据权限 */
+    @RepeatSubmit()
     @Put('dataScope')
     async dataScope(@Body() reqDataScopeDto: ReqDataScopeDto, @User(UserEnum.userName, UserInfoPipe) userName: string) {
         reqDataScopeDto.updateBy = userName
@@ -87,12 +91,14 @@ export class RoleController {
     }
 
     /* 更改角色状态 */
+    @RepeatSubmit()
     @Put("changeStatus")
     async changeStatus(@Body() reqChangeStatusDto: ReqChangeStatusDto, @User(UserEnum.userName, UserInfoPipe) userName: string) {
         await this.roleService.changeStatus(reqChangeStatusDto.roleId, reqChangeStatusDto.status, userName)
     }
 
     /* 导出角色列表 */
+    @RepeatSubmit()
     @Post('export')
     @Keep()
     @Log({
@@ -114,6 +120,7 @@ export class RoleController {
     }
 
     /* 单个取消用户角色授权 */
+    @RepeatSubmit()
     @Put('authUser/cancel')
     async cancel(@Body() reqCancelDto: ReqCancelDto) {
         const userIdArr = [reqCancelDto.userId]
@@ -121,6 +128,7 @@ export class RoleController {
     }
 
     /* 批量取消用户角色授权 */
+    @RepeatSubmit()
     @Put('authUser/cancelAll')
     async cancelAll(@Query() reqCancelAllDto: ReqCancelAllDto) {
         const userIdArr = reqCancelAllDto.userIds.split(',')
@@ -134,6 +142,7 @@ export class RoleController {
     }
 
     /* 给角色分配用户 */
+    @RepeatSubmit()
     @Put('authUser/selectAll')
     async selectAll(@Query() reqCancelAllDto: ReqCancelAllDto) {
         const userIdArr = reqCancelAllDto.userIds.split(',')
