@@ -15,3 +15,6 @@ export const LOG_KEY_METADATA = "common:log"
 
 /* 数据权限 */
 export const DATASCOPE_KEY_METADATA = "common:dataScope"
+
+/* 防止重复提交 */
+export const REOEATSUBMIT_METADATA = "common:repeatSubmit"

@@ -8,6 +8,7 @@ import { DataObj } from 'src/common/class/data-obj.class';
 import { ApiDataResponse, typeEnum } from 'src/common/decorators/api-data-response.decorator';
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { BusinessTypeEnum, Log } from 'src/common/decorators/log.decorator';
+import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
 import { User, UserEnum } from 'src/common/decorators/user.decorator';
 import { PaginationPipe } from 'src/common/pipes/pagination.pipe';
@@ -24,6 +25,7 @@ export class NoticeController {
     ) { }
     /* 新增公告 */
     @Post()
+    @RepeatSubmit()
     @RequiresPermissions('system:notice:add')
     @Log({
         title: '通知公告',

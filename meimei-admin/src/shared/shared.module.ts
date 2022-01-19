@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 16:44:29
- * @LastEditTime: 2022-01-16 14:17:08
+ * @LastEditTime: 2022-01-19 13:29:18
  * @LastEditors: Sheng.Jiang
  * @Description: 公共模块
  * @FilePath: \meimei-admin\src\shared\shared.module.ts
@@ -22,6 +22,7 @@ import { LogModule } from 'src/modules/monitor/log/log.module';
 import { BullModule } from '@nestjs/bull';
 import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interceptor';
 import { DemoEnvironmentInterceptor } from 'src/common/interceptors/demo-environment.interceptor';
+import { RepeatSubmitInterceptor } from 'src/common/interceptors/repeat-submit.interceptor';
 
 @Global()
 @Module({
@@ -89,7 +90,11 @@ import { DemoEnvironmentInterceptor } from 'src/common/interceptors/demo-environ
             provide: APP_INTERCEPTOR,
             useClass: OperationLogInterceptor
         },
-
+        /* 连续提交拦截器 */
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: RepeatSubmitInterceptor
+        },
         /* 全局返回值转化拦截器 */
         {
             provide: APP_INTERCEPTOR,

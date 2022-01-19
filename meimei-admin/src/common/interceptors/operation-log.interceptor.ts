@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 19:47:38
- * @LastEditTime: 2021-12-30 17:51:00
+ * @LastEditTime: 2022-01-19 13:42:22
  * @LastEditors: Sheng.Jiang
  * @Description: 操作日志记录拦截器
- * @FilePath: \meimei\src\common\interceptors\operation-log.interceptor.ts
+ * @FilePath: \meimei-admin\src\common\interceptors\operation-log.interceptor.ts
  * You can you up，no can no bb！！
  */
 
@@ -90,11 +90,11 @@ export class OperationLogInterceptor implements NestInterceptor {
         operLog.operParam = JSON.stringify(data)
       }
       /* 成功的请求 */
-      if (data.code === 200 || data instanceof StreamableFile) {  //如果是流，都算成功
+      if ((data && data.code === 200) || data instanceof StreamableFile) {  //如果是流，都算成功
         operLog.status = 0
       } else { //失败的请求
         operLog.status = 1
-        operLog.errorMsg = data.msg
+        operLog.errorMsg = data && data.msg
       }
       /* 记录返回值 */
       if (logOption.isSaveResponseData) {
