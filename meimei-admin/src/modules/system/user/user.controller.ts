@@ -174,7 +174,7 @@ export class UserController {
     @RepeatSubmit()
     @Put('resetPwd')
     @RequiresPermissions('system:user:resetPwd')
-    async resetPwd(@Body() reqResetPwdDto: ReqResetPwdDto, @UserDec(UserEnum.userName) userName: string) {
+    async resetPwd(@Body() reqResetPwdDto: ReqResetPwdDto, @UserDec(UserEnum.userName, UserInfoPipe) userName: string) {
         await this.userService.resetPwd(reqResetPwdDto.userId, reqResetPwdDto.password, userName)
     }
 
@@ -187,7 +187,7 @@ export class UserController {
     /* 给用户分配角色 */
     @RepeatSubmit()
     @Put('authRole')
-    async updateAuthRole(@Query() reqUpdateAuthRoleDto: ReqUpdateAuthRoleDto, @UserDec(UserEnum.userName) userName: string) {
+    async updateAuthRole(@Query() reqUpdateAuthRoleDto: ReqUpdateAuthRoleDto, @UserDec(UserEnum.userName, UserInfoPipe) userName: string) {
         const roleIdArr = reqUpdateAuthRoleDto.roleIds.split(',').map(item => Number(item))
         await this.userService.updateAuthRole(reqUpdateAuthRoleDto.userId, roleIdArr, userName)
     }
@@ -195,7 +195,7 @@ export class UserController {
     /* 改变用户状态 */
     @RepeatSubmit()
     @Put("changeStatus")
-    async changeStatus(@Body() reqChangeStatusDto: ReqChangeStatusDto, @UserDec(UserEnum.userName) userName: string) {
+    async changeStatus(@Body() reqChangeStatusDto: ReqChangeStatusDto, @UserDec(UserEnum.userName, UserInfoPipe) userName: string) {
         await this.userService.changeStatus(reqChangeStatusDto.userId, reqChangeStatusDto.status, userName)
     }
 
