@@ -1,11 +1,11 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 17:14:57
- * @LastEditTime: 2021-12-28 12:39:12
+ * @LastEditTime: 2022-01-25 15:00:50
  * @LastEditors: Sheng.Jiang
  * @Description: 公共方法
  * 
- * @FilePath: \meimei\src\shared\shared.service.ts
+ * @FilePath: \meimei-admin\src\shared\shared.service.ts
  * You can you up，no can no bb！！
  */
 
@@ -75,7 +75,8 @@ export class SharedService {
             (
                 (req.headers['x-forwarded-for'] as string) ||
                 // 判断后端的 socket 的 IP
-                req.socket.remoteAddress
+                req.socket.remoteAddress ||
+                ''
             ).replace('::ffff:', '')
         );
     }
