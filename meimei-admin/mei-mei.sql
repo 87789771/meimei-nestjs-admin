@@ -477,7 +477,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('2021-12-29 16:12:02.053561', '2022-01-06 13:42:55.000000', '', '', '', 1, 'admin', 'admin', '00', '87789771@qq.com', '13006133172', '0', '', '9c68fb331431f8dcfb7defef22b0c527', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, 1);
+INSERT INTO `user` VALUES ('2021-12-29 16:12:02.053561', '2022-01-06 13:42:55.000000', 'admin', 'admin', '', 1, 'admin', 'admin', '00', '87789771@qq.com', '13006133172', '0', '', '9c68fb331431f8dcfb7defef22b0c527', 'Y2uPc7hyq8Vi5qBc879Ut', '0', '0', '', NULL, 1);
 
 -- ----------------------------
 -- Table structure for user_posts_post

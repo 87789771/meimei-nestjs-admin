@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-09 14:49:35
- * @LastEditTime: 2022-01-20 20:06:41
+ * @LastEditTime: 2022-01-29 11:29:15
  * @LastEditors: Sheng.Jiang
  * @Description: 用户管理 service
  * @FilePath: \meimei-admin\src\modules\system\user\user.service.ts
@@ -106,7 +106,7 @@ export class UserService {
         if (sataScopeSql) {
             queryBuilde.andWhere(sataScopeSql)
         }
-        const result = await queryBuilde.andWhere(where).getManyAndCount()
+        const result = await queryBuilde.andWhere(where).orderBy("user.createTime", 'ASC').getManyAndCount()
         return {
             rows: result[0],
             total: result[1]
