@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 16:44:29
- * @LastEditTime: 2022-01-19 13:29:18
+ * @LastEditTime: 2022-01-29 11:16:42
  * @LastEditors: Sheng.Jiang
  * @Description: 公共模块
  * @FilePath: \meimei-admin\src\shared\shared.module.ts
@@ -21,8 +21,8 @@ import { RoleAuthGuard } from 'src/common/guards/role-auth.guard';
 import { LogModule } from 'src/modules/monitor/log/log.module';
 import { BullModule } from '@nestjs/bull';
 import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interceptor';
-import { DemoEnvironmentInterceptor } from 'src/common/interceptors/demo-environment.interceptor';
-import { RepeatSubmitInterceptor } from 'src/common/interceptors/repeat-submit.interceptor';
+import { RepeatSubmitGuard } from 'src/common/guards/repeat-submit.guard';
+import { DemoEnvironmentGuard } from 'src/common/guards/demo-environment.guard';
 
 @Global()
 @Module({
@@ -83,17 +83,22 @@ import { RepeatSubmitInterceptor } from 'src/common/interceptors/repeat-submit.i
             provide: APP_GUARD,
             useClass: PermissionAuthGuard,
         },
+        //阻止连续提交守卫
+        {
+            provide: APP_GUARD,
+            useClass: RepeatSubmitGuard,
+        },
+        //是否演示环境守卫
+        {
+            provide: APP_GUARD,
+            useClass: DemoEnvironmentGuard,
+        },
 
 
         /* 操作日志拦截器 。 注：拦截器中的 handle 从下往上执行（ReponseTransformInterceptor ----> OperationLogInterceptor），返回值值依次传递 */
         {
             provide: APP_INTERCEPTOR,
             useClass: OperationLogInterceptor
-        },
-        /* 连续提交拦截器 */
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: RepeatSubmitInterceptor
         },
         /* 全局返回值转化拦截器 */
         {
@@ -104,11 +109,6 @@ import { RepeatSubmitInterceptor } from 'src/common/interceptors/repeat-submit.i
         {
             provide: APP_INTERCEPTOR,
             useClass: DataScopeInterceptor
-        },
-        /* 是否开发演示环境拦截器 */
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: DemoEnvironmentInterceptor
         },
     ],
     exports: [
