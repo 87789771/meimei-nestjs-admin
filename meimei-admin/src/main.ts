@@ -5,6 +5,7 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/all-exception.filter';
 import { setupSwagger } from './setup-swagger'
+import * as history from 'connect-history-api-fallback'
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -17,6 +18,8 @@ async function bootstrap() {
     transform: true,   // 自动类型转换
   }))
 
+  /* 启动 vue 的 history模式 */
+  app.use(history())
   /* 配置静态资源目录 */
   app.useStaticAssets(join(__dirname, '../public'));
 

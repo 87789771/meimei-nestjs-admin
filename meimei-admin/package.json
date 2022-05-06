@@ -46,6 +46,7 @@
     "captcha.gif": "^1.0.7",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "connect-history-api-fallback": "^1.6.0",
     "crypto-js": "^4.1.1",
     "iconv-lite": "^0.6.3",
     "ioredis": "^4.28.2",
