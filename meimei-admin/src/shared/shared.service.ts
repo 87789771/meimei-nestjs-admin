@@ -1,8 +1,8 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 17:14:57
- * @LastEditTime: 2022-01-25 15:00:50
- * @LastEditors: Sheng.Jiang
+ * @LastEditTime: 2022-05-05 16:00:15
+ * @LastEditors: Please set LastEditors
  * @Description: 公共方法
  * 
  * @FilePath: \meimei-admin\src\shared\shared.service.ts
@@ -19,7 +19,6 @@ import * as iconv from 'iconv-lite'
 
 @Injectable()
 export class SharedService {
-
     /**
      * 构造树型结构数据
      */

@@ -8,7 +8,7 @@ export default {
   components: { iFrame },
   data() {
     return {
-      url: process.env.VUE_APP_BASE_API + "/swagger-ui/index.html"
+      url: "http://127.0.0.1:3000/doc/admin/swagger-api",
     };
   },
 };

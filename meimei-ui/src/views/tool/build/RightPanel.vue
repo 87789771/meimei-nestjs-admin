@@ -878,7 +878,7 @@ export default {
   padding-top: 3px;
   .field-box {
     position: relative;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 42px);
     box-sizing: border-box;
     overflow: hidden;
   }

@@ -1787,6 +1787,11 @@ caniuse-lite@^1.0.30001280:
   resolved "https://registry.npmmirror.com/caniuse-lite/download/caniuse-lite-1.0.30001285.tgz#fe1e52229187e11d6670590790d669b9e03315b7"
   integrity sha512-KAOkuUtcQ901MtmvxfKD+ODHH9YVDYnBt+TGYSz2KIfnq22CiArbUxXPN9067gNbgMlnNYRSwho8OPXZPALB9Q==
 
+captcha.gif@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmmirror.com/captcha.gif/-/captcha.gif-1.0.7.tgz#2c37c8aeb88f8aa5a3524cce2fec097e379da283"
+  integrity sha512-WxWEsGPU9YgyceyH8pPbiLnC4NUhTGNhCJFudNFX7f6gfAodTN8SR4AdJg9FnUgfYKVrmCkX325R0ZLY+Kf7kQ==
+
 cfb@^1.1.4:
   version "1.2.1"
   resolved "https://registry.nlark.com/cfb/download/cfb-1.2.1.tgz#209429e4c68efd30641f6fc74b2d6028bd202402"
@@ -4470,13 +4475,6 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-opentype.js@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.npmmirror.com/opentype.js/download/opentype.js-0.7.3.tgz#40fb8ce18bfd60e74448efdfe442834098397aab"
-  integrity sha1-QPuM4Yv9YOdESO/f5EKDQJg5eqs=
-  dependencies:
-    tiny-inflate "^1.0.2"
-
 optional@0.1.4:
   version "0.1.4"
   resolved "https://registry.npm.taobao.org/optional/download/optional-0.1.4.tgz#cdb1a9bedc737d2025f690ceeb50e049444fd5b3"
@@ -5380,13 +5378,6 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-svg-captcha@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.npmmirror.com/svg-captcha/download/svg-captcha-1.4.0.tgz#32ead3c6463936c218bb3bc9ed04fea4eeffe492"
-  integrity sha1-MurTxkY5NsIYuzvJ7QT+pO7/5JI=
-  dependencies:
-    opentype.js "^0.7.3"
-
 swagger-ui-dist@>3.52.5:
   version "4.1.2"
   resolved "https://registry.npmmirror.com/swagger-ui-dist/download/swagger-ui-dist-4.1.2.tgz#5dd182400eaead52511707b50bde29672a975794"
@@ -5500,11 +5491,6 @@ through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.npm.taobao.org/through/download/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
-
-tiny-inflate@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.npm.taobao.org/tiny-inflate/download/tiny-inflate-1.0.3.tgz#122715494913a1805166aaf7c93467933eea26c4"
-  integrity sha1-EicVSUkToYBRZqr3yTRnkz7qJsQ=
 
 tmp@^0.0.33:
   version "0.0.33"

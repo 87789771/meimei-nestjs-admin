@@ -22,6 +22,6 @@ import { PostService } from 'src/modules/system/post/post.service';
         JobService,
         JobConsumer,
     ],
-    exports: [JobService]
+    exports: [JobService, JobConsumer]
 })
 export class JobModule { }

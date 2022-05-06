@@ -1,8 +1,8 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:30:53
- * @LastEditTime: 2022-01-16 16:15:04
- * @LastEditors: Sheng.Jiang
+ * @LastEditTime: 2022-05-05 15:47:35
+ * @LastEditors: Please set LastEditors
  * @Description: 登录 service
  * @FilePath: \meimei-admin\src\modules\login\login.service.ts
  * You can you up，no can no bb！！
@@ -15,7 +15,6 @@ import { JwtService } from '@nestjs/jwt';
 import { CAPTCHA_IMG_KEY, USER_DEPTID_KEY, USER_DEPTNAME_KEY, USER_NICKNAME_KEY, USER_PERMISSIONS_KEY, USER_ROLEKEYS_KEY, USER_ROLEKS_KEY, USER_TOKEN_KEY, USER_USERNAME_KEY, USER_VERSION_KEY } from 'src/common/contants/redis.contant';
 import { ApiException } from 'src/common/exceptions/api.exception';
 import { SharedService } from 'src/shared/shared.service';
-import * as svgCaptcha from 'svg-captcha';
 import { MenuService } from '../system/menu/menu.service';
 import { User } from '../system/user/entities/user.entity';
 import { UserService } from '../system/user/user.service';
@@ -23,6 +22,7 @@ import { ResInfo } from './dto/res-login.dto';
 import { Request } from 'express';
 import { LogService } from '../monitor/log/log.service';
 import { ConfigService } from '@nestjs/config';
+import { Captcha } from 'captcha.gif';
 
 @Injectable()
 export class LoginService {
@@ -38,21 +38,17 @@ export class LoginService {
 
     /* 创建验证码图片 */
     async createImageCaptcha() {
-        const svg = svgCaptcha.create({
-            size: 4,
-            color: true,
-            noise: 4,
-            width: 150,
-            height: 50,
-            charPreset: '1234567890',
+        const captcha = new Captcha({
+            numberOfDots: 0,
+            blur: false,
+            filter: false
         });
+        const { token, buffer } = captcha.generate();
         const result = {
-            img: `data:image/svg+xml;base64,${Buffer.from(svg.data).toString(
-                'base64',
-            )}`,
+            img: buffer.toString('base64'),
             uuid: this.sharedService.generateUUID(),
-        };
-        await this.redis.set(`${CAPTCHA_IMG_KEY}:${result.uuid}`, svg.text, 'EX', 60 * 5)
+        }
+        await this.redis.set(`${CAPTCHA_IMG_KEY}:${result.uuid}`, token, 'EX', 60 * 5)
         return result
     }
 

@@ -17,7 +17,7 @@ export class JobConsumer {
   async handle(job: Job<SysJob>) {
     try {
       const { serviceName, funName, argumens } = await this.jobService.analysisinvokeTarget(job.data)
-      const service = await this.moduleRef.get(serviceName)
+      const service = await this.moduleRef.get(serviceName, { strict: false })
       await service[funName](...argumens)
     } catch (error) {
       throw error
@@ -39,14 +39,14 @@ export class JobConsumer {
   }
   @OnQueueFailed()
   /* 记录失败日志 */
-  async onFailed(job: Job<SysJob>, err: ApiException) {
+  async onFailed(job: Job<SysJob>, err: Error) {
     const jobLog = new JobLog()
     const oneJob = job.data
     jobLog.jobName = oneJob.jobName
     jobLog.jobGroup = oneJob.jobGroup
     jobLog.invokeTarget = oneJob.invokeTarget
     jobLog.jobMessage = '执行失败了'
-    jobLog.exceptionInfo = err instanceof ApiException ? err.getResponse().toString() : err
+    jobLog.exceptionInfo = err instanceof ApiException ? err.getResponse().toString() : err.message
     jobLog.status = '1'
     jobLog.createTime = new Date()
     await this.jobService.addJobLog(jobLog)

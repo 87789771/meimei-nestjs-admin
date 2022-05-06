@@ -53,6 +53,11 @@
       </div>
 
       <div class="drawer-item">
+        <span>固定 Header</span>
+        <el-switch v-model="fixedHeader" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
         <span>显示 Logo</span>
         <el-switch v-model="sidebarLogo" class="drawer-switch" />
       </div>
@@ -82,6 +87,17 @@ export default {
     };
   },
   computed: {
+    fixedHeader: {
+      get() {
+        return this.$store.state.settings.fixedHeader
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'fixedHeader',
+          value: val
+        })
+      }
+    },
     topNav: {
       get() {
         return this.$store.state.settings.topNav
@@ -92,6 +108,7 @@ export default {
           value: val
         })
         if (!val) {
+          this.$store.dispatch('app/toggleSideBarHide', false);
           this.$store.commit("SET_SIDEBAR_ROUTERS", this.$store.state.permission.defaultRoutes);
         }
       }
@@ -152,6 +169,7 @@ export default {
         `{
             "topNav":${this.topNav},
             "tagsView":${this.tagsView},
+            "fixedHeader":${this.fixedHeader},
             "sidebarLogo":${this.sidebarLogo},
             "dynamicTitle":${this.dynamicTitle},
             "sideTheme":"${this.sideTheme}",

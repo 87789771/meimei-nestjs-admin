@@ -1,4 +1,7 @@
-
+/**
+* v-dialogDragWidth 可拖动弹窗高度（右下角）
+* Copyright (c) 2019 ruoyi
+*/
 
 export default {
     bind(el) {

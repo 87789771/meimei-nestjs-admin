@@ -115,7 +115,7 @@ export class JobService {
     }
 
     /* 添加任务日志记录 */
-    async addJobLog(jobLog: JobLog) {
+    async addJobLog(jobLog: JobLog) {  
         return await this.jobLogRepository.save(jobLog)
     }
 

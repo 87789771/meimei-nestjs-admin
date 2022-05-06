@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form">
-      <h3 class="title"槑槑后台管理系统</h3>
+      <h3 class="title">槑槑后台管理系统</h3>
       <el-form-item prop="username">
         <el-input v-model="registerForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -59,6 +59,10 @@
         </div>
       </el-form-item>
     </el-form>
+    <!--  底部  -->
+    <div class="el-register-footer">
+      <span>Copyright © 2018-2022 ruoyi.vip All Rights Reserved.</span>
+    </div>
   </div>
 </template>
 
@@ -147,7 +151,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpeg");
+  background-image: url("../assets/images/login-background.jpg");
   background-size: cover;
 }
 .title {

@@ -1,4 +1,4 @@
-import { parseTime } from './mei-mei'
+import { parseTime } from './ruoyi'
 
 /**
  * 表格时间格式化

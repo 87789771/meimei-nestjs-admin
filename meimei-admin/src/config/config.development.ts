@@ -1,8 +1,8 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-01-18 14:51:16
- * @LastEditors: Sheng.Jiang
+ * @LastEditTime: 2022-05-06 16:54:17
+ * @LastEditors: Please set LastEditors
  * @Description: 测试环境配置文件
  * @FilePath: \meimei-admin\src\config\config.development.ts
  * You can you up，no can no bb！！
@@ -13,25 +13,26 @@ export default defineConfig({
   jwt: {
     secret: process.env.JWT_SECRET || '123456',
   },
-  // typeorm config
+  // typeorm 配置
   database: {
     type: 'mysql',
-    host: process.env.MYSQL_HOST || 'localhost',
+    host: process.env.MYSQL_HOST || '42.192.136.154',
     port: process.env.MYSQL_PORT || 3306,
-    username: process.env.MYSQL_USERNAME || 'root',
-    password: process.env.MYSQL_PASSWORD || '123456',
-    database: process.env.MYSQL_DATABASE || 'mei-mei',
+    username: process.env.MYSQL_USERNAME || 'mei-mei-dev',
+    password: process.env.MYSQL_PASSWORD || 'y3xxKRAmamMGTk3s',
+    database: process.env.MYSQL_DATABASE || 'mei-mei-dev',
     autoLoadModels: true,
     synchronize: true,
     logging: false,
   },
-  // redis cache config
+  // redis 配置
   redis: {
     config: {
       url: 'redis://localhost:6379/0'
     }
   },
 
+  // 队列reids 配置
   bullRedis: {
     host: 'localhost',
     port: '6379'

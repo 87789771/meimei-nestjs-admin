@@ -19,27 +19,9 @@
 export default {
   name: "Index",
   data() {
-    return {
-      // 版本号
-      version: "3.8.0",
-    };
+    return {};
   },
-  methods: {
-    goTarget(href) {
-      window.open(href, "_blank");
-    },
-  },
+  methods: {},
 };
 </script>
-
-<style scoped lang="scss">
-.home {
-  blockquote {
-    padding: 10px 20px;
-    margin: 0 0 20px;
-    font-size: 17.5px;
-    border-left: 5px solid #eee;
-  }
-}
-</style>
 

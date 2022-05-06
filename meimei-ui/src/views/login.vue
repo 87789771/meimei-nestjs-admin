@@ -7,7 +7,7 @@
           v-model="loginForm.username"
           type="text"
           auto-complete="off"
-          placeholder="账号: admin"
+          placeholder="账号"
         >
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
@@ -17,7 +17,7 @@
           v-model="loginForm.password"
           type="password"
           auto-complete="off"
-          placeholder="密码: admin123"
+          placeholder="密码"
           @keyup.enter.native="handleLogin"
         >
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
@@ -54,6 +54,10 @@
         </div>
       </el-form-item>
     </el-form>
+    <!--  底部  -->
+    <div class="el-login-footer">
+      <span>Copyright © 2018-2022 ruoyi.vip All Rights Reserved.</span>
+    </div>
   </div>
 </template>
 
@@ -108,7 +112,7 @@ export default {
       getCodeImg().then(res => {
         this.captchaOnOff = res.captchaOnOff === undefined ? true : res.captchaOnOff;
         if (this.captchaOnOff) {
-          this.codeUrl = res.img;
+          this.codeUrl = "data:image/gif;base64," + res.img;
           this.loginForm.uuid = res.uuid;
         }
       });
@@ -157,7 +161,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpeg");
+  background-image: url("../assets/images/login-background.jpg");
   background-size: cover;
 }
 .title {

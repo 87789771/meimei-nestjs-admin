@@ -20,6 +20,11 @@ module.exports = {
   tagsView: true,
 
   /**
+   * 是否固定头部
+   */
+  fixedHeader: false,
+
+  /**
    * 是否显示logo
    */
   sidebarLogo: true,
