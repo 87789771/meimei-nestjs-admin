@@ -40,6 +40,6 @@ async function bootstrap() {
   await app.listen(3000);
 
   /* 打印swagger地址 */
-  console.log('http://127.0.0.1:3000/swagger-ui');
+  console.log('http://127.0.0.1:3000/swagger-ui/');
 }
 bootstrap();
