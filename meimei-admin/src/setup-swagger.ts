@@ -11,5 +11,5 @@ export function setupSwagger(app: INestApplication): void {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup(`/doc/admin/swagger-api`, app, document);
+  SwaggerModule.setup(`swagger-ui`, app, document);
 }

@@ -19,7 +19,17 @@ async function bootstrap() {
   }))
 
   /* 启动 vue 的 history模式 */
-  app.use(history())
+  app.use(history({
+    rewrites: [
+      {
+        from: /^\/swagger-ui\/.*$/,
+        to: function (context) {
+          return context.parsedUrl.pathname;
+        }
+      }
+    ]
+  }))
+
   /* 配置静态资源目录 */
   app.useStaticAssets(join(__dirname, '../public'));
 
@@ -30,6 +40,6 @@ async function bootstrap() {
   await app.listen(3000);
 
   /* 打印swagger地址 */
-  console.log('http://127.0.0.1:3000/doc/admin/swagger-api');
+  console.log('http://127.0.0.1:3000/swagger-ui');
 }
 bootstrap();
