@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-05-06 16:54:17
+ * @LastEditTime: 2022-05-23 09:06:25
  * @LastEditors: Please set LastEditors
  * @Description: 测试环境配置文件
  * @FilePath: \meimei-admin\src\config\config.development.ts
@@ -28,14 +28,15 @@ export default defineConfig({
   // redis 配置
   redis: {
     config: {
-      url: 'redis://localhost:6379/0'
+      url: 'redis://:123456@localhost:6379/0'
     }
   },
 
   // 队列reids 配置
   bullRedis: {
     host: 'localhost',
-    port: '6379'
+    port: '6379',
+    password: '123456'
   },
 
   isDemoEnvironment: false,

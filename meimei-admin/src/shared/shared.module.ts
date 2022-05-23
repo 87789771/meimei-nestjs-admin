@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 16:44:29
- * @LastEditTime: 2022-04-29 17:21:16
+ * @LastEditTime: 2022-05-23 09:09:56
  * @LastEditors: Please set LastEditors
  * @Description: 公共模块
  * @FilePath: \meimei-admin\src\shared\shared.module.ts
@@ -55,6 +55,7 @@ import { DemoEnvironmentGuard } from 'src/common/guards/demo-environment.guard';
                 redis: {
                     host: configService.get<string>('bullRedis.host'),
                     port: configService.get<number>('bullRedis.port'),
+                    password: configService.get<string>('bullRedis.password'),
                 }
             }),
             inject: [ConfigService]

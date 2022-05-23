@@ -1,8 +1,8 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-10-18 13:21:16
- * @LastEditTime: 2022-01-16 14:10:54
- * @LastEditors: Sheng.Jiang
+ * @LastEditTime: 2022-05-23 09:06:27
+ * @LastEditors: Please set LastEditors
  * @Description: 
  * @FilePath: \meimei-admin\src\config\configuration.ts
  * You can you up，no can no bb！！
@@ -69,6 +69,7 @@ export interface IConfig {
     bullRedis?: {
         host: string,
         port: string
+        password: string,
     }
 
     /* 是否演示环境 */

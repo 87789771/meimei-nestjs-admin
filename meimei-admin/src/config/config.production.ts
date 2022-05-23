@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-05-06 16:54:48
+ * @LastEditTime: 2022-05-23 09:06:46
  * @LastEditors: Please set LastEditors
  * @Description: 正式环境配置文件
  * @FilePath: \meimei-admin\src\config\config.production.ts
@@ -35,7 +35,8 @@ export default defineConfig({
   // 队列reids 配置
   bullRedis: {
     host: 'localhost',
-    port: '6379'
+    port: '6379',
+    password: '123456'
   },
 
   isDemoEnvironment: false,
