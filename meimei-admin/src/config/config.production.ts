@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-05-23 09:06:46
+ * @LastEditTime: 2022-05-23 09:20:26
  * @LastEditors: Please set LastEditors
  * @Description: 正式环境配置文件
  * @FilePath: \meimei-admin\src\config\config.production.ts
@@ -28,7 +28,7 @@ export default defineConfig({
   // redis 配置
   redis: {
     config: {
-      url: 'redis://localhost:6379/0'
+      url: 'redis://:123456@localhost:6379/0'
     }
   },
 
