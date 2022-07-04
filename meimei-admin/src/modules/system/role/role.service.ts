@@ -81,7 +81,12 @@ export class RoleService {
 
     /* 更新数据权限 */
     async updateDataScope(reqDataScopeDto: ReqDataScopeDto) {
-        const deptArr = await this.deptService.listByIdArr(reqDataScopeDto.deptIds)
+        let deptArr = []
+        if (reqDataScopeDto.deptCheckStrictly) { //如果菜单选择父子联动就需要排除 所有父级
+            deptArr = await this.deptService.listByIdArrFilter(reqDataScopeDto.deptIds)
+        } else {
+            deptArr = await this.deptService.listByIdArr(reqDataScopeDto.deptIds)
+        }
         reqDataScopeDto.depts = deptArr
         return await this.roleRepository.save(reqDataScopeDto)
     }

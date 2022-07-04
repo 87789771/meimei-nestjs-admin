@@ -124,10 +124,6 @@ export class DeptService {
             .where("dept.delFlag = 0")
             .andWhere('role.delFlag = 0')
             .getRawMany()
-        const { deptCheckStrictly } = await this.roleService.findById(roleId) //查看是否 父子联动
-        if (deptCheckStrictly) {
-            deptArr = deptArr.filter(dept => !deptArr.find(deptSub => dept.deptId !== deptSub.deptId && ('.' + deptSub.mpath).includes('.' + dept.deptId + '.')))
-        }
         return deptArr.map(dept => dept.deptId)
     }
 
@@ -139,5 +135,31 @@ export class DeptService {
                 delFlag: 0
             }
         })
+    }
+
+    /* 通过id数组查询，并只取最后一级 */
+    async listByIdArrFilter(deptIdArr: number[]): Promise<Dept[]> {
+        const queryBuilder = this.deptRepository.createQueryBuilder('dept')
+        queryBuilder.select('dept.deptId', 'deptId')
+            .addSelect("dept.mpath")
+            .where("dept.delFlag = 0")
+            .andWhere({
+                deptId: In(deptIdArr),
+            })
+            .andWhere(qb => {
+                const subQuery = qb.subQuery()
+                    .select("dept2.deptId")
+                    .from(Dept, 'dept2')
+                    .where("dept2.delFlag = 0")
+                    .andWhere("dept.deptId != dept2.deptId")
+                    .andWhere({
+                        deptId: In(deptIdArr),
+                    })
+                    .andWhere("concat('.',dept2.mpath) like concat('%.',dept.dept_id,'.%')")
+                    .getQuery()
+                return "not exists" + subQuery
+            })
+        let DeptArr = await queryBuilder.getRawMany()
+        return DeptArr
     }
 }

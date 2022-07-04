@@ -1,8 +1,8 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-09 14:49:35
- * @LastEditTime: 2022-01-29 11:29:15
- * @LastEditors: Sheng.Jiang
+ * @LastEditTime: 2022-07-04 20:03:58
+ * @LastEditors: Please set LastEditors
  * @Description: 用户管理 service
  * @FilePath: \meimei-admin\src\modules\system\user\user.service.ts
  * You can you up，no can no bb！！
@@ -80,7 +80,7 @@ export class UserService {
         }
         if (reqUserListDto.params) {
             where.createTime = Between(reqUserListDto.params.beginTime, moment(reqUserListDto.params.endTime).add(1, 'day').format())
-        }
+        } 
         const deptId = reqUserListDto.deptId ?? ''
         const queryBuilde = this.userRepository.createQueryBuilder('user').innerJoin(User, 'user2', "user.createBy = user2.userName")
         if (deptId) {
@@ -105,7 +105,7 @@ export class UserService {
         }
         if (sataScopeSql) {
             queryBuilde.andWhere(sataScopeSql)
-        }
+        }   
         const result = await queryBuilde.andWhere(where).orderBy("user.createTime", 'ASC').getManyAndCount()
         return {
             rows: result[0],

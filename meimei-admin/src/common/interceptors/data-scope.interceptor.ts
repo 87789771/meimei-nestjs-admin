@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2022-01-05 19:43:12
- * @LastEditTime: 2022-01-06 18:59:15
- * @LastEditors: Sheng.Jiang
+ * @LastEditTime: 2022-07-04 20:01:40
+ * @LastEditors: Please set LastEditors
  * @Description: 数据权限拦截器
- * @FilePath: \meimei\src\common\interceptors\data-scope.interceptor.ts
+ * @FilePath: \meimei-admin\src\common\interceptors\data-scope.interceptor.ts
  * You can you up，no can no bb！！
  */
 
@@ -48,7 +48,7 @@ export class DataScopeInterceptor implements NestInterceptor {
         if (dataScope == '1') {  //全部数据权限
           sqlString = ''
         } else if (dataScope == '2') {  //自定义数据权限
-          sqlString += ` OR ${aliaObj.deptAlias}.dept_id IN ( SELECT dept_id FROM role_depts_dept WHERE roleRoleId = ${role.roleId} )`
+          sqlString += ` OR ${aliaObj.deptAlias}.dept_id IN ( SELECT deptDeptId FROM role_depts_dept WHERE roleRoleId = ${role.roleId} )`
         } else if (dataScope == '3') {  //本部门数据权限
           sqlString += ` OR ${aliaObj.deptAlias}.dept_id = ${deptId}`
         } else if (dataScope == '4') {  //本部门及以下数据权限
