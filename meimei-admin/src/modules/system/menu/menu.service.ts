@@ -201,18 +201,41 @@ export class MenuService {
                 .andWhere("role.status = 0 and role.roleId IN (:...roleIdArr)", { roleIdArr })
         }
         const menuList: ReqUpdateMenu[] = await queryBuilder.groupBy('menu.menuId').orderBy('menu.orderNum').getRawMany()
-        const routerList = menuList.map(item => {
+        const menuTreeList = []
+        this.sharedService.handleTree(menuList, 'menuId').forEach(item => {
+            if (item.parentId == 0) {
+                if (item.menuType == "C") {
+                    let obj = {
+                        component: "Layout",
+                        hidden: false,
+                        path: "/",
+                        visible: '0',
+                        children: [JSON.parse(JSON.stringify(item))]
+                    }
+                    menuTreeList.push(obj)
+                } else {
+                    item.path = '/' + item.path
+                    menuTreeList.push(item)
+                }
+            }
+        })
+        return this.createRouterTree(menuTreeList)
+    }
+
+    /* 生成菜单树 */
+    createRouterTree(menuArr: Menu[]): Router[] {
+        let routerList: Router[] = []
+        menuArr.forEach(item => {
             let router = new Router()
-            router.menuId = item.menuId
-            router.parentId = item.parentId
-            router.name = this.firstToUpper(item.path)
-            router.path = item.parentId == 0 ? ('/' + item.path) : item.path
+            if (this.firstToUpper(item.path)) {
+                router.name = this.firstToUpper(item.path)
+            }
             router.hidden = item.visible == '0' ? false : true
             if (item.menuType == "M" && item.isFrame == 1) {
                 router.redirect = "noRedirect"
             }
             if (item.menuType == "M") {
-                if (item.parentId == 0) {
+                if (item.path.includes('/')) {
                     router.component = 'Layout'
                 } else {
                     router.component = 'ParentView'
@@ -223,20 +246,28 @@ export class MenuService {
             if (item.menuType == "M") {
                 router.alwaysShow = true
             }
+            router.path = item.path
             router.meta = {
                 title: item.menuName,
                 icon: item.icon,
                 noCache: item.isCache == 0 ? false : true,
                 link: item.isFrame == 0 ? item.component : null
             }
-            return router
+            if (item.children && item.children.length) {
+                router.children = this.createRouterTree(item.children)
+            }
+            routerList.push(router)
         })
-        return this.sharedService.handleTree(routerList, 'menuId')
+        return routerList
     }
 
     // 首字母大写
-    firstToUpper(str) {
-        return str.trim().toLowerCase().replace(str[0], str[0].toUpperCase());
+    firstToUpper(pathStr: string) {
+        let str = pathStr.replace('/', '').trim()
+        if (str) {
+            return str.toLowerCase().replace(str[0], str[0].toUpperCase());
+        }
+        return ''
     }
 }
 
