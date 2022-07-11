@@ -55,14 +55,14 @@
         />
       </el-tab-pane>
 
-      <el-tab-pane label="年" v-if="shouldHide('year')">
+      <!-- <el-tab-pane label="年" v-if="shouldHide('year')">
         <CrontabYear
           @update="updateCrontabValue"
           :check="checkNumber"
           :cron="crontabValueObj"
           ref="cronyear"
         />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
 
     <div class="popup-main">
@@ -70,33 +70,33 @@
         <p class="title">时间表达式</p>
         <table>
           <thead>
-            <th v-for="item of tabTitles" width="40" :key="item">{{item}}</th>
+            <th v-for="item of tabTitles" width="40" :key="item">{{ item }}</th>
             <th>Cron 表达式</th>
           </thead>
           <tbody>
             <td>
-              <span>{{crontabValueObj.second}}</span>
+              <span>{{ crontabValueObj.second }}</span>
             </td>
             <td>
-              <span>{{crontabValueObj.min}}</span>
+              <span>{{ crontabValueObj.min }}</span>
             </td>
             <td>
-              <span>{{crontabValueObj.hour}}</span>
+              <span>{{ crontabValueObj.hour }}</span>
             </td>
             <td>
-              <span>{{crontabValueObj.day}}</span>
+              <span>{{ crontabValueObj.day }}</span>
             </td>
             <td>
-              <span>{{crontabValueObj.month}}</span>
+              <span>{{ crontabValueObj.month }}</span>
             </td>
             <td>
-              <span>{{crontabValueObj.week}}</span>
+              <span>{{ crontabValueObj.week }}</span>
             </td>
-            <td>
+            <!-- <td>
               <span>{{crontabValueObj.year}}</span>
-            </td>
+            </td> -->
             <td>
-              <span>{{crontabValueString}}</span>
+              <span>{{ crontabValueString }}</span>
             </td>
           </tbody>
         </table>
@@ -104,8 +104,12 @@
       <CrontabResult :ex="crontabValueString"></CrontabResult>
 
       <div class="pop_btn">
-        <el-button size="small" type="primary" @click="submitFill">确定</el-button>
-        <el-button size="small" type="warning" @click="clearCron">重置</el-button>
+        <el-button size="small" type="primary" @click="submitFill"
+          >确定</el-button
+        >
+        <el-button size="small" type="warning" @click="clearCron"
+          >重置</el-button
+        >
         <el-button size="small" @click="hidePopup">取消</el-button>
       </div>
     </div>
@@ -125,7 +129,8 @@ import CrontabResult from "./result.vue";
 export default {
   data() {
     return {
-      tabTitles: ["秒", "分钟", "小时", "日", "月", "周", "年"],
+      // tabTitles: ["秒", "分钟", "小时", "日", "月", "周", "年"],
+      tabTitles: ["秒", "分钟", "小时", "日", "月", "周"],
       tabActive: 0,
       myindex: 0,
       crontabValueObj: {
@@ -329,7 +334,7 @@ export default {
     },
   },
   computed: {
-    crontabValueString: function() {
+    crontabValueString: function () {
       let obj = this.crontabValueObj;
       let str =
         obj.second +
@@ -363,7 +368,7 @@ export default {
       // 隐藏部分组件
     },
   },
-  mounted: function() {
+  mounted: function () {
     this.resolveExp();
   },
 };

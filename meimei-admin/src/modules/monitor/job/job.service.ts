@@ -115,7 +115,7 @@ export class JobService {
     }
 
     /* 添加任务日志记录 */
-    async addJobLog(jobLog: JobLog) {  
+    async addJobLog(jobLog: JobLog) {
         return await this.jobLogRepository.save(jobLog)
     }
 
@@ -258,12 +258,18 @@ export class JobService {
 
 
     /* 测试定时任务的方法 */
-    async ceshi(a, b, c, d) {
+    async ceshi(a, b, c, d): Promise<void> {
         console.log(a);
         console.log(b);
         console.log(c);
         console.log(d);
         console.log('试一试定时任务');
         // throw new ApiException('错误了')
+        console.log(new Date());
+        return new Promise((resolve, reject) => {   //测试并发
+            setTimeout(() => {
+                resolve()
+            }, 10 * 1000)
+        })
     }
 }
