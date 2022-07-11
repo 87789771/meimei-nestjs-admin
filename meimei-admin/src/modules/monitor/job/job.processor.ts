@@ -18,7 +18,7 @@ export class JobConsumer {
     try {
       const { serviceName, funName, argumens } = await this.jobService.analysisinvokeTarget(job.data)
       const service = await this.moduleRef.get(serviceName, { strict: false })
-      if (job.data.concurrent == '0') {  // 允许并发
+      if (job.data.concurrent == '0') {  // 允许并发。  如果允许并发将无法捕获任务错误，任务全部为成功。
         service[funName](...argumens)
       } else if (job.data.concurrent == '1') {  //禁止并发
         await service[funName](...argumens)
