@@ -63,7 +63,8 @@
     "swagger-ui-express": "^4.2.0",
     "systeminformation": "^5.9.17",
     "typeorm": "^0.2.41",
-    "ua-parser-js": "^1.0.2"
+    "ua-parser-js": "^1.0.2",
+    "whatwg-mimetype": "^3.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

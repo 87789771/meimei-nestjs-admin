@@ -5896,6 +5896,11 @@ whatwg-mimetype@^2.3.0:
   resolved "https://registry.nlark.com/whatwg-mimetype/download/whatwg-mimetype-2.3.0.tgz?cache=0&sync_timestamp=1631994501080&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fwhatwg-mimetype%2Fdownload%2Fwhatwg-mimetype-2.3.0.tgz#3d4b1e0312d2079879f826aff18dbeeca5960fbf"
   integrity sha1-PUseAxLSB5h5+Cav8Y2+7KWWD78=
 
+whatwg-mimetype@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmmirror.com/whatwg-mimetype/-/whatwg-mimetype-3.0.0.tgz#5fa1a7623867ff1af6ca3dc72ad6b8a4208beba7"
+  integrity sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==
+
 whatwg-url@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmmirror.com/whatwg-url/download/whatwg-url-5.0.0.tgz?cache=0&sync_timestamp=1634673865107&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fwhatwg-url%2Fdownload%2Fwhatwg-url-5.0.0.tgz#966454e8765462e37644d3626f6742ce8b70965d"
