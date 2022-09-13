@@ -1,1 +1,1 @@
-export const EXCEL_ARR_KRY = "excel:obj:arr"
+export const EXCEL_ARR_KRY = 'excel:obj:arr';

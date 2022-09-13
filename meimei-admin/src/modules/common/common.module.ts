@@ -8,12 +8,9 @@ import { UploadModule } from './upload/upload.module';
 
 @Global()
 @Module({
-    imports: [
-        ExcelModule,
-        UploadModule
-    ],
-    controllers: [],
-    providers: [],
-    exports: [ExcelModule]
+  imports: [ExcelModule, UploadModule],
+  controllers: [],
+  providers: [],
+  exports: [ExcelModule],
 })
-export class CommonModule { }
+export class CommonModule {}

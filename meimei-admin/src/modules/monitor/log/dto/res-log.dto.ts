@@ -1,27 +1,25 @@
-
 export class ResOnlineDto {
+  /* 回话编号 */
+  tokenId: string;
 
-    /* 回话编号 */
-    tokenId: string
+  /* 用户名 */
+  userName: string;
 
-    /* 用户名 */
-    userName: string
+  /* 浏览器 */
+  browser: string;
 
-    /* 浏览器 */
-    browser: string
+  /* 部门名称 */
+  deptName: string;
 
-    /* 部门名称 */
-    deptName: string
+  /* 主机 */
+  ipaddr: string;
 
-    /* 主机 */
-    ipaddr: string
+  /* 登录地点 */
+  loginLocation: string;
 
-    /* 登录地点 */
-    loginLocation: string
+  /* 登录时间 */
+  loginTime: string;
 
-    /* 登录时间 */
-    loginTime: string
-
-    /* 操作系统 */
-    os: string
+  /* 操作系统 */
+  os: string;
 }

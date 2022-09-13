@@ -1,1 +1,1 @@
-export const DICTTYPE_KEY = "sys:dictType"
+export const DICTTYPE_KEY = 'sys:dictType';

@@ -10,15 +10,9 @@ import { Dept } from './entities/dept.entity';
 import { RoleModule } from '../role/role.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Dept]),
-    forwardRef(() => RoleModule)
-    ],
-    controllers: [
-        DeptController,],
-    providers: [
-        DeptService,],
-    exports: [
-        DeptService
-    ]
+  imports: [TypeOrmModule.forFeature([Dept]), forwardRef(() => RoleModule)],
+  controllers: [DeptController],
+  providers: [DeptService],
+  exports: [DeptService],
 })
-export class DeptModule { }
+export class DeptModule {}

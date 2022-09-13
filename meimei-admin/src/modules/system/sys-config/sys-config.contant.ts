@@ -1,1 +1,1 @@
-export const SYSCONFIG_KEY = "sys:sysConfig"
+export const SYSCONFIG_KEY = 'sys:sysConfig';

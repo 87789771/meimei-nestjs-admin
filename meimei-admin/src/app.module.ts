@@ -20,7 +20,7 @@ import { ServerModule } from './modules/monitor/server/server.module';
 import { JobService } from './modules/monitor/job/job.service';
 
 /* 将 provider的类名作为别名，方便定时器调用 */
-const providers = [JobService]
+const providers = [JobService];
 function createAliasProviders(): ExistingProvider[] {
   const aliasProviders: ExistingProvider[] = [];
   for (const p of providers) {
@@ -38,7 +38,7 @@ const aliasProviders = createAliasProviders();
     /* 配置文件模块 */
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration]
+      load: [configuration],
     }),
 
     /* 公共模块 */
@@ -59,8 +59,8 @@ const aliasProviders = createAliasProviders();
     LogModule,
     OnlineModule,
     JobModule,
-    ServerModule
+    ServerModule,
   ],
-  providers: [...aliasProviders]
+  providers: [...aliasProviders],
 })
-export class AppModule { }
+export class AppModule {}

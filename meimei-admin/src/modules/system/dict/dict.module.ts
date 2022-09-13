@@ -6,17 +6,9 @@ import { DictType } from './entities/dict_type.entity';
 import { DictData } from './entities/dict_data.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([DictType, DictData])],
-    controllers: [
-        DictController,
-    ],
-    providers: [
-        DictService,
-    ],
-    exports: [
-        DictService
-    ]
+  imports: [TypeOrmModule.forFeature([DictType, DictData])],
+  controllers: [DictController],
+  providers: [DictService],
+  exports: [DictService],
 })
-export class DictModule { }
-
-
+export class DictModule {}

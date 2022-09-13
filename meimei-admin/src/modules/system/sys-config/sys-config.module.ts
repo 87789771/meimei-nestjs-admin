@@ -9,10 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SysConfig } from './entities/sys-config.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([SysConfig])],
-    controllers: [
-        SysConfigController,],
-    providers: [
-        SysConfigService,],
+  imports: [TypeOrmModule.forFeature([SysConfig])],
+  controllers: [SysConfigController],
+  providers: [SysConfigService],
 })
-export class SysConfigModule { }
+export class SysConfigModule {}

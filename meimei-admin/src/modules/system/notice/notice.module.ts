@@ -5,10 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Notice } from './entities/notice.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Notice])],
-    controllers: [
-        NoticeController,],
-    providers: [
-        NoticeService,],
+  imports: [TypeOrmModule.forFeature([Notice])],
+  controllers: [NoticeController],
+  providers: [NoticeService],
 })
-export class NoticeModule { }
+export class NoticeModule {}

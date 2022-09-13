@@ -10,15 +10,9 @@ import { Logininfor } from './entities/logininfor.entity';
 import { OperLog } from './entities/oper_log.entity';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([Logininfor, OperLog])
-    ],
-    controllers: [
-        LogController,],
-    providers: [
-        LogService,],
-    exports: [
-        LogService
-    ]
+  imports: [TypeOrmModule.forFeature([Logininfor, OperLog])],
+  controllers: [LogController],
+  providers: [LogService],
+  exports: [LogService],
 })
-export class LogModule { }
+export class LogModule {}

@@ -6,16 +6,9 @@ import { Menu } from './entities/menu.entity';
 import { RoleModule } from '../role/role.module';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([Menu]),
-        forwardRef(() => RoleModule)
-    ],
-    controllers: [
-        MenuController,],
-    providers: [
-        MenuService,],
-    exports: [
-        MenuService
-    ]
+  imports: [TypeOrmModule.forFeature([Menu]), forwardRef(() => RoleModule)],
+  controllers: [MenuController],
+  providers: [MenuService],
+  exports: [MenuService],
 })
-export class MenuModule { }
+export class MenuModule {}
