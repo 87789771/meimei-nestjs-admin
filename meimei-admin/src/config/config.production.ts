@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-05-23 09:20:26
+ * @LastEditTime: 2022-09-14 16:29:34
  * @LastEditors: Please set LastEditors
  * @Description: 正式环境配置文件
  * @FilePath: \meimei-admin\src\config\config.production.ts
@@ -28,16 +28,20 @@ export default defineConfig({
   // redis 配置
   redis: {
     config: {
-      url: 'redis://:123456@localhost:6379/0'
-    }
+      url: 'redis://:123456@localhost:6379/0',
+    },
   },
 
   // 队列reids 配置
   bullRedis: {
     host: 'localhost',
     port: '6379',
-    password: '123456'
+    password: '123456',
   },
 
+  //文件上传地址
+  uploadPath: '/upload/test',
+
+  // 是否演示环境
   isDemoEnvironment: false,
 });
