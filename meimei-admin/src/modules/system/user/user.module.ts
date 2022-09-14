@@ -8,6 +8,7 @@ import { PostModule } from '../post/post.module';
 import { DeptModule } from '../dept/dept.module';
 import { storage } from 'src/modules/common/upload/upload.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -15,9 +16,15 @@ import { MulterModule } from '@nestjs/platform-express';
     forwardRef(() => RoleModule),
     PostModule,
     DeptModule,
-    MulterModule.register({
-      storage: storage,
-      preservePath: false,
+    MulterModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          storage: storage(configService.get('uploadPath')),
+          preservePath: false,
+        };
+      },
+      inject: [ConfigService],
     }),
   ],
   controllers: [UserController],

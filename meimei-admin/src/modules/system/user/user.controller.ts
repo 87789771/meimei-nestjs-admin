@@ -305,8 +305,11 @@ export class UserController {
   @Post('importData')
   @RequiresPermissions('system:user:import')
   @UseInterceptors(FileInterceptor('file'))
-  async importData(@UploadedFile() file: Express.Multer.File) {
+  async importData(
+    @UploadedFile() file: Express.Multer.File,
+    @UserDec(UserEnum.userName, UserInfoPipe) userName: string,
+  ) {
     const data = await this.excelService.import(User, file);
-    await this.userService.insert(data);
+    await this.userService.insert(data, userName);
   }
 }

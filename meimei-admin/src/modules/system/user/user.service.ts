@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-09 14:49:35
- * @LastEditTime: 2022-09-13 23:57:57
+ * @LastEditTime: 2022-09-14 17:13:34
  * @LastEditors: Please set LastEditors
  * @Description: 用户管理 service
- * @FilePath: /meimei-admin/src/modules/system/user/user.service.ts
+ * @FilePath: \meimei-admin\src\modules\system\user\user.service.ts
  * You can you up，no can no bb！！
  */
 
@@ -309,7 +309,7 @@ export class UserService {
   }
 
   /* 导入批量插入用户 */
-  async insert(data: any) {
+  async insert(data: any, userName: string) {
     const userArr: User[] = [];
     for await (const iterator of data) {
       let user = new User();
@@ -321,6 +321,9 @@ export class UserService {
       iterator.password = this.sharedService.md5(
         iterator.password + iterator.salt,
       );
+      iterator.createBy = iterator.updateBy = userName;
+      const dept = await this.deptService.findById(1);
+      iterator.dept = dept;
       user = Object.assign(user, iterator);
       userArr.push(user);
     }
