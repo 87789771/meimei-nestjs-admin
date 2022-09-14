@@ -6,13 +6,20 @@ import * as moment from 'moment';
 import * as multer from 'multer';
 import * as MIMEType from 'whatwg-mimetype';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { join } from 'path';
 
 export function storage(uploadPath) {
   return multer.diskStorage({
     // 配置上传文件夹
     destination: async (req, file, cd) => {
       const currentDate = moment().format('YYYY-MM-DD');
-      const path = uploadPath + '/' + currentDate;
+      let path = '';
+      if (uploadPath) {
+        path = uploadPath + '/' + currentDate;
+      } else {
+        // 如果没有配置路径 就上传默认路径
+        path = join(__dirname, `../../../../public/upload/${currentDate}`);
+      }
       try {
         // 判断是否有该文件夹
         await fs.promises.stat(path);

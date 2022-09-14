@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-10-18 13:21:16
- * @LastEditTime: 2022-09-14 16:33:31
+ * @LastEditTime: 2022-09-14 17:38:12
  * @LastEditors: Please set LastEditors
  * @Description:
  * @FilePath: \meimei-admin\src\config\configuration.ts
@@ -41,7 +41,7 @@ export interface IConfig {
   };
 
   /**
-   * 文件上传路径， 绝对路径
+   * 文件上传路径， 绝对路径  例如： E:/upload/test
    */
   uploadPath?: string;
 

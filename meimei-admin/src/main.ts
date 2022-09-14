@@ -37,9 +37,11 @@ async function bootstrap() {
   /* 配置静态资源目录 */
   app.useStaticAssets(join(__dirname, '../public'));
   /* 配置上传文件目录为 资源目录 */
-  app.useStaticAssets(process.env.uploadPath, {
-    prefix: '/upload',
-  });
+  if (process.env.uploadPath) {
+    app.useStaticAssets(process.env.uploadPath, {
+      prefix: '/upload',
+    });
+  }
 
   /* 启动swagger */
   setupSwagger(app);
