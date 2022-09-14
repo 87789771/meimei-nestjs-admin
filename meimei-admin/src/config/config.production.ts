@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-09-03 11:32:52
- * @LastEditTime: 2022-09-14 16:29:34
+ * @LastEditTime: 2022-09-14 17:23:27
  * @LastEditors: Please set LastEditors
  * @Description: 正式环境配置文件
  * @FilePath: \meimei-admin\src\config\config.production.ts
@@ -40,7 +40,7 @@ export default defineConfig({
   },
 
   //文件上传地址
-  uploadPath: '/upload/test',
+  uploadPath: 'E:/upload/test',
 
   // 是否演示环境
   isDemoEnvironment: false,
