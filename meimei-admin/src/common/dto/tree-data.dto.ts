@@ -6,5 +6,6 @@ export class TreeDataDto {
   label: string;
 
   /* 子项数组 */
-  children?: object[];
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  children?: TreeDataDto[];
 }
