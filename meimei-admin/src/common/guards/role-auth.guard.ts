@@ -1,13 +1,12 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-22 13:22:00
- * @LastEditTime: 2021-12-22 13:58:41
- * @LastEditors: Sheng.Jiang
+ * @LastEditTime: 2022-09-18 11:07:20
+ * @LastEditors: Please set LastEditors
  * @Description: 权限守卫
- * @FilePath: \meimei\src\common\guards\role-auth.guard copy.ts
+ * @FilePath: /meimei-admin/src/common/guards/role-auth.guard.ts
  * You can you up，no can no bb！！
  */
-
 
 import { InjectRedis, Redis } from '@nestjs-modules/ioredis';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
@@ -22,28 +21,31 @@ import { ApiException } from '../exceptions/api.exception';
 export class RoleAuthGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    @InjectRedis() private readonly redis: Redis
-  ) { }
-  async canActivate(
-    context: ExecutionContext,
-  ) {
-    const roleObj = this.reflector.getAllAndOverride<RoleObj>(ROLES_KEY_METADATA, [context.getHandler(), context.getClass()])
+    @InjectRedis() private readonly redis: Redis,
+  ) {}
+  async canActivate(context: ExecutionContext) {
+    const roleObj = this.reflector.getAllAndOverride<RoleObj>(
+      ROLES_KEY_METADATA,
+      [context.getHandler(), context.getClass()],
+    );
     if (!roleObj || !roleObj.roleArr.length) return true;
-    const request = context.switchToHttp().getRequest()
-    const userId = request.user?.userId
-    const userRoleArr = JSON.parse(await this.redis.get(`${USER_ROLEKEYS_KEY}:${userId}`))
-    if (userRoleArr.includes("admin")) return true;
-    let result: boolean = false
+    const request = context.switchToHttp().getRequest();
+    const userId = request.user?.userId;
+    const userRoleArr = JSON.parse(
+      await this.redis.get(`${USER_ROLEKEYS_KEY}:${userId}`),
+    );
+    if (userRoleArr.includes('admin')) return true;
+    let result = false;
     if (roleObj.logical === LogicalEnum.or) {
       result = roleObj.roleArr.some((userPermission) => {
-        return userRoleArr.includes(userPermission)
-      })
+        return userRoleArr.includes(userPermission);
+      });
     } else if (roleObj.logical === LogicalEnum.and) {
       result = roleObj.roleArr.every((userPermission) => {
-        return userRoleArr.includes(userPermission)
-      })
+        return userRoleArr.includes(userPermission);
+      });
     }
-    if (!result) throw new ApiException('暂无权限访问，请联系管理员')
-    return result
+    if (!result) throw new ApiException('暂无权限访问，请联系管理员');
+    return result;
   }
 }
