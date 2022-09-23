@@ -1,18 +1,18 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 16:44:29
- * @LastEditTime: 2022-09-14 00:00:55
+ * @LastEditTime: 2022-09-23 21:57:40
  * @LastEditors: Please set LastEditors
  * @Description: 公共模块
  * @FilePath: /meimei-admin/src/shared/shared.module.ts
  * You can you up，no can no bb！！
  */
 import { SharedService } from './shared.service';
-import { Global, Module } from '@nestjs/common';
+import { Global, Module, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisModule } from '@nestjs-modules/ioredis';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ReponseTransformInterceptor } from 'src/common/interceptors/reponse-transform.interceptor';
 import { OperationLogInterceptor } from 'src/common/interceptors/operation-log.interceptor';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
@@ -23,6 +23,7 @@ import { BullModule } from '@nestjs/bull';
 import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interceptor';
 import { RepeatSubmitGuard } from 'src/common/guards/repeat-submit.guard';
 import { DemoEnvironmentGuard } from 'src/common/guards/demo-environment.guard';
+import { AllExceptionsFilter } from 'src/common/filters/all-exception.filter';
 
 @Global()
 @Module({
@@ -66,6 +67,21 @@ import { DemoEnvironmentGuard } from 'src/common/guards/demo-environment.guard';
   controllers: [],
   providers: [
     SharedService,
+
+    //全局异常过滤器
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+
+    //全局参数校验管道
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true, // 启用白名单，dto中没有声明的属性自动过滤
+        transform: true, // 自动类型转换
+      }),
+    },
 
     //jwt守卫
     {
