@@ -7,7 +7,6 @@ import { ExcelOptionAll } from './excel.interface';
 import { ExcelTypeEnum } from './excel.enum';
 import * as fs from 'fs';
 import { ApiException } from 'src/common/exceptions/api.exception';
-import { validate } from 'class-validator';
 
 @Injectable()
 export class ExcelService {
