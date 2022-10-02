@@ -122,6 +122,7 @@ export class MenuService {
     const menu = await this.menuRepository.findOne(menuId, {
       relations: ['roles'],
     });
+    if (!menu) return;
     menu.roles = [];
     await this.menuRepository.save(menu);
     return this.menuRepository.delete(menuId);
