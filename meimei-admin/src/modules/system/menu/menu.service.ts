@@ -119,6 +119,11 @@ export class MenuService {
 
   /* 删除菜单 */
   async delete(menuId: string) {
+    const menu = await this.menuRepository.findOne(menuId, {
+      relations: ['roles'],
+    });
+    menu.roles = [];
+    await this.menuRepository.save(menu);
     return this.menuRepository.delete(menuId);
   }
 
