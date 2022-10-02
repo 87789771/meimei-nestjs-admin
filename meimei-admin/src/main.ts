@@ -4,8 +4,12 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import { setupSwagger } from './setup-swagger';
 import * as history from 'connect-history-api-fallback';
+import helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  /* 设置 HTTP 标头来帮助保护应用免受一些众所周知的 Web 漏洞的影响 */
+  app.use(helmet());
 
   /* 启动 vue 的 history模式 */
   app.use(

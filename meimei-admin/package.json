@@ -48,6 +48,7 @@
     "class-validator": "^0.13.2",
     "connect-history-api-fallback": "^1.6.0",
     "crypto-js": "^4.1.1",
+    "helmet": "^6.0.0",
     "iconv-lite": "^0.6.3",
     "ioredis": "^4.28.2",
     "moment": "^2.29.1",
