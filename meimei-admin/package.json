@@ -31,6 +31,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/schedule": "^1.0.2",
     "@nestjs/swagger": "^5.1.5",
+    "@nestjs/throttler": "^3.0.0",
     "@nestjs/typeorm": "^8.0.2",
     "@types/cron": "^1.7.3",
     "@types/crypto-js": "^4.0.2",

@@ -749,6 +749,13 @@
     optional "0.1.4"
     tslib "2.3.1"
 
+"@nestjs/throttler@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmmirror.com/@nestjs/throttler/-/throttler-3.0.0.tgz#08a9c53d1246069292504f5d4d9db2257b51e36f"
+  integrity sha512-E5aLstJ1a3yZE6AgcN+BgHLiRd8lonR5E4E4I3wzVHRGfgglHQS1sa2zEUuD/pdzLPlbI8pvVDJom8Z2D1oDug==
+  dependencies:
+    md5 "^2.2.1"
+
 "@nestjs/typeorm@^8.0.2":
   version "8.0.2"
   resolved "https://registry.nlark.com/@nestjs/typeorm/download/@nestjs/typeorm-8.0.2.tgz?cache=0&sync_timestamp=1627980486597&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40nestjs%2Ftypeorm%2Fdownload%2F%40nestjs%2Ftypeorm-8.0.2.tgz#8e9b8422be402e02d6addfe7c779639fbff267af"
@@ -1836,6 +1843,11 @@ chardet@^0.7.0:
   resolved "https://registry.npmmirror.com/chardet/download/chardet-0.7.0.tgz?cache=0&sync_timestamp=1634639163489&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fchardet%2Fdownload%2Fchardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha1-kAlISfCTfy7twkJdDSip5fDLrZ4=
 
+charenc@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmmirror.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
+  integrity sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==
+
 chokidar@3.5.2, chokidar@^3.4.2:
   version "3.5.2"
   resolved "https://registry.npmmirror.com/chokidar/download/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"
@@ -2129,6 +2141,11 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+crypt@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmmirror.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
+  integrity sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==
 
 crypto-js@^4.1.1:
   version "4.1.1"
@@ -3296,6 +3313,11 @@ is-binary-path@~2.1.0:
   dependencies:
     binary-extensions "^2.0.0"
 
+is-buffer@~1.1.6:
+  version "1.1.6"
+  resolved "https://registry.npmmirror.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
+  integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
+
 is-core-module@^2.2.0:
   version "2.8.0"
   resolved "https://registry.npmmirror.com/is-core-module/download/is-core-module-2.8.0.tgz?cache=0&sync_timestamp=1634236539354&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fis-core-module%2Fdownload%2Fis-core-module-2.8.0.tgz#0321336c3d0925e497fd97f5d95cb114a5ccd548"
@@ -4201,6 +4223,15 @@ makeerror@1.0.12:
   integrity sha1-Pl3SB5qC6BLpg8xmEMSiyw6qgBo=
   dependencies:
     tmpl "1.0.5"
+
+md5@^2.2.1:
+  version "2.3.0"
+  resolved "https://registry.npmmirror.com/md5/-/md5-2.3.0.tgz#c3da9a6aae3a30b46b7b0c349b87b110dc3bda4f"
+  integrity sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==
+  dependencies:
+    charenc "0.0.2"
+    crypt "0.0.2"
+    is-buffer "~1.1.6"
 
 media-typer@0.3.0:
   version "0.3.0"

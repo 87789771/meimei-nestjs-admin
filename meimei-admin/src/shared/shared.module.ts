@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 16:44:29
- * @LastEditTime: 2022-09-23 21:57:40
+ * @LastEditTime: 2022-10-03 23:52:10
  * @LastEditors: Please set LastEditors
  * @Description: 公共模块
  * @FilePath: /meimei-admin/src/shared/shared.module.ts
@@ -24,6 +24,7 @@ import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interce
 import { RepeatSubmitGuard } from 'src/common/guards/repeat-submit.guard';
 import { DemoEnvironmentGuard } from 'src/common/guards/demo-environment.guard';
 import { AllExceptionsFilter } from 'src/common/filters/all-exception.filter';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Global()
 @Module({
@@ -51,6 +52,7 @@ import { AllExceptionsFilter } from 'src/common/filters/all-exception.filter';
         configService.get<any>('redis'),
       inject: [ConfigService],
     }),
+
     /* 启用队列 */
     BullModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
@@ -62,6 +64,14 @@ import { AllExceptionsFilter } from 'src/common/filters/all-exception.filter';
       }),
       inject: [ConfigService],
     }),
+
+    /* 导入速率限制模块   ttl:单位秒钟， 表示ttl秒内最多只能请求 limit 次， 避免暴力攻击。*/
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 60,
+    }),
+
+    /* 导入系统日志模块 */
     LogModule,
   ],
   controllers: [],
@@ -81,6 +91,12 @@ import { AllExceptionsFilter } from 'src/common/filters/all-exception.filter';
         whitelist: true, // 启用白名单，dto中没有声明的属性自动过滤
         transform: true, // 自动类型转换
       }),
+    },
+
+    //速率限制守卫
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
 
     //jwt守卫
