@@ -11,7 +11,7 @@ import * as moment from 'moment';
 import { JOB_BULL_KEY } from 'src/common/contants/bull.contants';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
 import { ApiException } from 'src/common/exceptions/api.exception';
-import { Between, FindCondition, In, Like, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, In, Like, Repository } from 'typeorm';
 import {
   ReqAddJob,
   ReqChangStatusDto,
@@ -58,7 +58,7 @@ export class JobService {
 
   /* 分页查询任务列表 */
   async jobList(reqJobListDto: ReqJobListDto): Promise<PaginatedDto<Job>> {
-    const where: FindCondition<Job> = {};
+    const where: FindOptionsWhere<Job> = {};
     if (reqJobListDto.jobName) {
       where.jobName = Like(`%${reqJobListDto.jobName}%`);
     }
@@ -82,7 +82,7 @@ export class JobService {
 
   /* 通过id查询任务 */
   async oneJob(jobId: number): Promise<Job> {
-    return this.jobRepository.findOne(jobId);
+    return this.jobRepository.findOneBy({ jobId });
   }
 
   /* 通过Id数组查询任务 */
@@ -127,7 +127,7 @@ export class JobService {
   async jobLogList(
     reqJobLogList: ReqJobLogList,
   ): Promise<PaginatedDto<JobLog>> {
-    const where: FindCondition<Job> = {};
+    const where: FindOptionsWhere<JobLog> = {};
     if (reqJobLogList.jobName) {
       where.jobName = Like(`%${reqJobLogList.jobName}%`);
     }

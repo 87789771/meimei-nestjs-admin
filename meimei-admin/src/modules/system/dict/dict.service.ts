@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
 import { ApiException } from 'src/common/exceptions/api.exception';
-import { Between, FindConditions, Like, Not, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, Like, Not, Repository } from 'typeorm';
 import { DICTTYPE_KEY } from './dict.contant';
 import {
   ReqAddDictDataDto,
@@ -41,7 +41,7 @@ export class DictService {
 
   /* 字典类型list */
   async typeList(reqDictTypeListDto: ReqDictTypeListDto) {
-    const where: FindConditions<DictType> = {};
+    const where: FindOptionsWhere<DictType> = {};
     if (reqDictTypeListDto.dictName) {
       where.dictName = Like(`%${reqDictTypeListDto.dictName}%`);
     }
@@ -71,7 +71,7 @@ export class DictService {
 
   /* 通过字典类型查询 */
   async findByDictType(dictType: string, dictId?: number): Promise<DictType> {
-    const where: FindConditions<DictType> = {
+    const where: FindOptionsWhere<DictType> = {
       dictType,
     };
     if (dictId) {
@@ -88,8 +88,8 @@ export class DictService {
   }
 
   /* 通过id 查找字典类型 */
-  async findDictTypeById(typeIds: number) {
-    return await this.dictTypeRepository.findOne(typeIds);
+  async findDictTypeById(dictId: number) {
+    return await this.dictTypeRepository.findOneBy({ dictId });
   }
 
   /* 通过 dictType 获取 字典数据(排除停用的) 并缓存进入redis*/
@@ -130,7 +130,7 @@ export class DictService {
   async dictDataList(
     reqDictDataListDto: ReqDictDataListDto,
   ): Promise<PaginatedDto<DictData>> {
-    const where: FindConditions<DictData> = {};
+    const where: FindOptionsWhere<DictData> = {};
     if (reqDictDataListDto.status) {
       where.status = reqDictDataListDto.status;
     }
@@ -176,8 +176,13 @@ export class DictService {
 
   /* 通过dictCode获取字典数据 */
   async findDictDataById(dictCode: number) {
-    const dictData = await this.dictDataRepository.findOne(dictCode, {
-      relations: ['dictType'],
+    const dictData = await this.dictDataRepository.findOne({
+      where: {
+        dictCode,
+      },
+      relations: {
+        dictType: true,
+      },
     });
     const reqUpdateDictDataDto = Object.assign(
       new ReqUpdateDictDataDto(),

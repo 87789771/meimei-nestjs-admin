@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-09 14:49:35
- * @LastEditTime: 2022-09-14 17:13:34
+ * @LastEditTime: 2022-10-05 10:42:20
  * @LastEditors: Please set LastEditors
  * @Description: 用户管理 service
- * @FilePath: \meimei-admin\src\modules\system\user\user.service.ts
+ * @FilePath: /meimei-admin/src/modules/system/user/user.service.ts
  * You can you up，no can no bb！！
  */
 
@@ -16,7 +16,7 @@ import { USER_VERSION_KEY } from 'src/common/contants/redis.contant';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
 import { ApiException } from 'src/common/exceptions/api.exception';
 import { SharedService } from 'src/shared/shared.service';
-import { Between, FindConditions, In, Like, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, In, Like, Repository } from 'typeorm';
 import { DeptService } from '../dept/dept.service';
 import { PostService } from '../post/post.service';
 import { ReqRoleListDto } from '../role/dto/req-role.dto';
@@ -80,7 +80,7 @@ export class UserService {
     reverse?: boolean,
     sataScopeSql?: string,
   ): Promise<PaginatedDto<User>> {
-    const where: FindConditions<User> = { delFlag: '0' };
+    const where: FindOptionsWhere<User> = { delFlag: '0' };
     if (reqUserListDto.userName) {
       where.userName = Like(`%${reqUserListDto.userName}%`);
     }
@@ -225,7 +225,7 @@ export class UserService {
 
   /* id查询用户 */
   async findById(userId: number) {
-    return await this.userRepository.findOne(userId);
+    return await this.userRepository.findOneBy({ userId });
   }
 
   /* 更改密码 */

@@ -22,6 +22,7 @@ export class ExcelService {
       {
         name: '表格1',
         data,
+        options: {},
       },
     ]);
     return Buffer.from(arrBuffer);
@@ -64,6 +65,7 @@ export class ExcelService {
       {
         name: '表格1',
         data,
+        options: {},
       },
     ]);
     return Buffer.from(arrBuffer);

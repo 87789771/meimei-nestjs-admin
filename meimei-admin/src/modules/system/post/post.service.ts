@@ -5,7 +5,7 @@ https://docs.nestjs.com/providers#services
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
-import { FindConditions, In, Like, Repository } from 'typeorm';
+import { FindOptionsWhere, In, Like, Repository } from 'typeorm';
 import { ReqAddPostDto, ReqPostListDto } from './dto/req-post.dto';
 import { Post } from './entities/post.entity';
 
@@ -17,7 +17,7 @@ export class PostService {
 
   /* 通过岗位编码查询 */
   async findByPostCode(postCode: string) {
-    return await this.postRepository.findOne({ postCode });
+    return await this.postRepository.findOneBy({ postCode });
   }
 
   /* 新增或编辑 */
@@ -27,7 +27,7 @@ export class PostService {
 
   /* 分页查询 */
   async list(reqPostListDto: ReqPostListDto): Promise<PaginatedDto<Post>> {
-    const where: FindConditions<Post> = {};
+    const where: FindOptionsWhere<Post> = {};
     if (reqPostListDto.postCode) {
       where.postCode = Like(`%${reqPostListDto.postCode}%`);
     }
@@ -63,8 +63,8 @@ export class PostService {
   }
 
   /* 通过id查找 */
-  async findById(postId: number | string) {
-    return await this.postRepository.findOne(postId);
+  async findById(postId: number) {
+    return await this.postRepository.findOneBy({ postId });
   }
 
   /* 通过id数组删除 */

@@ -5,7 +5,7 @@ https://docs.nestjs.com/providers#services
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
-import { FindConditions, Like, Repository } from 'typeorm';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { ReqAddNoticeDto, ReqNoeiceList } from './dto/req-notice.dto';
 import { Notice } from './entities/notice.entity';
 
@@ -22,7 +22,7 @@ export class NoticeService {
 
   /* 分页查询 */
   async list(reqNoeiceList: ReqNoeiceList): Promise<PaginatedDto<Notice>> {
-    const where: FindConditions<Notice> = {};
+    const where: FindOptionsWhere<Notice> = {};
     if (reqNoeiceList.noticeTitle) {
       where.noticeTitle = Like(`%${reqNoeiceList.noticeTitle}%`);
     }
@@ -52,8 +52,8 @@ export class NoticeService {
   }
 
   /* 通过id查询 */
-  async findById(noticeId: number | string) {
-    return this.noticeRepository.findOne(noticeId);
+  async findById(noticeId: number) {
+    return this.noticeRepository.findOneBy({ noticeId });
   }
 
   /* 删除 */

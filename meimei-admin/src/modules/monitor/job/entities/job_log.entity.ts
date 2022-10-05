@@ -104,5 +104,5 @@ export class JobLog {
     name: '创建时间',
     dateFormat: 'YYYY-MM-DD HH:mm:ss',
   })
-  createTime: Date;
+  createTime: Date | string;
 }

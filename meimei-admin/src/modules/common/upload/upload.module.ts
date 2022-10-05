@@ -29,22 +29,17 @@ export function storage(uploadPath) {
       }
       // 挂载文件存储的路径
       req.query.fileName = '/upload/' + currentDate;
-
       cd(null, path);
     },
     // 配置上传文件名
-    filename: (req, file, cd) => {
+    filename: async (req, file, cd) => {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      const mimeType = new MIMEType(file.mimetype);
-      //获取文件后缀
-      const subtype = mimeType.subtype;
-      // 拼接完整文件名
-      let originalname = '';
-      const lastIndex = file.originalname.lastIndexOf('.');
-      if (lastIndex >= 0) {
-        originalname =
-          file.originalname.substring(0, lastIndex) + '.' + subtype;
-      } else {
+      let originalname = file.originalname;
+      //如果文件没有后缀就获取文件后缀进行拼接
+      if (file.originalname.lastIndexOf('.') < 0) {
+        //获取文件后缀
+        const mimeType = new MIMEType(file.mimetype);
+        const subtype = mimeType.subtype;
         originalname = file.originalname + '.' + subtype;
       }
       // 挂载文件存储的路径

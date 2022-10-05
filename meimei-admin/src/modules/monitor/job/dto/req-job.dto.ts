@@ -65,8 +65,10 @@ export class ReqJobLogList extends PaginationDto {
 /* 执行一次任务 */
 export class ReqJobRunDto {
   /* 分组 */
+  @IsString()
   jobGroup: string;
 
   /* 任务id */
+  @IsNumber()
   jobId: number;
 }

@@ -10,7 +10,7 @@ import { USER_ONLINE_KEY } from 'src/common/contants/redis.contant';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
 import { User } from 'src/modules/system/user/entities/user.entity';
 import { SharedService } from 'src/shared/shared.service';
-import { Between, FindConditions, Like, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, Like, Repository } from 'typeorm';
 import { ReqLogininforDto, ReqOperLogDto } from './dto/req-log.dto';
 import { Logininfor } from './entities/logininfor.entity';
 import { OperLog } from './entities/oper_log.entity';
@@ -36,7 +36,7 @@ export class LogService {
   async operLogList(
     reqOperLogDto: ReqOperLogDto,
   ): Promise<PaginatedDto<OperLog>> {
-    const where: FindConditions<OperLog> = {};
+    const where: FindOptionsWhere<OperLog> = {};
     if (reqOperLogDto.title) {
       where.title = Like(`%${reqOperLogDto.title}%`);
     }
@@ -124,7 +124,7 @@ export class LogService {
   async logininforList(
     reqLogininforDto: ReqLogininforDto,
   ): Promise<PaginatedDto<Logininfor>> {
-    const where: FindConditions<Logininfor> = {};
+    const where: FindOptionsWhere<Logininfor> = {};
     if (reqLogininforDto.ipaddr) {
       where.ipaddr = Like(`%${reqLogininforDto.ipaddr}%`);
     }

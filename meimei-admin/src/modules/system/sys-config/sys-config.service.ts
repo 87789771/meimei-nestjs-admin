@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
 import { ApiException } from 'src/common/exceptions/api.exception';
-import { Between, FindConditions, Like, Not, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, Like, Not, Repository } from 'typeorm';
 import { ReqAddConfigDto, ReqConfigListDto } from './dto/req-sys-config.dto';
 import { SysConfig } from './entities/sys-config.entity';
 import { SYSCONFIG_KEY } from './sys-config.contant';
@@ -35,7 +35,7 @@ export class SysConfigService {
   async list(
     reqConfigListDto: ReqConfigListDto,
   ): Promise<PaginatedDto<SysConfig>> {
-    const where: FindConditions<SysConfig> = {};
+    const where: FindOptionsWhere<SysConfig> = {};
     if (reqConfigListDto.configName) {
       where.configName = Like(`%${reqConfigListDto.configName}%`);
     }
@@ -63,8 +63,8 @@ export class SysConfigService {
   }
 
   /* 通过id查询 */
-  async findById(configId: number | string) {
-    return await this.sysConfigRepository.findOne(configId);
+  async findById(configId: number) {
+    return await this.sysConfigRepository.findOneBy({ configId });
   }
 
   /* 通过id数组删除 */
@@ -74,7 +74,7 @@ export class SysConfigService {
 
   /* 通过字参数键名查询 */
   async findByConfigKey(configKey: string, configId?: number) {
-    const where: FindConditions<SysConfig> = { configKey };
+    const where: FindOptionsWhere<SysConfig> = { configKey };
     if (configId) {
       where.configId = Not(configId);
     }
@@ -87,7 +87,7 @@ export class SysConfigService {
     if (configValue) {
       return configValue;
     } else {
-      const sysConfig = await this.sysConfigRepository.findOne({ configKey });
+      const sysConfig = await this.sysConfigRepository.findOneBy({ configKey });
       configValue = sysConfig ? sysConfig.configValue : '';
       await this.redis.set(`${SYSCONFIG_KEY}:${configKey}`, configValue);
       return configValue;

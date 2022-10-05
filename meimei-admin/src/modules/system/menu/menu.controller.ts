@@ -97,7 +97,7 @@ export class MenuController {
   /* 删除菜单 */
   @Delete(':menuId')
   @RequiresPermissions('system:menu:remove')
-  async delete(@Param('menuId') menuId: string) {
+  async delete(@Param('menuId') menuId: number) {
     const childs = await this.menuService.findChildsByParentId(menuId);
     if (childs && childs.length)
       throw new ApiException('该菜单下还存在其他菜单，无法删除');

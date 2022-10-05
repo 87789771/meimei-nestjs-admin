@@ -6,7 +6,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
-import { Between, FindConditions, In, Like, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, In, Like, Repository } from 'typeorm';
 import { DeptService } from '../dept/dept.service';
 import { MenuService } from '../menu/menu.service';
 import { ReqUserListDto } from '../user/dto/req-user.dto';
@@ -40,7 +40,7 @@ export class RoleService {
 
   /* 分页查询 */
   async list(reqRoleListDto: ReqRoleListDto): Promise<PaginatedDto<Role>> {
-    const where: FindConditions<Role> = {
+    const where: FindOptionsWhere<Role> = {
       delFlag: '0',
     };
     if (reqRoleListDto.roleName) {
@@ -84,8 +84,8 @@ export class RoleService {
   }
 
   /* 通过id查询 */
-  async findById(roleId: number | string) {
-    return this.roleRepository.findOne(roleId);
+  async findById(roleId: number) {
+    return this.roleRepository.findOneBy({ roleId });
   }
 
   /* 通过id数组删除 */

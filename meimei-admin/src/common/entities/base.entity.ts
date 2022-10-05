@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:06:20
- * @LastEditTime: 2022-09-18 11:07:42
+ * @LastEditTime: 2022-10-05 10:37:40
  * @LastEditors: Please set LastEditors
  * @Description: 数据库基类
  * @FilePath: /meimei-admin/src/common/entities/base.entity.ts
@@ -23,12 +23,12 @@ export class BaseEntity {
     dateFormat: 'YYYY-MM-DD HH:mm:ss',
     sort: 99,
   })
-  createTime: Date;
+  createTime: Date | string;
 
   /* 更新时间 */
   @UpdateDateColumn({ name: 'update_time', comment: '更新时间' })
   @ApiHideProperty()
-  updateTime: Date;
+  updateTime: Date | string;
 
   /* 创建人 */
   @Column({ name: 'create_by', comment: '创建人', length: '50', default: '' })
