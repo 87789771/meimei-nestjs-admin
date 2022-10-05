@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:30:53
- * @LastEditTime: 2022-09-13 23:41:20
+ * @LastEditTime: 2022-10-05 20:57:40
  * @LastEditors: Please set LastEditors
  * @Description: 登录 service
  * @FilePath: /meimei-admin/src/modules/login/login.service.ts
@@ -34,6 +34,7 @@ import { LogService } from '../monitor/log/log.service';
 import { ConfigService } from '@nestjs/config';
 import { Captcha } from 'captcha.gif';
 import { Payload } from './login.interface';
+import * as svgCaptcha from 'svg-captcha';
 
 @Injectable()
 export class LoginService {
@@ -49,19 +50,22 @@ export class LoginService {
 
   /* 创建验证码图片 */
   async createImageCaptcha() {
-    const captcha = new Captcha({
-      numberOfDots: 0,
-      blur: false,
-      filter: false,
+    const { data, text } = svgCaptcha.createMathExpr({
+      // size: 4, //验证码长度
+      // ignoreChars: '0o1i', // 验证码字符中排除 0o1i
+      noise: 3, // 干扰线条的数量
+      color: true, // 验证码的字符是否有颜色，默认没有，如果设定了背景，则默认有
+      // background: '#cc9966', // 验证码图片背景颜色
+      width: 115.5,
+      height: 38,
     });
-    const { token, buffer } = captcha.generate();
     const result = {
-      img: buffer.toString('base64'),
+      img: data.toString(),
       uuid: this.sharedService.generateUUID(),
     };
     await this.redis.set(
       `${CAPTCHA_IMG_KEY}:${result.uuid}`,
-      token,
+      text,
       'EX',
       60 * 5,
     );

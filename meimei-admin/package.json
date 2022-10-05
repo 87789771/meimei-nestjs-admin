@@ -64,6 +64,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.7",
+    "svg-captcha": "^1.4.0",
     "systeminformation": "^5.12.6",
     "typeorm": "^0.3.10",
     "ua-parser-js": "^1.0.2",

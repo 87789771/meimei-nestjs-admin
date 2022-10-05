@@ -33,9 +33,7 @@
         >
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
-        <div class="login-code">
-          <img :src="codeUrl" @click="getCode" class="login-code-img"/>
-        </div>
+        <div class="login-code" v-html="codeUrl" @click="getCode"></div>
       </el-form-item>
       <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
@@ -108,7 +106,7 @@ export default {
       getCodeImg().then(res => {
         this.captchaOnOff = res.captchaOnOff === undefined ? true : res.captchaOnOff;
         if (this.captchaOnOff) {
-          this.codeUrl = "data:image/gif;base64," + res.img;
+          this.codeUrl = res.img;
           this.loginForm.uuid = res.uuid;
         }
       });
@@ -192,7 +190,7 @@ export default {
   width: 33%;
   height: 38px;
   float: right;
-  img {
+  svg {
     cursor: pointer;
     vertical-align: middle;
   }
