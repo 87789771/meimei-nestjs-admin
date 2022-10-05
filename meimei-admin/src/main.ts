@@ -9,7 +9,11 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   /* 设置 HTTP 标头来帮助保护应用免受一些众所周知的 Web 漏洞的影响 */
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: false, //取消https强制转换
+    }),
+  );
 
   /* 启动 vue 的 history模式 */
   app.use(
