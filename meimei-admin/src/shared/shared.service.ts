@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 17:14:57
- * @LastEditTime: 2022-10-05 11:22:39
+ * @LastEditTime: 2022-10-05 23:23:12
  * @LastEditors: Please set LastEditors
  * @Description: 公共方法
  *
@@ -107,12 +107,16 @@ export class SharedService {
   /* 通过ip获取地理位置 */
   async getLocation(ip: string) {
     if (this.IsLAN(ip)) return '内网IP';
-    let { data } = await axios.get(
-      `http://whois.pconline.com.cn/ipJson.jsp?ip=${ip}&json=true`,
-      { responseType: 'arraybuffer' },
-    );
-    data = JSON.parse(iconv.decode(data, 'gbk'));
-    return data.pro + ' ' + data.city;
+    try {
+      let { data } = await axios.get(
+        `http://whois.pconline.com.cn/ipJson.jsp?ip=${ip}&json=true`,
+        { responseType: 'arraybuffer' },
+      );
+      data = JSON.parse(iconv.decode(data, 'gbk'));
+      return data.pro + ' ' + data.city;
+    } catch (error) {
+      return '未知';
+    }
   }
 
   /**
