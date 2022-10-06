@@ -45,7 +45,6 @@
     "@types/ua-parser-js": "^0.7.36",
     "axios": "0.24.0",
     "bull": "^4.10.0",
-    "captcha.gif": "^1.0.9",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "connect-history-api-fallback": "^2.0.0",

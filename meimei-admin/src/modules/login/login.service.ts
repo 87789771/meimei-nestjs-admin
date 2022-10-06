@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:30:53
- * @LastEditTime: 2022-10-05 20:57:40
+ * @LastEditTime: 2022-10-06 10:37:51
  * @LastEditors: Please set LastEditors
  * @Description: 登录 service
  * @FilePath: /meimei-admin/src/modules/login/login.service.ts
@@ -32,7 +32,6 @@ import { ResInfo } from './dto/res-login.dto';
 import { Request } from 'express';
 import { LogService } from '../monitor/log/log.service';
 import { ConfigService } from '@nestjs/config';
-import { Captcha } from 'captcha.gif';
 import { Payload } from './login.interface';
 import * as svgCaptcha from 'svg-captcha';
 

@@ -1837,11 +1837,6 @@ caniuse-lite@^1.0.30001400:
   resolved "https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001415.tgz#fd7ea96e9e94c181a7f56e7571efb43d92b860cc"
   integrity sha512-ER+PfgCJUe8BqunLGWd/1EY4g8AzQcsDAVzdtMGKVtQEmKAwaFfU6vb7EAVIqTMYsqxBorYZi2+22Iouj/y7GQ==
 
-captcha.gif@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.npmmirror.com/captcha.gif/-/captcha.gif-1.0.9.tgz#1355a68b0b7abccc662bbdb6cefcf6559877a9ac"
-  integrity sha512-KFgnVL1V4pyZpHj9gtSvbZDUBDTma+TYSIsIDiP2usBJCfDejdo3L0liGyJCCEidtDw14fSDPsZvoGjNI/2t3w==
-
 cfb@^1.1.4:
   version "1.2.2"
   resolved "https://registry.npmmirror.com/cfb/-/cfb-1.2.2.tgz#94e687628c700e5155436dac05f74e08df23bc44"
