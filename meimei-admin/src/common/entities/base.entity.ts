@@ -1,14 +1,19 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:06:20
- * @LastEditTime: 2022-10-05 10:37:40
+ * @LastEditTime: 2022-10-06 23:58:09
  * @LastEditors: Please set LastEditors
  * @Description: 数据库基类
  * @FilePath: /meimei-admin/src/common/entities/base.entity.ts
  * You can you up，no can no bb！！
  */
 import { IsOptional, IsString } from 'class-validator';
-import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  VersionColumn,
+} from 'typeorm';
 import { ApiHideProperty } from '@nestjs/swagger';
 import { Excel } from 'src/modules/common/excel/excel.decorator';
 import { ExcelTypeEnum } from 'src/modules/common/excel/excel.enum';
@@ -21,7 +26,7 @@ export class BaseEntity {
     name: '创建时间',
     type: ExcelTypeEnum.EXPORT,
     dateFormat: 'YYYY-MM-DD HH:mm:ss',
-    sort: 99,
+    sort: 100,
   })
   createTime: Date | string;
 
@@ -36,7 +41,7 @@ export class BaseEntity {
   @Excel({
     name: '创建人',
     type: ExcelTypeEnum.EXPORT,
-    sort: 98,
+    sort: 101,
   })
   createBy: string;
 
@@ -51,7 +56,12 @@ export class BaseEntity {
   @IsString()
   @Excel({
     name: '备注',
-    sort: 100,
+    sort: 102,
   })
   remark?: string;
+
+  /* 版本号（首次插入或更新时会自增） */
+  @VersionColumn({ name: 'version', comment: '版本号', select: false })
+  @ApiHideProperty()
+  version?: number;
 }
