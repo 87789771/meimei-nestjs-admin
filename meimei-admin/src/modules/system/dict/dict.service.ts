@@ -91,8 +91,6 @@ export class DictService {
       relations: ['dictDatas'],
     });
     const errorList = dictTypeList.filter((item) => item.dictDatas.length);
-    console.log(errorList);
-
     if (errorList.length) {
       const idArr = errorList.map((item) => item.dictId);
       throw new ApiException(
