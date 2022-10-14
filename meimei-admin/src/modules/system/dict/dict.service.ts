@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { PaginatedDto } from 'src/common/dto/paginated.dto';
 import { ApiException } from 'src/common/exceptions/api.exception';
-import { Between, FindOptionsWhere, Like, Not, Repository } from 'typeorm';
+import { Between, FindOptionsWhere, In, Like, Not, Repository } from 'typeorm';
 import { DICTTYPE_KEY } from './dict.contant';
 import {
   ReqAddDictDataDto,
@@ -83,8 +83,24 @@ export class DictService {
   }
 
   /* 通过字典id数组删除 */
-  async deleteByDictIdArr(dictIdArr: string[] | number[]) {
-    await this.dictTypeRepository.delete(dictIdArr);
+  async deleteByDictIdArr(dictIdArr: string[]) {
+    const dictTypeList = await this.dictTypeRepository.find({
+      where: {
+        dictId: In(dictIdArr),
+      },
+      relations: ['dictDatas'],
+    });
+    const errorList = dictTypeList.filter((item) => item.dictDatas.length);
+    console.log(errorList);
+
+    if (errorList.length) {
+      const idArr = errorList.map((item) => item.dictId);
+      throw new ApiException(
+        `字典编号为${idArr.join('、')}的字典存在字典值，请先删除字典值`,
+      );
+    } else {
+      await this.dictTypeRepository.delete(dictIdArr);
+    }
   }
 
   /* 通过id 查找字典类型 */
