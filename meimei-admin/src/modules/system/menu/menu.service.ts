@@ -177,18 +177,7 @@ export class MenuService {
       .select('menu.perms')
       .innerJoin('menu.roles', 'role', 'role.delFlag = 0')
       .where('menu.perms is not null')
-      .andWhere((qb) => {
-        const subQuery = qb
-          .subQuery()
-          .select('menu2.menu_id')
-          .from(Menu, 'menu2')
-          .where('menu2.status=1')
-          .andWhere(
-            "concat('.',menu.mpath) like concat('%.',menu2.menu_id,'.%')",
-          )
-          .getQuery();
-        return 'not exists' + subQuery;
-      })
+      .andWhere("menu.perms != ''")
       .andWhere('role.status = 0 and role.roleId IN (:...roleIdArr)', {
         roleIdArr,
       })
