@@ -142,6 +142,7 @@ export class MenuService {
       .select('menu.menuId', 'id')
       .addSelect('menu.menuName', 'label')
       .addSelect('menu.parentmenuId', 'parentId')
+      .orderBy('menu.orderNum', 'ASC')
       .getRawMany();
     return this.sharedService.handleTree(menuArr);
   }

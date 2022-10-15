@@ -47,11 +47,11 @@ export class DeptController {
     businessType: BusinessTypeEnum.insert,
   })
   async add(
-    @Body() ReqAddDeptDto: ReqAddDeptDto,
+    @Body() reqAddDeptDto: ReqAddDeptDto,
     @User(UserEnum.userName, UserInfoPipe) userName: string,
   ) {
-    ReqAddDeptDto.createBy = ReqAddDeptDto.updateBy = userName;
-    await this.deptService.addOrUpdate(ReqAddDeptDto);
+    reqAddDeptDto.createBy = reqAddDeptDto.updateBy = userName;
+    await this.deptService.addOrUpdate(reqAddDeptDto);
   }
 
   /* 部门列表 */
