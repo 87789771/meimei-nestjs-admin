@@ -18,6 +18,7 @@ import {
   ApiDataResponse,
   typeEnum,
 } from 'src/common/decorators/api-data-response.decorator';
+import { DataScopeSql } from 'src/common/decorators/data-scope-sql.decorator';
 import { BusinessTypeEnum, Log } from 'src/common/decorators/log.decorator';
 import { RepeatSubmit } from 'src/common/decorators/repeat-submit.decorator';
 import { RequiresPermissions } from 'src/common/decorators/requires-permissions.decorator';
@@ -66,8 +67,8 @@ export class DeptController {
   /* 获取部门树结构 */
   @Get('treeselect')
   @ApiDataResponse(typeEnum.objectArr, TreeDataDto)
-  async treeselect() {
-    const deptTree = await this.deptService.treeselect();
+  async treeselect(@DataScopeSql() dataScopeSql: string) {
+    const deptTree = await this.deptService.treeselectByOrg(dataScopeSql);
     return DataObj.create(deptTree);
   }
 

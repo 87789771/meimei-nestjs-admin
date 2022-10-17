@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SharedService } from 'src/shared/shared.service';
 import { FindOptionsWhere, In, Like, Repository } from 'typeorm';
 import { RoleService } from '../role/role.service';
+import { User } from '../user/entities/user.entity';
 import { ReqAddDeptDto, ReqDeptListDto } from './dto/req-dept.dto';
 import { Dept } from './entities/dept.entity';
 
@@ -110,6 +111,22 @@ export class DeptService {
         deptId,
       })
       .execute();
+  }
+
+  /* 查询 部门 树结构 根据数据权限 */
+  async treeselectByOrg(dataScopeSql: string) {
+    const queryBuilde = this.deptRepository
+      .createQueryBuilder('dept')
+      .select('dept.deptId', 'id')
+      .addSelect('dept.deptName', 'label')
+      .addSelect('dept.parentDeptId', 'parentId')
+      .innerJoin(User, 'user', 'dept.createBy = user.userName')
+      .where('dept.delFlag = 0');
+    if (dataScopeSql) {
+      queryBuilde.andWhere(dataScopeSql);
+    }
+    const deptArr = await queryBuilde.getRawMany();
+    return this.sharedService.handleTree(deptArr);
   }
 
   /* 查询 部门 树结构 */

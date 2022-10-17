@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2022-01-05 19:43:12
- * @LastEditTime: 2022-09-18 11:07:00
+ * @LastEditTime: 2022-10-17 15:37:29
  * @LastEditors: Please set LastEditors
  * @Description: 数据权限拦截器
- * @FilePath: /meimei-admin/src/common/interceptors/data-scope.interceptor.ts
+ * @FilePath: \meimei-admin\src\common\interceptors\data-scope.interceptor.ts
  * You can you up，no can no bb！！
  */
 
@@ -52,11 +52,13 @@ export class DataScopeInterceptor implements NestInterceptor {
     if (!roleArr.map((role) => role.roleKey).includes('admin')) {
       const userDeptId = await this.redis.get(`${USER_DEPTID_KEY}:${userId}`);
       const deptId = userDeptId ? userDeptId : null;
-      roleArr.forEach((role) => {
+      for (let index = 0; index < roleArr.length; index++) {
+        const role = roleArr[index];
         const dataScope = role.dataScope;
         if (dataScope == '1') {
           //全部数据权限
           sqlString = '';
+          return;
         } else if (dataScope == '2') {
           //自定义数据权限
           sqlString += ` OR ${aliaObj.deptAlias}.dept_id IN ( SELECT deptDeptId FROM role_depts_dept WHERE roleRoleId = ${role.roleId} )`;
@@ -70,7 +72,7 @@ export class DataScopeInterceptor implements NestInterceptor {
           //仅本人数据权限
           sqlString += ` OR ${aliaObj.userAlias}.user_id = ${userId}`;
         }
-      });
+      }
     }
     if (sqlString) {
       request.dataScope = '(' + sqlString.substring(4) + ')';
