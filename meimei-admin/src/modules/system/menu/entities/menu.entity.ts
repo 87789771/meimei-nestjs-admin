@@ -91,8 +91,8 @@ export class Menu extends BaseEntity {
   @Column({
     name: 'is_cache',
     comment: '是否缓存（0缓存 1不缓存）',
-    type: 'int',
-    default: 0,
+    type: 'char',
+    default: '0',
   })
   @IsOptional()
   @Type()
