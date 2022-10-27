@@ -1,7 +1,7 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-08 18:06:20
- * @LastEditTime: 2022-10-06 23:58:09
+ * @LastEditTime: 2022-10-27 22:53:37
  * @LastEditors: Please set LastEditors
  * @Description: 数据库基类
  * @FilePath: /meimei-admin/src/common/entities/base.entity.ts
@@ -36,7 +36,7 @@ export class BaseEntity {
   updateTime: Date | string;
 
   /* 创建人 */
-  @Column({ name: 'create_by', comment: '创建人', length: '50', default: '' })
+  @Column({ name: 'create_by', comment: '创建人', length: 30, default: '' })
   @ApiHideProperty()
   @Excel({
     name: '创建人',
@@ -46,7 +46,7 @@ export class BaseEntity {
   createBy: string;
 
   /* 更新人 */
-  @Column({ name: 'update_by', comment: '更新人', length: '50', default: '' })
+  @Column({ name: 'update_by', comment: '更新人', length: 30, default: '' })
   @ApiHideProperty()
   updateBy: string;
 
