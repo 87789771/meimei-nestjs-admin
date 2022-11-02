@@ -373,6 +373,8 @@ export default {
         icon: undefined,
         menuType: "M",
         orderNum: undefined,
+        path:undefined,
+        component:undefined,
         isFrame: "1",
         isCache: "0",
         visible: "0",
