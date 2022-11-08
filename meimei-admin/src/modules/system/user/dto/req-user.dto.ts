@@ -7,11 +7,12 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ParamsDto } from 'src/common/dto/params.dto';
 import { User } from '../entities/user.entity';
 
 /* 分页查询用户 */
-export class ReqUserListDto {
+export class ReqUserListDto extends PaginationDto {
   @IsOptional()
   @IsString()
   userName?: string;

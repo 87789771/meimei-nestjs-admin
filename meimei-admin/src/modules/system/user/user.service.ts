@@ -1,10 +1,10 @@
 /*
  * @Author: Sheng.Jiang
  * @Date: 2021-12-09 14:49:35
- * @LastEditTime: 2022-10-05 10:42:20
+ * @LastEditTime: 2022-11-08 11:25:38
  * @LastEditors: Please set LastEditors
  * @Description: 用户管理 service
- * @FilePath: /meimei-admin/src/modules/system/user/user.service.ts
+ * @FilePath: \meimei-admin\src\modules\system\user\user.service.ts
  * You can you up，no can no bb！！
  */
 
@@ -133,6 +133,8 @@ export class UserService {
     const result = await queryBuilde
       .andWhere(where)
       .orderBy('user.createTime', 'ASC')
+      .skip(reqUserListDto.skip)
+      .take(reqUserListDto.take)
       .getManyAndCount();
     return {
       rows: result[0],
