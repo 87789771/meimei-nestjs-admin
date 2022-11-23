@@ -277,6 +277,9 @@ export class UserController {
 
   /* 导出用户 */
   @RepeatSubmit()
+  @DataScope({
+    userAlias: 'user2',
+  })
   @Post('export')
   @RequiresPermissions('system:user:export')
   @Keep()
@@ -285,8 +288,16 @@ export class UserController {
     businessType: BusinessTypeEnum.export,
     isSaveResponseData: false,
   })
-  async export(@Body(PaginationPipe) reqUserListDto: ReqUserListDto) {
-    const { rows } = await this.userService.list(reqUserListDto);
+  async export(
+    @Body(PaginationPipe) reqUserListDto: ReqUserListDto,
+    @DataScopeSql() dataScopeSql: string,
+  ) {
+    const { rows } = await this.userService.list(
+      reqUserListDto,
+      null,
+      null,
+      dataScopeSql,
+    );
     const file = await this.excelService.export(User, rows);
     return new StreamableFile(file);
   }
