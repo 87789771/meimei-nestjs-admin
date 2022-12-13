@@ -109,7 +109,7 @@ export default {
       })
         .then(() => {
           this.$store.dispatch("LogOut").then(() => {
-            location.href = "/";
+            window.location.reload();
           });
         })
         .catch(() => {});
