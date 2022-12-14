@@ -86,7 +86,7 @@ service.interceptors.response.use(res => {
       ).then(() => {
         isRelogin.show = false;
         store.dispatch('LogOut').then(() => {
-          window.location.reload()
+          location.href = '/index';
         })
       }).catch(() => {
         isRelogin.show = false;
