@@ -123,6 +123,7 @@ export class DictService {
           { dictType },
         )
         .where('dictData.status = 0')
+        .orderBy('dictData.dictSort')
         .getMany();
       await this.redis.set(
         `${DICTTYPE_KEY}:${dictType}`,
