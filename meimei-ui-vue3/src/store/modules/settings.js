@@ -1,3 +1,12 @@
+/*
+ * @Author: sheng.jiang 87789771@qq.com
+ * @Date: 2023-10-10 10:01:20
+ * @LastEditors: sheng.jiang 87789771@qq.com
+ * @LastEditTime: 2023-10-10 10:18:31
+ * @FilePath: /meimei-ui-vue3/src/store/modules/settings.js
+ * @Description: 
+ * 
+ */
 import defaultSettings from '@/settings'
 import { useDynamicTitle } from '@/utils/dynamicTitle'
 
@@ -23,7 +32,7 @@ const useSettingsStore = defineStore(
       // 修改布局设置
       changeSetting(data) {
         const { key, value } = data
-        if (this.hasOwnProperty(key)) {
+        if (Reflect.has(this, key)) {
           this[key] = value
         }
       },
