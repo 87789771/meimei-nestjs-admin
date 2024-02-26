@@ -3,7 +3,7 @@
 
 
 ## 在线体验
-  - [演示地址](http://www.zt-hf.com/meimei/#/index)
+  - [演示地址](http://203.25.211.232:888/meimei/#/login)
   - [文档地址](https://87789771.github.io/#/)
   - [码源地址](https://github.com/87789771/meimei-nestjs-admin)
 
