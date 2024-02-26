@@ -1,3 +1,12 @@
+/*
+ * @Author: sheng.jiang 87789771@qq.com
+ * @Date: 2023-10-10 10:01:20
+ * @LastEditors: sheng.jiang 87789771@qq.com
+ * @LastEditTime: 2024-02-26 10:54:05
+ * @FilePath: /meimei-nestjs-admin/meimei-admin/src/main.ts
+ * @Description: 
+ * 
+ */
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
@@ -16,18 +25,18 @@ async function bootstrap() {
   );
 
   /* 启动 vue 的 history模式 */
-  app.use(
-    history({
-      rewrites: [
-        {
-          from: /^\/swagger-ui\/.*$/,
-          to: function (context) {
-            return context.parsedUrl.pathname;
-          },
-        },
-      ],
-    }),
-  );
+  // app.use(
+  //   history({
+  //     rewrites: [
+  //       {
+  //         from: /^\/swagger-ui\/.*$/,
+  //         to: function (context) {
+  //           return context.parsedUrl.pathname;
+  //         },
+  //       },
+  //     ],
+  //   }),
+  // );
 
   /* 配置静态资源目录 */
   app.useStaticAssets(join(__dirname, '../public'));
