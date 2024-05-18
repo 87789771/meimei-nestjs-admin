@@ -2,8 +2,8 @@
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2024-04-20 17:42:55
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-04-22 22:12:54
- * @FilePath: /meimei-new/src/main.ts
+ * @LastEditTime: 2024-05-19 01:36:57
+ * @FilePath: /meimei-admin/src/main.ts
  * @Description: 主入口
  *
  */
@@ -17,6 +17,9 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
+
+  /* 设置后，如果服务经过代理 req.ips 将是一个[]。可以获得真实ip  */
+  app.set('trust proxy', true);
 
   /* 读取环境变量里是否允许跨域 */
   const cors = configService.get('cors');
@@ -32,13 +35,13 @@ async function bootstrap() {
   );
 
   /* 设置静态资源目录 */
-  app.useStaticAssets(join(__dirname, '../static'))
+  app.useStaticAssets(join(__dirname, '../static'));
 
   /* 读取配置文件是否有配置的上传文件目录，也设置为静态资源目录,方便前端加载 */
-  const uploadPath = configService.get('uploadPath'); 
-  if(uploadPath) {
-    app.useStaticAssets(uploadPath)
-  }   
+  const uploadPath = configService.get('uploadPath');
+  if (uploadPath) {
+    app.useStaticAssets(uploadPath);
+  }
 
   /* 读取环境变量里的项目启动端口 */
   const port = configService.get('port');
