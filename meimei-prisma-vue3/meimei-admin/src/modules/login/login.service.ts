@@ -36,7 +36,7 @@ export class LoginService {
 
   /* 创建验证码图片 */
   async createImageCaptcha() {
-    const { token, buffer } = captcha.generate(1);
+    const { token, buffer } = captcha.generate(4);
     const result = {
       img: buffer.toString('base64'),
       uuid: this.sharedService.generateUUID(),
