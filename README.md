@@ -1,5 +1,10 @@
+## 版本问题
+当前项目包含1.0文件（我刚开始学习 nestjs 时无聊写的项目），后端使用的是TypeOrm，前端用的的vue2.0，同时也使用了swagger，功能和这个基本一样 (都具备数据权限，但是因为数据库工具的不同，实现方式不同) 。 本文介绍的内容都是针这两天刚写的版本（后端使用 Prisma,前端使用 vue3+vite ）。如果有需要查看和学习TypeOrm版本的，可以直接切换Tags到1.0。 后续如果我有时间，我也只会维护 Prisma + vue3 的这个版本。因为这个写起来更简单湿滑，一看就懂。同时在这个版本中，我去掉了swagger的支持， 我觉得用它太麻烦了，丢失了js的灵活性。我习惯的开发流程是:   apiFox定义字段和接口 ----> prisma定义模型 ----> 推送数据库  ----> 业务程序实现。   apiFox真是一个特别好用的东西，当然 nestjs 也给了我们前端无限可能，prisma 更是把数据库交互变成了一看就会的东西。希望这两个简单的后台系统项目可以给你们在学习nestjs以及后端思维上有点帮助。。。。   最后：如果觉得还可以，麻烦点个star。你的鼓励是我能抽出时间维护它最后的动力了。
+
+
+
 ## 项目简介
-槑槑是一款后台管理系统，它前端基于 [vue](https://cn.vuejs.org/) 和 [element-ui](https://element.eleme.cn/#/zh-CN) ，后端基于 node 的后端框架 [nestjs](https://docs.nestjs.cn/8/) ，数据库采用 mysql ，缓存采用 redis。
+槑槑是一款后台管理系统，它前端基于 [vue3](https://v3.cn.vuejs.org/) 和 [element-ui](https://element-plus.org/zh-CN/) ，后端基于 node 的后端框架 [nestjs](https://docs.nestjs.com/) ，数据库采用 mysql ，缓存采用 redis。
 
 
 ## 在线体验
@@ -9,29 +14,27 @@
 
 
 ## 技术要求
-  - [Vue](https://cn.vuejs.org/)
-  - [Element-ui](https://element.eleme.cn/#/zh-CN)
+  - [Vue3](https://v3.cn.vuejs.org/)
+  - [Element-ui](https://element-plus.org/zh-CN/)
   - [TypeScript](https://www.tslang.cn/index.html)
-  - [Nestjs](https://docs.nestjs.cn/8/)
-  - [TypeORM](https://typeorm.biunav.com/)
+  - [Nestjs](https://docs.nestjs.com/)
+  - [Prisma](https://www.prisma.io/)
   - Mysql
   - Redis
   
 ## 技术选型
   1. **前端技术**
-   - vue @2.6.12
-   - element-ui @2.15.6
-   - axios @0.24.0
-   - vuex @3.6.0
-   - vue-router @3.4.9
-   - sass-loader @10.1.1
+   - vue @3.4.21
+   - element-plus @2.6.1
+   - axios @0.27.2
+   - pinia @2.0.22
+   - vue-router @4.2.5
+   - sass @1.56.1
   
   2. **后端技术**
-   - nest @8.0
-   - mysql2 @2.3.3
-   - swagger-ui-express @4.2.0
-   - typeorm @0.2.41
-   - ioredis @4.28.2
+   - nest @10.3.2
+   - prisma @5.12.1
+   - ioredis @5.4.1
     
 ## 内置功能
 - 用户管理：用户是系统操作者，该功能主要完成系统用户配置。
@@ -48,6 +51,8 @@
 - 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
 - 系统接口：根据业务代码自动生成相关的api接口文档。
 - 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
+- 缓存监控：对系统的缓存信息查询，命令统计等。
+- 缓存列表：查看redis的缓存情况
 - 在线构建器：拖动表单元素生成相应的Vue代码。
 
 
@@ -55,7 +60,8 @@
 
 ```
     meimei
-    ├── public #静态文件
+    ├── prisma                          #数据库模型和迁移模块
+    ├── static                          #静态文件
     │   └── upload                      #上传文件夹
     ├── src
     │   ├── common                      
@@ -71,22 +77,22 @@
     │   │   ├── interceptors            #装饰器
     │   │   ├── interface               #公共接口
     │   │   └── pipes                   #公共管道
+    │   │   └── type                    #公共类型
     │   ├── config
-    │   │   ├── config.development.ts   #开发环境配置文件
-    │   │   ├── config.production.ts    #正式环境配置文件
-    │   │   ├── configuration.ts      
-    │   │   └── defineConfig.ts
+    │   │   ├── config.dev              #开发环境配置文件
+    │   │   ├── config.pro              #正式环境配置文件
+    │   │   ├── index      
     │   ├── modules                     #业务模块文件夹
     │   │   ├── common                  #导入导出和上传模块
     │   │   ├── login                   #登录模块
     │   │   ├── monitor                 #系统监控
     │   │   └── system                  #系统管理
-    │   ├── shared                      #公共模块
-    │   │   ├── shared.module.ts
+    │   ├── shared                      
+    │   │   ├── prisma                  #数据库连接定义
+    │   │   ├── shared.module.ts        #公共模块
     │   │   └── shared.service.ts       #公共方法
     │   ├── app.module.ts
     │   ├── main.ts
-    │   └── setup-swagger.ts
     ├── test
     │   ├── app.e2e-spec.ts
     │   └── jest-e2e.json

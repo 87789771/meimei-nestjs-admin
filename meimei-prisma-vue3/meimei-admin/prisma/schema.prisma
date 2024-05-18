@@ -1,0 +1,305 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model SysWeb {
+  webId        Int       @id @default(autoincrement())
+  theme        String?   @default("#409EFF") @db.VarChar(50)
+  sideTheme    String?   @default("") @db.VarChar(50)
+  topNav       Boolean?
+  tagsView     Boolean?
+  fixedHeader  Boolean?
+  sidebarLogo  Boolean?
+  dynamicTitle Boolean?
+  createBy     String    @unique @db.VarChar(64)
+  createTime   DateTime? @db.DateTime()
+  updateBy     String?   @default("") @db.VarChar(64)
+  updateTime   DateTime? @db.DateTime()
+
+  @@map("sys_web")
+}
+
+model SysTable {
+  tableId         String    @db.VarChar(100)
+  createBy        String    @db.VarChar(64)
+  createTime      DateTime? @db.DateTime()
+  updateBy        String?   @default("") @db.VarChar(64)
+  updateTime      DateTime? @db.DateTime()
+  tableJsonConfig String?   @db.Text
+
+  @@id([tableId, createBy])
+  @@map("sys_table")
+}
+
+model SysConfig {
+  configId    Int       @id @default(autoincrement())
+  configName  String?   @default("") @db.VarChar(100)
+  configKey   String?   @unique @db.VarChar(100)
+  configValue String?   @default("") @db.VarChar(500)
+  configType  String?   @default("N") @db.Char(1)
+  createBy    String?   @default("") @db.VarChar(64)
+  createTime  DateTime? @db.DateTime()
+  updateBy    String?   @default("") @db.VarChar(64)
+  updateTime  DateTime? @db.DateTime()
+  remark      String?   @db.VarChar(500)
+
+  @@map("sys_config")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysDept {
+  deptId     Int       @id @default(autoincrement())
+  parentId   Int?
+  parentDept SysDept?  @relation("deptParentDept", fields: [parentId], references: [deptId])
+  childDept  SysDept[] @relation("deptParentDept")
+  ancestors  String    @default("") @db.VarChar(50)
+  deptName   String?   @default("") @db.VarChar(30)
+  orderNum   Int?      @default(0)
+  leader     String?   @db.VarChar(20)
+  phone      String?   @db.VarChar(11)
+  email      String?   @db.VarChar(50)
+  status     String?   @default("0") @db.Char(1)
+  delFlag    String?   @default("0") @db.Char(1)
+  createBy   String?   @default("") @db.VarChar(64)
+  createTime DateTime? @db.DateTime()
+  updateBy   String?   @default("") @db.VarChar(64)
+  updateTime DateTime? @db.DateTime()
+  users      SysUser[]
+  roles      SysRole[] @relation("sys_dept_to_sys_role")
+
+  @@map("sys_dept")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysDictData {
+  dictCode    Int          @id @default(autoincrement())
+  dictSort    Int?         @default(0)
+  dictLabel   String?      @default("") @db.VarChar(100)
+  dictValue   String?      @default("") @db.VarChar(100)
+  dictType    String?      @default("") @db.VarChar(100)
+  cssClass    String?      @db.VarChar(100)
+  listClass   String?      @db.VarChar(100)
+  isDefault   String?      @default("N") @db.Char(1)
+  status      String?      @default("0") @db.Char(1)
+  createBy    String?      @default("") @db.VarChar(64)
+  createTime  DateTime?    @db.DateTime()
+  updateBy    String?      @default("") @db.VarChar(64)
+  updateTime  DateTime?    @db.DateTime()
+  remark      String?      @db.VarChar(500)
+  dictTypeObj SysDictType? @relation(fields: [dictType], references: [dictType])
+
+  @@index([dictType], map: "sys_dict_data_dictType_fkey")
+  @@map("sys_dict_data")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysDictType {
+  dictId     Int           @id @default(autoincrement())
+  dictName   String?       @default("") @db.VarChar(100)
+  dictType   String?       @unique(map: "dictType") @default("") @db.VarChar(100)
+  status     String?       @default("0") @db.Char(1)
+  createBy   String?       @default("") @db.VarChar(64)
+  createTime DateTime?     @db.DateTime()
+  updateBy   String?       @default("") @db.VarChar(64)
+  updateTime DateTime?     @db.DateTime()
+  remark     String?       @db.VarChar(500)
+  dictData   SysDictData[]
+
+  @@map("sys_dict_type")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysJob {
+  jobId          Int       @id @default(autoincrement())
+  jobName        String    @default("") @db.VarChar(64)
+  jobGroup       String    @default("DEFAULT") @db.VarChar(64)
+  invokeTarget   String    @db.VarChar(500)
+  cronExpression String?   @default("") @db.VarChar(255)
+  misfirePolicy  String?   @default("3") @db.VarChar(20)
+  concurrent     String?   @default("1") @db.Char(1)
+  status         String?   @default("0") @db.Char(1)
+  createBy       String?   @default("") @db.VarChar(64)
+  createTime     DateTime? @db.DateTime()
+  updateBy       String?   @default("") @db.VarChar(64)
+  updateTime     DateTime? @db.DateTime()
+  remark         String?   @default("") @db.VarChar(500)
+
+  @@map("sys_job")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysJobLog {
+  jobLogId      Int       @id @default(autoincrement())
+  jobName       String    @db.VarChar(64)
+  jobGroup      String    @db.VarChar(64)
+  invokeTarget  String    @db.VarChar(500)
+  jobMessage    String?   @db.VarChar(500)
+  status        String?   @default("0") @db.Char(1)
+  exceptionInfo String?   @default("") @db.VarChar(2000)
+  createTime    DateTime? @db.DateTime()
+
+  @@map("sys_job_log")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysLoginInfor {
+  infoId        Int       @id @default(autoincrement())
+  userName      String?   @default("") @db.VarChar(50)
+  ipaddr        String?   @default("") @db.VarChar(128)
+  loginLocation String?   @default("") @db.VarChar(255)
+  browser       String?   @default("") @db.VarChar(50)
+  os            String?   @default("") @db.VarChar(50)
+  status        String?   @default("0") @db.Char(1)
+  msg           String?   @default("") @db.VarChar(255)
+  loginTime     DateTime? @db.DateTime()
+
+  @@index([loginTime], map: "idxSysLogininforLt")
+  @@index([status], map: "idxSysLogininforS")
+  @@map("sys_login_infor")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysMenu {
+  menuId     Int       @id @default(autoincrement())
+  menuName   String    @db.VarChar(50)
+  parentId   Int?
+  parentMenu SysMenu?  @relation("menuParentMenu", fields: [parentId], references: [menuId])
+  childMenu  SysMenu[] @relation("menuParentMenu")
+  orderNum   Int?      @default(0)
+  path       String?   @default("") @db.VarChar(200)
+  component  String?   @db.VarChar(255)
+  query      String?   @db.VarChar(255)
+  isFrame    String?   @default("1") @db.Char(1)
+  isCache    String?   @default("0") @db.Char(1)
+  menuType   String?   @default("") @db.Char(1)
+  visible    String?   @default("0") @db.Char(1)
+  status     String?   @default("0") @db.Char(1)
+  perms      String?   @db.VarChar(100)
+  icon       String?   @default("#") @db.VarChar(100)
+  createBy   String?   @default("") @db.VarChar(64)
+  createTime DateTime? @db.DateTime()
+  updateBy   String?   @default("") @db.VarChar(64)
+  updateTime DateTime? @db.DateTime()
+  remark     String?   @default("") @db.VarChar(500)
+  roles      SysRole[] @relation("sys_menu_to_sys_role")
+
+  @@map("sys_menu")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysNotice {
+  noticeId      Int       @id @default(autoincrement())
+  noticeTitle   String    @db.VarChar(50)
+  noticeType    String    @db.Char(1)
+  noticeContent Bytes?    @db.LongBlob
+  status        String?   @default("0") @db.Char(1)
+  createBy      String?   @default("") @db.VarChar(64)
+  createTime    DateTime? @db.DateTime()
+  updateBy      String?   @default("") @db.VarChar(64)
+  updateTime    DateTime? @db.DateTime()
+  remark        String?   @db.VarChar(255)
+
+  @@map("sys_notice")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysOperLog {
+  operId        Int       @id @default(autoincrement())
+  title         String?   @default("") @db.VarChar(50)
+  businessType  String?   @default("0") @db.Char(2)
+  method        String?   @default("") @db.VarChar(100)
+  requestMethod String?   @default("") @db.VarChar(10)
+  operatorType  Int?      @default(0)
+  operName      String?   @default("") @db.VarChar(50)
+  deptName      String?   @default("") @db.VarChar(50)
+  operUrl       String?   @default("") @db.VarChar(255)
+  operIp        String?   @default("") @db.VarChar(128)
+  operLocation  String?   @default("") @db.VarChar(255)
+  operParam     String?   @db.Text
+  jsonResult    String?   @db.Text
+  status        String?   @default("0") @db.Char(1)
+  errorMsg      String?   @db.Text
+  operTime      DateTime? @db.DateTime()
+  costTime      Int?      @default(0)
+
+  @@index([businessType], map: "idxSysOperLogBt")
+  @@index([operTime], map: "idxSysOperLogOt")
+  @@index([status], map: "idxSysOperLogS")
+  @@map("sys_oper_log")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysPost {
+  postId     Int       @id @default(autoincrement())
+  postCode   String    @unique @db.VarChar(64)
+  postName   String    @db.VarChar(50)
+  postSort   Int
+  status     String    @db.Char(1)
+  createBy   String?   @default("") @db.VarChar(64)
+  createTime DateTime? @db.DateTime()
+  updateBy   String?   @default("") @db.VarChar(64)
+  updateTime DateTime? @db.DateTime()
+  remark     String?   @db.VarChar(500)
+  users      SysUser[] @relation("sys_post_to_sys_user")
+
+  @@map("sys_post")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model SysRole {
+  roleId            Int       @id @default(autoincrement())
+  createBy          String?   @default("") @db.VarChar(64)
+  createTime        DateTime? @db.DateTime()
+  dataScope         String?   @default("4") @db.Char(4)
+  delFlag           String?   @default("0") @db.Char(1)
+  deptCheckStrictly Boolean?  @default(true)
+  menuCheckStrictly Boolean?  @default(true)
+  remark            String?   @db.VarChar(500)
+  roleKey           String    @db.VarChar(100)
+  roleName          String    @db.VarChar(30)
+  roleSort          Int
+  status            String    @db.Char(1)
+  updateBy          String?   @default("") @db.VarChar(64)
+  updateTime        DateTime? @db.DateTime()
+  depts             SysDept[] @relation("sys_dept_to_sys_role")
+  menus             SysMenu[] @relation("sys_menu_to_sys_role")
+  users             SysUser[] @relation("sys_role_to_sys_user")
+
+  @@map("sys_role")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// 用户表
+model SysUser {
+  userId      Int       @id @default(autoincrement())
+  avatar      String?   @default("") @db.VarChar(100)
+  createBy    String?   @default("") @db.VarChar(64)
+  createTime  DateTime? @db.DateTime()
+  delFlag     String?   @default("0") @db.Char(1)
+  deptId      Int?
+  email       String?   @default("") @db.VarChar(50)
+  loginDate   DateTime? @db.DateTime()
+  loginIp     String?   @default("") @db.VarChar(128)
+  nickName    String    @db.VarChar(30)
+  password    String?   @default("") @db.VarChar(100)
+  phonenumber String?   @default("") @db.VarChar(11)
+  remark      String?   @db.VarChar(500)
+  sex         String?   @default("0") @db.Char(1)
+  status      String?   @default("0") @db.Char(1)
+  updateBy    String?   @default("") @db.VarChar(64)
+  updateTime  DateTime? @db.DateTime()
+  userName    String    @unique @db.VarChar(30)
+  userType    String?   @default("00") @db.VarChar(2)
+  dept        SysDept?  @relation(fields: [deptId], references: [deptId])
+  posts       SysPost[] @relation("sys_post_to_sys_user")
+  roles       SysRole[] @relation("sys_role_to_sys_user")
+
+  @@index([deptId], map: "sys_user_deptId_fkey")
+  @@map("sys_user")
+}
