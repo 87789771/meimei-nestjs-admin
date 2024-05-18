@@ -2,10 +2,10 @@
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2024-04-22 19:22:42
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-04-22 22:08:49
- * @FilePath: /meimei-new/src/config/config.pro.ts
+ * @LastEditTime: 2024-05-19 00:50:43
+ * @FilePath: /meimei-admin/src/config/config.pro.ts
  * @Description: 开发环境配置文件
- * 
+ *
  */
 export default {
   /**
@@ -24,12 +24,20 @@ export default {
   jwtSecret: '123456',
 
   /**
+   * token过期时间
+   * 单位：秒
+   * 默认7天
+   */
+  expiresIn: 60 * 60 * 24 * 7,
+
+  /**
    * reids 配置
    */
   redis: {
     host: 'localhost',
     port: '6379',
     password: '123456',
+    db: 0,
   },
 
   /**
