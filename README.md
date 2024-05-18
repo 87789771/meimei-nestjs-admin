@@ -98,7 +98,7 @@
     │   └── jest-e2e.json
     ├── .eslintrc.js
     ├── .prettierrc
-    ├── mei-mei.sql                     #初始化sql语句
+    ├── meimei-prisma.sql                     #初始化sql语句
     ├── nest-cli.json
     ├── package.json
     ├── tsconfig.build.json
