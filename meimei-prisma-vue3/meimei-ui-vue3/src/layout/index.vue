@@ -35,6 +35,7 @@ import defaultSettings from '@/settings'
 import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'
 import useUserStore from '@/store/modules/user'
+import { computed, watch } from 'vue'
 
 const settingsStore = useSettingsStore()
 const userStore = useUserStore()
@@ -61,9 +62,9 @@ const content = ref([
   userStore.dept ? userStore.dept.deptName : '',
   userStore.nickName + ' ' + userStore.phonenumber.slice(-4)
 ])
-
+const opened = computed(() => sidebar.value.opened)
 watchEffect(() => {
-  if (device.value === 'mobile' && sidebar.value.opened) {
+  if (device.value === 'mobile' && opened) {
     useAppStore().closeSideBar({ withoutAnimation: false })
   }
   if (width.value - 1 < WIDTH) {
