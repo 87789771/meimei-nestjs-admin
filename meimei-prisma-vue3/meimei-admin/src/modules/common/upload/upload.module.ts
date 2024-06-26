@@ -1,3 +1,12 @@
+/*
+ * @Author: JiangSheng 87789771@qq.com
+ * @Date: 2024-05-20 13:39:36
+ * @LastEditors: JiangSheng 87789771@qq.com
+ * @LastEditTime: 2024-06-26 10:01:42
+ * @FilePath: \meimei-prisma-vue3\meimei-admin\src\modules\common\upload\upload.module.ts
+ * @Description: 
+ * 
+ */
 import { UploadController } from './upload.controller';
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
@@ -18,7 +27,7 @@ export function storage(uploadPath) {
         path = uploadPath + '/' + currentDate;
       } else {
         // 如果没有配置路径 就上传默认路径
-        path = join(__dirname, `../../../../static/public/upload/${currentDate}`);
+        path = join(__dirname, `../../../../static/upload/${currentDate}`);
       }
       try {
         // 判断是否有该文件夹
