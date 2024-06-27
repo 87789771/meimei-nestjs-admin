@@ -366,4 +366,16 @@ export class SysUserService {
   async addPv(userId: number) {
     return await this.redis.incr(`${USER_VERSION_KEY}:${userId}`);
   }
+
+  /* 更新用户头像 */
+  async uploadAvatar(avatar: string, userId: number) {
+    return await this.prisma.sysUser.update({
+      data: {
+        avatar,
+      },
+      where: {
+        userId,
+      },
+    });
+  }
 }
