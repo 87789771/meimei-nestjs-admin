@@ -1,9 +1,9 @@
 /*
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-05-11 13:32:00
- * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-05-18 09:49:55
- * @FilePath: /meimei-new/src/modules/sys/sys-user/sys-user.service.ts
+ * @LastEditors: JiangSheng 87789771@qq.com
+ * @LastEditTime: 2024-06-27 11:17:14
+ * @FilePath: \meimei-prisma-vue3\meimei-admin\src\modules\sys\sys-user\sys-user.service.ts
  * @Description:
  *
  */
@@ -29,6 +29,7 @@ import { DataScope } from 'src/common/type/data-scope.type';
 import Redis from 'ioredis';
 import { InjectRedis } from '@nestjs-modules/ioredis';
 import { USER_VERSION_KEY } from 'src/common/contants/redis.contant';
+import { LoginService } from 'src/modules/login/login.service';
 
 @Injectable()
 export class SysUserService {
@@ -38,6 +39,7 @@ export class SysUserService {
     private readonly customPrisma: CustomPrismaService<ExtendedPrismaClient>,
     private readonly sharedService: SharedService,
     @InjectRedis() private readonly redis: Redis,
+    private readonly loginService: LoginService,
   ) {}
   /* 分页查询 */
   async list(getSysUserListDto: GetSysUserListDto, dataScope: DataScope) {
@@ -328,12 +330,13 @@ export class SysUserService {
 
   /* 更新自己的信息 */
   async updataMyslf(updataSelfDto: UpdataSelfDto) {
-    return await this.prisma.sysUser.update({
+    await this.prisma.sysUser.update({
       where: {
         userId: updataSelfDto.userId,
       },
       data: updataSelfDto,
     });
+    return await this.loginService.getInfo(updataSelfDto.userId);
   }
 
   /* 更改个人密码 */
@@ -369,7 +372,7 @@ export class SysUserService {
 
   /* 更新用户头像 */
   async uploadAvatar(avatar: string, userId: number) {
-    return await this.prisma.sysUser.update({
+    await this.prisma.sysUser.update({
       data: {
         avatar,
       },
@@ -377,5 +380,6 @@ export class SysUserService {
         userId,
       },
     });
+    return await this.loginService.getInfo(userId);
   }
 }
