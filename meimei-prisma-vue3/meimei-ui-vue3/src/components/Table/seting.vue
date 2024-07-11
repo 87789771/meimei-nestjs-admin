@@ -1,9 +1,9 @@
 <!--
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2023-09-16 14:29:35
- * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-05-18 12:16:00
- * @FilePath: /meimei-new-vue/src/components/Table/seting.vue
+ * @LastEditors: JiangSheng 87789771@qq.com
+ * @LastEditTime: 2024-07-11 11:32:53
+ * @FilePath: \meimei-prisma-vue3\meimei-ui-vue3\src\components\Table\seting.vue
  * @Description: 表格列设置组件
  * 
 -->
@@ -18,7 +18,7 @@
     append-to-body
     draggable
   >
-    <el-form :model="form">
+    <el-form :model="form" ref="settingRef">
       <el-table
         :data="form.tableData"
         style="width: 100%"
@@ -181,20 +181,24 @@ function clickReset () {
 /* 点击确定 */
 const confirmLoading = ref(false)
 function clickConfirm () {
-  confirmLoading.value = true
-  let data = form.tableData.map((item, index) => {
-    if (!item.fixed) {
-      item.fixed = undefined
+  proxy.$refs['settingRef'].validate(valid => {
+    if (valid) {
+      confirmLoading.value = true
+      let data = form.tableData.map((item, index) => {
+        if (!item.fixed) {
+          item.fixed = undefined
+        }
+        return Object.assign(toValue(item), { sort: index })
+      })
+      addTableConfig({
+        tableId: toValue(id),
+        tableJsonConfig: JSON.stringify(data)
+      }).then(() => {
+        emits('update:modelValue', false)
+        emits('reset', '更新成功')
+        confirmLoading.value = false
+      })
     }
-    return Object.assign(toValue(item), { sort: index })
-  })
-  addTableConfig({
-    tableId: toValue(id),
-    tableJsonConfig: JSON.stringify(data)
-  }).then(() => {
-    emits('update:modelValue', false)
-    emits('reset', '更新成功')
-    confirmLoading.value = false
   })
 }
 </script>
