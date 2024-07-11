@@ -2,8 +2,8 @@
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2024-04-23 18:59:25
  * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-05-11 15:51:05
- * @FilePath: \meimei-new\src\common\interceptors\operation-log.interceptor.ts
+ * @LastEditTime: 2024-07-11 20:09:22
+ * @FilePath: \meimei-prisma-vue3\meimei-admin\src\common\interceptors\operation-log.interceptor.ts
  * @Description: 接口访问日志拦截器
  *
  */
@@ -114,7 +114,7 @@ export class OperationLogInterceptor implements NestInterceptor {
       } else {
         //失败的请求
         addOperLogDto.status = '1';
-        addOperLogDto.errorMsg = data && data.msg;
+        addOperLogDto.errorMsg = data?.msg?.toString();
       }
       /* 记录返回值 */
       if (
