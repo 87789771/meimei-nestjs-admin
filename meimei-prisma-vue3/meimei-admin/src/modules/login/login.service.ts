@@ -309,6 +309,9 @@ export class LoginService {
         },
         roles: rolesWhere,
       },
+      orderBy: {
+        orderNum: 'asc',
+      },
     });
     const menuTree: Menu[] = this.sharedService.handleTree(menus, 'menuId');
     const routerTree = menuTree.map((item) => new Route(item));
