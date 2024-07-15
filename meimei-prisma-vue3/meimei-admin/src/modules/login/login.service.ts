@@ -12,7 +12,6 @@ import { ApiException } from 'src/common/exceptions/api.exception';
 import { SharedService } from 'src/shared/shared.service';
 import { ConfigService } from '@nestjs/config';
 import { Payload } from './login.interface';
-import { Captcha } from 'captcha.gif';
 import Redis from 'ioredis';
 import { SysDept, SysRole, SysUser } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
@@ -21,7 +20,7 @@ import { LoginInforService } from '../monitor/login-infor/login-infor.service';
 import { Request } from 'express';
 import { DataScope } from 'src/common/type/data-scope.type';
 import { OnlineDto } from '../monitor/online/dto/res-online.dto';
-const captcha = new Captcha();
+import * as svgCaptcha from 'svg-captcha';
 
 @Injectable()
 export class LoginService {
@@ -36,14 +35,22 @@ export class LoginService {
 
   /* 创建验证码图片 */
   async createImageCaptcha() {
-    const { token, buffer } = captcha.generate(4);
+    const { data, text } = svgCaptcha.createMathExpr({
+      size: 4, //验证码长度
+      ignoreChars: '0o1i', // 验证码字符中排除 0o1i
+      noise: 3, // 干扰线条的数量
+      color: true, // 验证码的字符是否有颜色，默认没有，如果设定了背景，则默认有
+      background: '#ffffff', // 验证码图片背景颜色
+      width: 115.5,
+      height: 38,
+    });
     const result = {
-      img: buffer.toString('base64'),
+      img: data.toString(),
       uuid: this.sharedService.generateUUID(),
     };
     await this.redis.set(
       `${CAPTCHA_IMG_KEY}:${result.uuid}`,
-      token,
+      text,
       'EX',
       60 * 5,
     );
