@@ -4,6 +4,7 @@
     <el-select
       ref="headerSearchSelectRef"
       v-model="search"
+      value-key="path"
       :remote-method="querySearch"
       filterable
       default-first-option
