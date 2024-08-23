@@ -1,9 +1,9 @@
 /*
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2023-09-17 16:34:32
- * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-05-14 12:38:32
- * @FilePath: \meimei-new-前端\src\components\Table\formatColumn.js
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2024-08-22 23:19:20
+ * @FilePath: /goods-nest-vue3/src/components/Table/formatColumn.js
  * @Description: 处理表格列数据
  * 
  */
@@ -23,7 +23,7 @@ export function formatColumn(tableId, columns, TableRef) {
                     minWidth: 80,
                     showOverflowTooltip: true,
                     align: 'left',
-                    fixed: undefined,
+                    fixed: false,
                     hide: false,
                     noExport: false,
                     sort: 999

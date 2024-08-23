@@ -2,7 +2,7 @@
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2023-09-16 14:29:35
  * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-07-11 11:32:53
+ * @LastEditTime: 2024-08-23 08:44:44
  * @FilePath: \meimei-prisma-vue3\meimei-ui-vue3\src\components\Table\seting.vue
  * @Description: 表格列设置组件
  * 
@@ -84,18 +84,18 @@
         <el-table-column label="对齐方式" align="center" min-width="220">
           <template #default="{ row }">
             <el-radio-group v-model="row.align">
-              <el-radio label="left">左</el-radio>
-              <el-radio label="center">居中</el-radio>
-              <el-radio label="right">右</el-radio>
+              <el-radio value="left">左</el-radio>
+              <el-radio value="center">居中</el-radio>
+              <el-radio value="right">右</el-radio>
             </el-radio-group>
           </template>
         </el-table-column>
         <el-table-column label="浮动方式" align="center" min-width="230">
           <template #default="{ row }">
             <el-radio-group v-model="row.fixed">
-              <el-radio label="left">左</el-radio>
-              <el-radio :label="undefined">不浮动</el-radio>
-              <el-radio label="right">右</el-radio>
+              <el-radio value="left">左</el-radio>
+              <el-radio :value="false">不浮动</el-radio>
+              <el-radio value="right">右</el-radio>
             </el-radio-group>
           </template>
         </el-table-column>
@@ -185,9 +185,6 @@ function clickConfirm () {
     if (valid) {
       confirmLoading.value = true
       let data = form.tableData.map((item, index) => {
-        if (!item.fixed) {
-          item.fixed = undefined
-        }
         return Object.assign(toValue(item), { sort: index })
       })
       addTableConfig({
