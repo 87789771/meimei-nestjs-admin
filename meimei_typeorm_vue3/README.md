@@ -1,7 +1,7 @@
 ## 项目简介
 槑槑是一款后台管理系统，它前端基于 [vue](https://cn.vuejs.org/) 和 [element-ui](https://element.eleme.cn/#/zh-CN) ，后端基于 node 的后端框架 [nestjs](https://docs.nestjs.cn/8/) ，数据库采用 mysql ，缓存采用 redis。
 
-该版本从 tag 1.0 抽取出来，后续由 [SunSeekerX](https://github.com/SunSeekerX) 维护，随缘修改，不建议用在生产环境。
+该版本从 [4e71788999965e325ba1f5545a663869be222664](https://github.com/87789771/meimei-nestjs-admin/commit/4e71788999965e325ba1f5545a663869be222664) 抽取出来，后续由 [SunSeekerX](https://github.com/SunSeekerX) 维护，随缘修改，不建议用在生产环境。
 
 
 ## 在线体验

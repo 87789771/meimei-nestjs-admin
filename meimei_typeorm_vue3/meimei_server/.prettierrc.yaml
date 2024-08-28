@@ -1,0 +1,21 @@
+printWidth: 120
+tabWidth: 2
+useTabs: false
+semi: false
+singleQuote: true
+quoteProps: as-needed
+jsxSingleQuote: true
+trailingComma: all
+bracketSpacing: true
+arrowParens: always
+proseWrap: never
+htmlWhitespaceSensitivity: strict
+vueIndentScriptAndStyle: false
+endOfLine: auto
+overrides:
+  - files: '*.md'
+    options:
+      tabWidth: 2
+  - files: '*.nvue'
+    options:
+      parser: 'vue'
