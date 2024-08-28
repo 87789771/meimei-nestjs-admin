@@ -1,0 +1,20 @@
+{
+    //eslint 代码自动检查相关配置
+    "eslint.enable": true,
+    "eslint.run": "onType",
+    "eslint.options": {
+        "extensions": [
+            ".js",
+            ".vue"
+        ]
+    },
+    "eslint.validate": [
+        "javascriptreact",
+        "vue",
+        "javascript",
+        "html",
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+}
