@@ -11,7 +11,7 @@
     "vue"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode development",
     "build": "vite build",
     "preview": "vite preview"
   },
