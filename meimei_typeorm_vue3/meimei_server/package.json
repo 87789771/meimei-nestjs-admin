@@ -13,6 +13,7 @@
     "start": "cross-env NODE_ENV=production node dist/main",
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
+    "dev": "cross-env NODE_ENV=development nest start --watch",
     "start:prod": "cross-env NODE_ENV=production node dist/main",
     "test": "jest",
     "test:cov": "jest --coverage",

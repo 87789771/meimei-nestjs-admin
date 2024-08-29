@@ -5,7 +5,7 @@ export function listNotice(query) {
   return request({
     url: '/system/notice/list',
     method: 'get',
-    params: query
+    params: query,
   })
 }
 
@@ -13,7 +13,7 @@ export function listNotice(query) {
 export function getNotice(noticeId) {
   return request({
     url: '/system/notice/' + noticeId,
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -22,7 +22,7 @@ export function addNotice(data) {
   return request({
     url: '/system/notice',
     method: 'post',
-    data: data
+    data: data,
   })
 }
 
@@ -31,7 +31,7 @@ export function updateNotice(data) {
   return request({
     url: '/system/notice',
     method: 'put',
-    data: data
+    data: data,
   })
 }
 
@@ -39,6 +39,6 @@ export function updateNotice(data) {
 export function delNotice(noticeId) {
   return request({
     url: '/system/notice/' + noticeId,
-    method: 'delete'
+    method: 'delete',
   })
 }

@@ -5,7 +5,7 @@ export function listDept(query) {
   return request({
     url: '/system/dept/list',
     method: 'get',
-    params: query
+    params: query,
   })
 }
 
@@ -13,7 +13,7 @@ export function listDept(query) {
 export function listDeptExcludeChild(deptId) {
   return request({
     url: '/system/dept/list/exclude/' + deptId,
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -21,7 +21,7 @@ export function listDeptExcludeChild(deptId) {
 export function getDept(deptId) {
   return request({
     url: '/system/dept/' + deptId,
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -30,7 +30,7 @@ export function addDept(data) {
   return request({
     url: '/system/dept',
     method: 'post',
-    data: data
+    data: data,
   })
 }
 
@@ -39,7 +39,7 @@ export function updateDept(data) {
   return request({
     url: '/system/dept',
     method: 'put',
-    data: data
+    data: data,
   })
 }
 
@@ -47,6 +47,6 @@ export function updateDept(data) {
 export function delDept(deptId) {
   return request({
     url: '/system/dept/' + deptId,
-    method: 'delete'
+    method: 'delete',
   })
 }

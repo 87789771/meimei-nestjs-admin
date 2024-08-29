@@ -5,7 +5,7 @@ export function listJob(query) {
   return request({
     url: '/monitor/job/list',
     method: 'get',
-    params: query
+    params: query,
   })
 }
 
@@ -13,7 +13,7 @@ export function listJob(query) {
 export function getJob(jobId) {
   return request({
     url: '/monitor/job/' + jobId,
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -22,7 +22,7 @@ export function addJob(data) {
   return request({
     url: '/monitor/job',
     method: 'post',
-    data: data
+    data: data,
   })
 }
 
@@ -31,7 +31,7 @@ export function updateJob(data) {
   return request({
     url: '/monitor/job',
     method: 'put',
-    data: data
+    data: data,
   })
 }
 
@@ -39,7 +39,7 @@ export function updateJob(data) {
 export function delJob(jobId) {
   return request({
     url: '/monitor/job/' + jobId,
-    method: 'delete'
+    method: 'delete',
   })
 }
 
@@ -47,25 +47,24 @@ export function delJob(jobId) {
 export function changeJobStatus(jobId, status) {
   const data = {
     jobId,
-    status
+    status,
   }
   return request({
     url: '/monitor/job/changeStatus',
     method: 'put',
-    data: data
+    data: data,
   })
 }
-
 
 // 定时任务立即执行一次
 export function runJob(jobId, jobGroup) {
   const data = {
     jobId,
-    jobGroup
+    jobGroup,
   }
   return request({
     url: '/monitor/job/run',
     method: 'put',
-    data: data
+    data: data,
   })
 }

@@ -12,7 +12,7 @@
     <router-view v-slot="{ Component, route }">
       <transition name="fade-transform" mode="out-in">
         <keep-alive :include="tagsViewStore.cachedViews">
-          <component v-if="!route.meta.link" :is="Component" :key="route.path"/>
+          <component v-if="!route.meta.link" :is="Component" :key="route.path" />
         </keep-alive>
       </transition>
     </router-view>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import iframeToggle from "./IframeToggle/index"
+import iframeToggle from './IframeToggle/index'
 import useTagsViewStore from '@/store/modules/tagsView'
 
 const tagsViewStore = useTagsViewStore()
@@ -29,10 +29,11 @@ const tagsViewStore = useTagsViewStore()
 
 <style lang="scss" scoped>
 .app-main {
+  position: relative;
+  width: 100%;
+
   /* 50= navbar  50  */
   min-height: calc(100vh - 50px);
-  width: 100%;
-  position: relative;
   overflow: hidden;
 }
 
@@ -70,8 +71,7 @@ const tagsViewStore = useTagsViewStore()
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #c0c0c0;
   border-radius: 3px;
+  background-color: #c0c0c0;
 }
 </style>
-

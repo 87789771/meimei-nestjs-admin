@@ -1,6 +1,6 @@
 @mixin clearfix {
-  &:after {
-    content: "";
+  &::after {
+    content: '';
     display: table;
     clear: both;
   }
@@ -16,8 +16,8 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #99a9bf;
     border-radius: 20px;
+    background: #99a9bf;
   }
 }
 
@@ -28,8 +28,8 @@
 }
 
 @mixin pct($pct) {
-  width: #{$pct};
   position: relative;
+  width: #{$pct};
   margin: 0 auto;
 }
 
@@ -37,28 +37,23 @@
   $width: $width/2;
   $color-border-style: $height solid $color;
   $transparent-border-style: $width solid transparent;
-  height: 0;
+
   width: 0;
+  height: 0;
 
   @if $direction==up {
     border-bottom: $color-border-style;
     border-left: $transparent-border-style;
     border-right: $transparent-border-style;
-  }
-
-  @else if $direction==right {
+  } @else if $direction==right {
     border-left: $color-border-style;
     border-top: $transparent-border-style;
     border-bottom: $transparent-border-style;
-  }
-
-  @else if $direction==down {
+  } @else if $direction==down {
     border-top: $color-border-style;
     border-left: $transparent-border-style;
     border-right: $transparent-border-style;
-  }
-
-  @else if $direction==left {
+  } @else if $direction==left {
     border-right: $color-border-style;
     border-top: $transparent-border-style;
     border-bottom: $transparent-border-style;

@@ -2,7 +2,7 @@ export default {
   /**
    * 网页标题
    */
-  title: import.meta.env.VITE_APP_TITLE,
+  title: import.meta.env.VITE_SITE_NAME,
   /**
    * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
    */
@@ -43,5 +43,5 @@ export default {
    * The default is only used in the production env
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
-  errorLog: 'production'
+  errorLog: 'production',
 }

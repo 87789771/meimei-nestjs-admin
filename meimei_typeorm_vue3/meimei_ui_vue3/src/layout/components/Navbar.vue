@@ -1,6 +1,11 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="appStore.sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger
+      id="hamburger-container"
+      :is-active="appStore.sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!settingsStore.topNav" />
     <top-nav id="topmenu-container" class="topmenu-container" v-if="settingsStore.topNav" />
 
@@ -61,14 +66,14 @@ function toggleSideBar() {
 
 function handleCommand(command) {
   switch (command) {
-    case "setLayout":
-      setLayout();
-      break;
-    case "logout":
-      logout();
-      break;
+    case 'setLayout':
+      setLayout()
+      break
+    case 'logout':
+      logout()
+      break
     default:
-      break;
+      break
   }
 }
 
@@ -76,38 +81,40 @@ function logout() {
   ElMessageBox.confirm('确定注销并退出系统吗？', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
-    type: 'warning'
-  }).then(() => {
-    userStore.logOut().then(() => {
-      location.href = '/index';
+    type: 'warning',
+  })
+    .then(() => {
+      userStore.logOut().then(() => {
+        location.href = '/index'
+      })
     })
-  }).catch(() => { });
+    .catch(() => {})
 }
 
 const emits = defineEmits(['setLayout'])
 function setLayout() {
-  emits('setLayout');
+  emits('setLayout')
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .navbar {
+  position: relative;
   height: 50px;
   overflow: hidden;
-  position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
 
   .hamburger-container {
-    line-height: 46px;
     height: 100%;
     float: left;
-    cursor: pointer;
     transition: background 0.3s;
+    line-height: 46px;
+    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.025);
+      background: rgb(0 0 0 / 2.5%);
     }
   }
 
@@ -126,10 +133,10 @@ function setLayout() {
   }
 
   .right-menu {
-    float: right;
-    height: 100%;
-    line-height: 50px;
     display: flex;
+    height: 100%;
+    float: right;
+    line-height: 50px;
 
     &:focus {
       outline: none;
@@ -137,18 +144,18 @@ function setLayout() {
 
     .right-menu-item {
       display: inline-block;
-      padding: 0 8px;
       height: 100%;
-      font-size: 18px;
+      padding: 0 8px;
       color: #5a5e66;
+      font-size: 18px;
       vertical-align: text-bottom;
 
       &.hover-effect {
-        cursor: pointer;
         transition: background 0.3s;
+        cursor: pointer;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.025);
+          background: rgb(0 0 0 / 2.5%);
         }
       }
     }
@@ -157,22 +164,22 @@ function setLayout() {
       margin-right: 40px;
 
       .avatar-wrapper {
-        margin-top: 5px;
         position: relative;
+        margin-top: 5px;
 
         .user-avatar {
-          cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
+          cursor: pointer;
         }
 
         i {
-          cursor: pointer;
           position: absolute;
-          right: -20px;
           top: 25px;
+          right: -20px;
           font-size: 12px;
+          cursor: pointer;
         }
       }
     }

@@ -1,10 +1,5 @@
 <template>
-  <div class="app-container home">  
-    
-  </div>
+  <div class="app-container home"> </div>
 </template>
 
-<script setup name="Index">
-</script>
-
-
+<script setup name="Index"></script>

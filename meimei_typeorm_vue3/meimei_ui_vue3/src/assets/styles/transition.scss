@@ -15,33 +15,33 @@
 .fade-transform--move,
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-  transition: all .5s;
+  transition: all 0.2s;
 }
 
 .fade-transform-enter {
-  opacity: 0;
   transform: translateX(-30px);
+  opacity: 0;
 }
 
 .fade-transform-leave-to {
-  opacity: 0;
   transform: translateX(30px);
+  opacity: 0;
 }
 
 /* breadcrumb transition */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all .5s;
+  transition: all 0.2s;
 }
 
 .breadcrumb-enter,
 .breadcrumb-leave-active {
-  opacity: 0;
   transform: translateX(20px);
+  opacity: 0;
 }
 
 .breadcrumb-move {
-  transition: all .5s;
+  transition: all 0.2s;
 }
 
 .breadcrumb-leave-active {
