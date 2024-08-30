@@ -69,7 +69,7 @@
       <el-table-column label="字典标签" align="center" prop="dictLabel">
         <template #default="scope">
           <span v-if="scope.row.listClass == '' || scope.row.listClass == 'default'">{{ scope.row.dictLabel }}</span>
-          <el-tag v-else :type="scope.row.listClass == 'primary' ? '' : scope.row.listClass">{{
+          <el-tag v-else :type="scope.row.listClass == 'primary' ? 'primary' : scope.row.listClass">{{
             scope.row.dictLabel
           }}</el-tag>
         </template>
@@ -265,7 +265,7 @@ function handleClose() {
 /** 重置按钮操作 */
 function resetQuery() {
   proxy.resetForm('queryRef')
-  queryParams.value.dictType = defaultDictType
+  queryParams.value.dictType = defaultDictType.value
   handleQuery()
 }
 /** 新增按钮操作 */

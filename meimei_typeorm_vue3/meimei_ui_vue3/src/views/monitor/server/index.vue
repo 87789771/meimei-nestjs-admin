@@ -143,7 +143,7 @@
         </el-card>
       </el-col>
 
-      <el-col :span="24" class="card-box">
+      <!-- <el-col :span="24" class="card-box">
         <el-card>
           <template #header
             ><CoffeeCup style="width: 1em; height: 1em; vertical-align: middle" />
@@ -194,7 +194,7 @@
             </table>
           </div>
         </el-card>
-      </el-col>
+      </el-col> -->
 
       <el-col :span="24" class="card-box">
         <el-card>

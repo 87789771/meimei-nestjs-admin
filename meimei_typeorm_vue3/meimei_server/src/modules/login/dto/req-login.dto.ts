@@ -1,19 +1,19 @@
-import { IsString } from 'class-validator';
+import { IsString } from 'class-validator'
 
 export class ReqLoginDto {
   /* uuid码 */
   @IsString()
-  uuid: string;
+  uuid: string
 
   /* 验证码code */
   @IsString()
-  code: string;
+  code: string
 
   /* 用户名 */
   @IsString()
-  username: string;
+  username: string
 
   /* 密码 */
   @IsString()
-  password: string;
+  password: string
 }

@@ -1,7 +1,7 @@
-import { IsNumber, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNumber, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity({
   name: 'config',
@@ -16,7 +16,7 @@ export class SysConfig extends BaseEntity {
   @Excel({
     name: '参数主键',
   })
-  configId: number;
+  configId: number
 
   /* 参数名称 */
   @Column({
@@ -29,7 +29,7 @@ export class SysConfig extends BaseEntity {
   @Excel({
     name: '参数名称',
   })
-  configName: string;
+  configName: string
 
   /* 参数键名 */
   @Column({
@@ -42,7 +42,7 @@ export class SysConfig extends BaseEntity {
     name: '参数键名',
   })
   @IsString()
-  configKey: string;
+  configKey: string
 
   /* 参数键值 */
   @Column({
@@ -55,7 +55,7 @@ export class SysConfig extends BaseEntity {
   @Excel({
     name: '参数键值',
   })
-  configValue: string;
+  configValue: string
 
   /* 系统内置（Y是 N否） */
   @Column({
@@ -70,5 +70,5 @@ export class SysConfig extends BaseEntity {
     dictType: 'sys_yes_no',
   })
   @IsString()
-  configType: string;
+  configType: string
 }

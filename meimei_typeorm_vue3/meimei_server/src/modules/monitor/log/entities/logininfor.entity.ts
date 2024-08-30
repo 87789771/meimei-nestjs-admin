@@ -1,5 +1,5 @@
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Logininfor {
@@ -8,7 +8,7 @@ export class Logininfor {
     name: 'info_id',
     comment: '访问ID',
   })
-  infoId: number;
+  infoId: number
 
   /* 用户账号 */
   @Column({
@@ -20,7 +20,7 @@ export class Logininfor {
   @Excel({
     name: '用户账号',
   })
-  userName: string;
+  userName: string
 
   /* 登录IP地址 */
   @Column({
@@ -32,7 +32,7 @@ export class Logininfor {
   @Excel({
     name: '登录IP地址',
   })
-  ipaddr: string;
+  ipaddr: string
 
   /* 登录地点 */
   @Column({
@@ -44,7 +44,7 @@ export class Logininfor {
   @Excel({
     name: '登录地点',
   })
-  loginLocation: string;
+  loginLocation: string
 
   /* 浏览器类型 */
   @Column({
@@ -56,7 +56,7 @@ export class Logininfor {
   @Excel({
     name: '浏览器类型',
   })
-  browser: string;
+  browser: string
 
   /* 浏览器操作系统类型 */
   @Column({
@@ -68,7 +68,7 @@ export class Logininfor {
   @Excel({
     name: '浏览器操作系统类型',
   })
-  os: string;
+  os: string
 
   /* 登录状态（0成功 1失败） */
   @Column({
@@ -82,7 +82,7 @@ export class Logininfor {
     name: '登录状态',
     dictType: 'sys_common_status',
   })
-  status: string;
+  status: string
 
   /* 提示消息 */
   @Column({
@@ -94,7 +94,7 @@ export class Logininfor {
   @Excel({
     name: '登录状态',
   })
-  msg: string;
+  msg: string
 
   /* 访问时间 */
   @Column({
@@ -106,5 +106,5 @@ export class Logininfor {
     name: '操作时间',
     dateFormat: 'YYYY-MM-DD HH:mm:ss',
   })
-  loginTime: string;
+  loginTime: string
 }

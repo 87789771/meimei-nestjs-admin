@@ -1,18 +1,12 @@
-import { ApiHideProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Dept } from '../../dept/entities/dept.entity';
-import { Menu } from '../../menu/entities/menu.entity';
-import { User } from '../../user/entities/user.entity';
+import { ApiHideProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Dept } from '../../dept/entities/dept.entity'
+import { Menu } from '../../menu/entities/menu.entity'
+import { User } from '../../user/entities/user.entity'
 
 @Entity()
 export class Role extends BaseEntity {
@@ -27,7 +21,7 @@ export class Role extends BaseEntity {
   @Excel({
     name: '角色ID',
   })
-  roleId: number;
+  roleId: number
 
   /* 角色名称 */
   @Column({
@@ -39,7 +33,7 @@ export class Role extends BaseEntity {
   @Excel({
     name: '角色名称',
   })
-  roleName: string;
+  roleName: string
 
   /* 角色权限字符串 */
   @Column({
@@ -51,7 +45,7 @@ export class Role extends BaseEntity {
   @Excel({
     name: '角色权限字符串',
   })
-  roleKey: string;
+  roleKey: string
 
   /* 显示顺序 */
   @Column({
@@ -62,20 +56,19 @@ export class Role extends BaseEntity {
   @Excel({
     name: '显示顺序',
   })
-  roleSort: number;
+  roleSort: number
 
   /* 数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限  5：仅本人数据权限） */
   @Column({
     name: 'data_scope',
-    comment:
-      '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限 5：仅本人数据权限）',
+    comment: '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限 5：仅本人数据权限）',
     length: 1,
     type: 'char',
     default: '1',
   })
   @IsOptional()
   @IsString()
-  dataScope?: string;
+  dataScope?: string
 
   /* 菜单树选择项是否关联显示 */
   @Column({
@@ -85,7 +78,7 @@ export class Role extends BaseEntity {
     default: true,
   })
   @IsBoolean()
-  menuCheckStrictly: boolean;
+  menuCheckStrictly: boolean
 
   /* 菜单树选择项是否关联显示 */
   @Column({
@@ -95,7 +88,7 @@ export class Role extends BaseEntity {
     default: true,
   })
   @IsBoolean()
-  deptCheckStrictly: boolean;
+  deptCheckStrictly: boolean
 
   /* 角色状态（0正常 1停用） */
   @Column({
@@ -109,7 +102,7 @@ export class Role extends BaseEntity {
     name: '角色状态',
     dictType: 'sys_normal_disable',
   })
-  status: string;
+  status: string
 
   @Column({
     name: 'del_flag',
@@ -119,19 +112,19 @@ export class Role extends BaseEntity {
     default: '0',
   })
   @ApiHideProperty()
-  delFlag: string;
+  delFlag: string
 
   @ApiHideProperty()
   @ManyToMany(() => Dept, (dept) => dept.roles)
   @JoinTable()
-  depts: Dept[];
+  depts: Dept[]
 
   @ApiHideProperty()
   @ManyToMany(() => Menu, (menu) => menu.roles)
   @JoinTable()
-  menus: Menu[];
+  menus: Menu[]
 
   @ApiHideProperty()
   @ManyToMany(() => User, (user) => user.roles)
-  users: User[];
+  users: User[]
 }

@@ -1,25 +1,25 @@
-import { User } from 'src/modules/system/user/entities/user.entity';
+import { User } from 'src/modules/system/user/entities/user.entity'
 
 export class ResImageCaptchaDto {
   /* base64图片编码 */
-  img: string;
+  img: string
 
   /* uuid码 */
-  uuid: string;
+  uuid: string
 }
 
 export class ResLoginDto {
   /* token密匙 */
-  token: string;
+  token: string
 }
 
 export class ResInfo {
   /* 权限标识 */
-  permissions: string[];
+  permissions: string[]
 
   /* 角色标识 */
-  roles: string[];
+  roles: string[]
 
   /* 用户信息 */
-  user: User;
+  user: User
 }

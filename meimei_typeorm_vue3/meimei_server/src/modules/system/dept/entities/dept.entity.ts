@@ -1,19 +1,10 @@
-import { ApiHideProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  Tree,
-  TreeChildren,
-  TreeParent,
-} from 'typeorm';
-import { Role } from '../../role/entities/role.entity';
-import { User } from '../../user/entities/user.entity';
+import { ApiHideProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent } from 'typeorm'
+import { Role } from '../../role/entities/role.entity'
+import { User } from '../../user/entities/user.entity'
 
 @Entity()
 @Tree('materialized-path')
@@ -26,7 +17,7 @@ export class Dept extends BaseEntity {
   })
   @Type()
   @IsNumber()
-  deptId: number;
+  deptId: number
 
   /* 部门名称 */
   @Column({
@@ -36,7 +27,7 @@ export class Dept extends BaseEntity {
     length: 50,
   })
   @IsString()
-  deptName: string;
+  deptName: string
 
   /*显示顺序  */
   @Column({
@@ -45,7 +36,7 @@ export class Dept extends BaseEntity {
     default: 0,
   })
   @IsNumber()
-  orderNum: number;
+  orderNum: number
 
   /* 负责人 */
   @Column({
@@ -56,7 +47,7 @@ export class Dept extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  leader?: string;
+  leader?: string
 
   /* 联系电话 */
   @Column({
@@ -67,7 +58,7 @@ export class Dept extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  phone?: string;
+  phone?: string
 
   /* 邮箱 */
   @Column({
@@ -78,7 +69,7 @@ export class Dept extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  email?: string;
+  email?: string
 
   /* 部门状态 */
   @Column({
@@ -89,7 +80,7 @@ export class Dept extends BaseEntity {
     type: 'char',
   })
   @IsString()
-  status: string;
+  status: string
 
   @ApiHideProperty()
   @Column({
@@ -99,21 +90,21 @@ export class Dept extends BaseEntity {
     default: '0',
     type: 'char',
   })
-  delFlag: string;
+  delFlag: string
 
   @ApiHideProperty()
   @TreeChildren()
-  children: Dept[];
+  children: Dept[]
 
   @ApiHideProperty()
   @TreeParent()
-  parent: Dept;
+  parent: Dept
 
   @ApiHideProperty()
   @ManyToMany(() => Role, (role) => role.depts)
-  roles: Role[];
+  roles: Role[]
 
   @ApiHideProperty()
   @OneToMany(() => User, (user) => user.dept)
-  users: User[];
+  users: User[]
 }

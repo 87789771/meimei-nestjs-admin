@@ -1,7 +1,7 @@
-import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Type } from 'class-transformer'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Notice extends BaseEntity {
@@ -11,7 +11,7 @@ export class Notice extends BaseEntity {
   })
   @Type()
   @IsNumber()
-  noticeId: number;
+  noticeId: number
 
   @Column({
     name: 'notice_title',
@@ -19,7 +19,7 @@ export class Notice extends BaseEntity {
     length: 50,
   })
   @IsString()
-  noticeTitle: string;
+  noticeTitle: string
 
   @Column({
     name: 'notice_type',
@@ -28,7 +28,7 @@ export class Notice extends BaseEntity {
     length: 1,
   })
   @IsString()
-  noticeType: string;
+  noticeType: string
 
   @Column({
     name: 'notice_content',
@@ -39,7 +39,7 @@ export class Notice extends BaseEntity {
   @IsOptional()
   @Type()
   @IsString()
-  noticeContent: string;
+  noticeContent: string
 
   @Column({
     name: 'status',
@@ -49,5 +49,5 @@ export class Notice extends BaseEntity {
     length: 1,
   })
   @IsString()
-  status: string;
+  status: string
 }

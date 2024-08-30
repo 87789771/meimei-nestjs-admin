@@ -1,9 +1,9 @@
 export class DataObj<A> {
-  private data: A;
+  private data: A
   constructor(data: A) {
-    this.data = data;
+    this.data = data
   }
   static create<A>(data: A) {
-    return new DataObj<A>(data);
+    return new DataObj<A>(data)
   }
 }

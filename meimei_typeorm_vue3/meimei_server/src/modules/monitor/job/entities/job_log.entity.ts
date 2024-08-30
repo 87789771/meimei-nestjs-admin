@@ -1,12 +1,7 @@
-import { Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Type } from 'class-transformer'
+import { IsNumber, IsString } from 'class-validator'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity({
   name: 'job_log',
@@ -19,7 +14,7 @@ export class JobLog {
   })
   @Type()
   @IsNumber()
-  jobLogId: number;
+  jobLogId: number
 
   /* 任务名称 */
   @Column({
@@ -31,7 +26,7 @@ export class JobLog {
   @Excel({
     name: '任务名称',
   })
-  jobName: string;
+  jobName: string
 
   /* 任务组名 */
   @Column({
@@ -44,7 +39,7 @@ export class JobLog {
     name: '任务组名',
     dictType: 'sys_job_group',
   })
-  jobGroup: string;
+  jobGroup: string
 
   /* 调用目标字符串 */
   @Column({
@@ -56,7 +51,7 @@ export class JobLog {
   @Excel({
     name: '调用目标字符串',
   })
-  invokeTarget: string;
+  invokeTarget: string
 
   /* 日志信息 */
   @Column({
@@ -69,7 +64,7 @@ export class JobLog {
   @Excel({
     name: '日志信息',
   })
-  jobMessage: string;
+  jobMessage: string
 
   /* 执行状态（0正常 1失败） */
   @Column({
@@ -84,7 +79,7 @@ export class JobLog {
     name: '执行状态',
     dictType: 'sys_common_status',
   })
-  status: string;
+  status: string
 
   /* 异常信息 */
   @Column({
@@ -97,12 +92,12 @@ export class JobLog {
   @Excel({
     name: '异常信息',
   })
-  exceptionInfo: string;
+  exceptionInfo: string
 
   @CreateDateColumn({ name: 'create_time', comment: '创建时间' })
   @Excel({
     name: '创建时间',
     dateFormat: 'YYYY-MM-DD HH:mm:ss',
   })
-  createTime: Date | string;
+  createTime: Date | string
 }

@@ -1,17 +1,9 @@
-import { ApiHideProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-  Tree,
-  TreeChildren,
-  TreeParent,
-} from 'typeorm';
-import { Role } from '../../role/entities/role.entity';
+import { ApiHideProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent } from 'typeorm'
+import { Role } from '../../role/entities/role.entity'
 @Entity()
 @Tree('materialized-path')
 export class Menu extends BaseEntity {
@@ -23,7 +15,7 @@ export class Menu extends BaseEntity {
   })
   @Type()
   @IsNumber()
-  menuId: number;
+  menuId: number
 
   /* 菜单名称 */
   @Column({
@@ -32,7 +24,7 @@ export class Menu extends BaseEntity {
     length: 50,
   })
   @IsString()
-  menuName: string;
+  menuName: string
 
   /* 显示顺序 */
   @Column({
@@ -40,7 +32,7 @@ export class Menu extends BaseEntity {
     comment: '显示顺序',
   })
   @IsNumber()
-  orderNum: number;
+  orderNum: number
 
   /* 路由地址 */
   @Column({
@@ -51,7 +43,7 @@ export class Menu extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  path: string;
+  path: string
 
   /* 组件路径 */
   @Column({
@@ -62,7 +54,7 @@ export class Menu extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  component?: string;
+  component?: string
 
   /* 路由参数 */
   @Column({
@@ -73,7 +65,7 @@ export class Menu extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  query?: string;
+  query?: string
 
   /* 是否为外链 */
   @Column({
@@ -85,7 +77,7 @@ export class Menu extends BaseEntity {
   @IsOptional()
   @Type()
   @IsNumber()
-  isFrame: number;
+  isFrame: number
 
   /* 是否缓存 */
   @Column({
@@ -97,7 +89,7 @@ export class Menu extends BaseEntity {
   @IsOptional()
   @Type()
   @IsNumber()
-  isCache?: number;
+  isCache?: number
 
   /* '菜单类型 */
   @Column({
@@ -108,7 +100,7 @@ export class Menu extends BaseEntity {
     default: '',
   })
   @IsString()
-  menuType: string;
+  menuType: string
 
   /* 菜单状态(0显示 1隐藏) */
   @Column({
@@ -120,7 +112,7 @@ export class Menu extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  visible?: string;
+  visible?: string
 
   /* 菜单状态（0正常 1停用） */
   @Column({
@@ -132,7 +124,7 @@ export class Menu extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  status?: string;
+  status?: string
 
   /* 权限标识 */
   @Column({
@@ -143,7 +135,7 @@ export class Menu extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  perms?: string;
+  perms?: string
 
   /* 菜单图标 */
   @Column({
@@ -155,17 +147,17 @@ export class Menu extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  icon?: string;
+  icon?: string
 
   @ApiHideProperty()
   @TreeChildren()
-  children: Menu[];
+  children: Menu[]
 
   @ApiHideProperty()
   @TreeParent()
-  parent: Menu;
+  parent: Menu
 
   @ApiHideProperty()
   @ManyToMany(() => Role, (role) => role.menus)
-  roles: Role[];
+  roles: Role[]
 }

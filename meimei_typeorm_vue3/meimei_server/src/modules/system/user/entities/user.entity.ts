@@ -1,20 +1,13 @@
-import { ApiHideProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { ExcelTypeEnum } from 'src/modules/common/excel/excel.enum';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Dept } from '../../dept/entities/dept.entity';
-import { Post } from '../../post/entities/post.entity';
-import { Role } from '../../role/entities/role.entity';
+import { ApiHideProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { ExcelTypeEnum } from 'src/modules/common/excel/excel.enum'
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Dept } from '../../dept/entities/dept.entity'
+import { Post } from '../../post/entities/post.entity'
+import { Role } from '../../role/entities/role.entity'
 
 @Entity()
 export class User extends BaseEntity {
@@ -29,7 +22,7 @@ export class User extends BaseEntity {
     name: '用户Id',
     type: ExcelTypeEnum.EXPORT,
   })
-  userId: number;
+  userId: number
 
   /* 用户账号 */
   @Column({
@@ -41,7 +34,7 @@ export class User extends BaseEntity {
   @Excel({
     name: '用户账号',
   })
-  userName: string;
+  userName: string
 
   /* 用户昵称 */
   @Column({
@@ -53,7 +46,7 @@ export class User extends BaseEntity {
   @Excel({
     name: '用户昵称',
   })
-  nickName: string;
+  nickName: string
 
   /* 用户类型 */
   @Column({
@@ -64,7 +57,7 @@ export class User extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  userType?: string;
+  userType?: string
 
   /* 用户邮箱 */
   @Column({
@@ -74,7 +67,7 @@ export class User extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  email?: string;
+  email?: string
 
   /* 手机号码 */
   @Column({
@@ -87,7 +80,7 @@ export class User extends BaseEntity {
   @Excel({
     name: '手机号码',
   })
-  phonenumber?: string;
+  phonenumber?: string
 
   @Column({
     comment: '用户性别（0男 1女 2未知）',
@@ -97,7 +90,7 @@ export class User extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  sex: string;
+  sex: string
 
   /* 头像地址 */
   @Column({
@@ -107,7 +100,7 @@ export class User extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  avatar?: string;
+  avatar?: string
 
   /* 密码 */
   @Column({
@@ -121,7 +114,7 @@ export class User extends BaseEntity {
     name: '密码',
   })
   @IsString()
-  password: string;
+  password: string
 
   @ApiHideProperty()
   @Column({
@@ -130,7 +123,7 @@ export class User extends BaseEntity {
     default: '',
     select: false,
   })
-  salt: string;
+  salt: string
 
   /* 帐号状态 */
   @Column({
@@ -145,7 +138,7 @@ export class User extends BaseEntity {
     name: '帐号状态',
     dictType: 'sys_normal_disable',
   })
-  status: string;
+  status: string
 
   @ApiHideProperty()
   @Column({
@@ -155,7 +148,7 @@ export class User extends BaseEntity {
     length: 1,
     default: '0',
   })
-  delFlag: string;
+  delFlag: string
 
   /* 最后登录IP */
   @Column({
@@ -166,7 +159,7 @@ export class User extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  loginIp?: string;
+  loginIp?: string
 
   /* 最后登录时间 */
   @Column({
@@ -176,19 +169,19 @@ export class User extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  loginDate?: Date;
+  loginDate?: Date
 
   @ApiHideProperty()
   @ManyToOne(() => Dept, (dept) => dept.users)
-  dept: Dept;
+  dept: Dept
 
   @ApiHideProperty()
   @ManyToMany(() => Post, (post) => post.users)
   @JoinTable()
-  posts: Post[];
+  posts: Post[]
 
   @ApiHideProperty()
   @ManyToMany(() => Role, (role) => role.users)
   @JoinTable()
-  roles: Role[];
+  roles: Role[]
 }

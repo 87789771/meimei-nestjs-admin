@@ -2,14 +2,14 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { SharedService } from 'src/shared/shared.service';
-import { FindOptionsWhere, In, Like, Repository } from 'typeorm';
-import { RoleService } from '../role/role.service';
-import { User } from '../user/entities/user.entity';
-import { ReqAddDeptDto, ReqDeptListDto } from './dto/req-dept.dto';
-import { Dept } from './entities/dept.entity';
+import { forwardRef, Inject, Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { SharedService } from 'src/shared/shared.service'
+import { FindOptionsWhere, In, Like, Repository } from 'typeorm'
+import { RoleService } from '../role/role.service'
+import { User } from '../user/entities/user.entity'
+import { ReqAddDeptDto, ReqDeptListDto } from './dto/req-dept.dto'
+import { Dept } from './entities/dept.entity'
 
 @Injectable()
 export class DeptService {
@@ -23,20 +23,20 @@ export class DeptService {
   /* 新增或编辑部门 */
   async addOrUpdate(reqAddDeptDto: ReqAddDeptDto) {
     if (reqAddDeptDto.parentId) {
-      const parentDept = await this.findById(reqAddDeptDto.parentId);
-      reqAddDeptDto.parent = parentDept;
+      const parentDept = await this.findById(reqAddDeptDto.parentId)
+      reqAddDeptDto.parent = parentDept
     }
-    await this.deptRepository.save(reqAddDeptDto);
+    await this.deptRepository.save(reqAddDeptDto)
   }
 
   /* 查询部门列表 */
   async list(reqDeptListDto: ReqDeptListDto) {
-    const where: FindOptionsWhere<Dept> = { delFlag: '0' };
+    const where: FindOptionsWhere<Dept> = { delFlag: '0' }
     if (reqDeptListDto.deptName) {
-      where.deptName = Like(`%${reqDeptListDto.deptName}%`);
+      where.deptName = Like(`%${reqDeptListDto.deptName}%`)
     }
     if (reqDeptListDto.status) {
-      where.status = reqDeptListDto.status;
+      where.status = reqDeptListDto.status
     }
     return this.deptRepository
       .createQueryBuilder('dept')
@@ -49,12 +49,12 @@ export class DeptService {
       .where(where)
       .orderBy('dept.orderNum', 'ASC')
       .addOrderBy('dept.createTime', 'ASC')
-      .getRawMany();
+      .getRawMany()
   }
 
   /* 通过id查询 */
   async findById(deptId: number) {
-    return this.deptRepository.findOneBy({ deptId });
+    return this.deptRepository.findOneBy({ deptId })
   }
 
   /* 通过id查询，返回原始数据 */
@@ -72,7 +72,7 @@ export class DeptService {
       .addSelect('ifnull(dept.parentDeptId,0)', 'parentId')
       .where('dept.delFlag = 0')
       .andWhere('dept.deptId = :deptId', { deptId })
-      .getRawOne();
+      .getRawOne()
   }
 
   /* 查询除自己(包括子类) 外的所有 */
@@ -89,7 +89,7 @@ export class DeptService {
       .andWhere("concat('.',dept.mpath) not like :v", {
         v: '%.' + deptId + '.%',
       })
-      .getRawMany();
+      .getRawMany()
   }
 
   /* 通过 parentId 查询其所有孩子 */
@@ -98,7 +98,7 @@ export class DeptService {
       .createQueryBuilder('dept')
       .where('dept.delFlag = 0')
       .andWhere('dept.parentDeptId = :parentId', { parentId })
-      .getMany();
+      .getMany()
   }
 
   /* 删除部门 */
@@ -110,7 +110,7 @@ export class DeptService {
       .where({
         deptId,
       })
-      .execute();
+      .execute()
   }
 
   /* 查询 部门 树结构 根据数据权限 */
@@ -121,12 +121,12 @@ export class DeptService {
       .addSelect('dept.deptName', 'label')
       .addSelect('dept.parentDeptId', 'parentId')
       .innerJoin(User, 'user', 'dept.createBy = user.userName')
-      .where('dept.delFlag = 0');
+      .where('dept.delFlag = 0')
     if (dataScopeSql) {
-      queryBuilde.andWhere(dataScopeSql);
+      queryBuilde.andWhere(dataScopeSql)
     }
-    const deptArr = await queryBuilde.getRawMany();
-    return this.sharedService.handleTree(deptArr);
+    const deptArr = await queryBuilde.getRawMany()
+    return this.sharedService.handleTree(deptArr)
   }
 
   /* 查询 部门 树结构 */
@@ -137,8 +137,8 @@ export class DeptService {
       .addSelect('dept.deptName', 'label')
       .addSelect('dept.parentDeptId', 'parentId')
       .where('dept.delFlag = 0')
-      .getRawMany();
-    return this.sharedService.handleTree(deptArr);
+      .getRawMany()
+    return this.sharedService.handleTree(deptArr)
   }
 
   /* 获取角色的数据权限列表 */
@@ -150,8 +150,8 @@ export class DeptService {
       .innerJoin('dept.roles', 'role', 'role.roleId = :roleId', { roleId })
       .where('dept.delFlag = 0')
       .andWhere('role.delFlag = 0')
-      .getRawMany();
-    return deptArr.map((dept) => dept.deptId);
+      .getRawMany()
+    return deptArr.map((dept) => dept.deptId)
   }
 
   /* 通过id数组查询 */
@@ -161,12 +161,12 @@ export class DeptService {
         deptId: In(deptIdArr),
         delFlag: '0',
       },
-    });
+    })
   }
 
   /* 通过id数组查询，并只取最后一级 */
   async listByIdArrFilter(deptIdArr: number[]): Promise<Dept[]> {
-    const queryBuilder = this.deptRepository.createQueryBuilder('dept');
+    const queryBuilder = this.deptRepository.createQueryBuilder('dept')
     queryBuilder
       .select('dept.deptId', 'deptId')
       .addSelect('dept.mpath')
@@ -184,13 +184,11 @@ export class DeptService {
           .andWhere({
             deptId: In(deptIdArr),
           })
-          .andWhere(
-            "concat('.',dept2.mpath) like concat('%.',dept.dept_id,'.%')",
-          )
-          .getQuery();
-        return 'not exists' + subQuery;
-      });
-    const DeptArr = await queryBuilder.getRawMany();
-    return DeptArr;
+          .andWhere("concat('.',dept2.mpath) like concat('%.',dept.dept_id,'.%')")
+          .getQuery()
+        return 'not exists' + subQuery
+      })
+    const DeptArr = await queryBuilder.getRawMany()
+    return DeptArr
   }
 }

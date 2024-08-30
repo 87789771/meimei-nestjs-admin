@@ -1,10 +1,10 @@
-import { ApiHideProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { DictData } from './dict_data.entity';
+import { ApiHideProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsNumber, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { DictData } from './dict_data.entity'
 
 @Entity({
   name: 'dict_type',
@@ -20,7 +20,7 @@ export class DictType extends BaseEntity {
   @Excel({
     name: '字典编码',
   })
-  dictId: number;
+  dictId: number
 
   /* 字典名称 */
   @Column({
@@ -33,7 +33,7 @@ export class DictType extends BaseEntity {
   @Excel({
     name: '字典名称',
   })
-  dictName: string;
+  dictName: string
 
   /* 字典类型 */
   @Column({
@@ -47,7 +47,7 @@ export class DictType extends BaseEntity {
   @Excel({
     name: '字典类型',
   })
-  dictType: string;
+  dictType: string
 
   /* 状态（0正常 1停用） */
   @Column({
@@ -61,9 +61,9 @@ export class DictType extends BaseEntity {
     dictType: 'sys_normal_disable',
   })
   @IsString()
-  status: string;
+  status: string
 
   @OneToMany(() => DictData, (dictData) => dictData.dictType)
   @ApiHideProperty()
-  dictDatas: DictData[];
+  dictDatas: DictData[]
 }

@@ -1,5 +1,5 @@
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity({
   name: 'oper_log',
@@ -10,7 +10,7 @@ export class OperLog {
     name: 'oper_id',
     comment: '日志主键',
   })
-  operId: number;
+  operId: number
 
   /* 模块标题 */
   @Column({
@@ -22,7 +22,7 @@ export class OperLog {
   @Excel({
     name: '模块标题',
   })
-  title: string;
+  title: string
 
   /* '业务类型 */
   @Column({
@@ -36,7 +36,7 @@ export class OperLog {
     name: '业务类型',
     dictType: 'sys_oper_type',
   })
-  businessType: string;
+  businessType: string
 
   /* 方法名称 */
   @Column({
@@ -48,7 +48,7 @@ export class OperLog {
   @Excel({
     name: '方法名称',
   })
-  method: string;
+  method: string
 
   /* 请求方式 */
   @Column({
@@ -60,7 +60,7 @@ export class OperLog {
   @Excel({
     name: '请求方式',
   })
-  requestMethod: string;
+  requestMethod: string
 
   /* 操作类别（0其它 1后台用户 2手机端用户） */
   @Column({
@@ -70,7 +70,7 @@ export class OperLog {
     type: 'char',
     length: 1,
   })
-  operatorType: string;
+  operatorType: string
 
   /* 操作人员 */
   @Column({
@@ -82,7 +82,7 @@ export class OperLog {
   @Excel({
     name: '操作人员',
   })
-  operName: string;
+  operName: string
 
   /* 部门名称 */
   @Column({
@@ -91,7 +91,7 @@ export class OperLog {
     length: 50,
     default: '',
   })
-  deptName: string;
+  deptName: string
 
   /* 请求URL */
   @Column({
@@ -103,7 +103,7 @@ export class OperLog {
   @Excel({
     name: '请求URL',
   })
-  operUrl: string;
+  operUrl: string
 
   /* 主机地址 */
   @Column({
@@ -115,7 +115,7 @@ export class OperLog {
   @Excel({
     name: '主机地址',
   })
-  operIp: string;
+  operIp: string
 
   /* 操作地点 */
   @Column({
@@ -127,7 +127,7 @@ export class OperLog {
   @Excel({
     name: '操作地点',
   })
-  operLocation: string;
+  operLocation: string
 
   /* 请求参数 */
   @Column({
@@ -136,7 +136,7 @@ export class OperLog {
     length: 2000,
     default: '',
   })
-  operParam: string;
+  operParam: string
 
   /* 返回参数 */
   @Column({
@@ -145,7 +145,7 @@ export class OperLog {
     length: 2000,
     default: '',
   })
-  jsonResult: string;
+  jsonResult: string
 
   /* 操作状态（0正常 1异常） */
   @Column({
@@ -158,7 +158,7 @@ export class OperLog {
     name: '操作状态',
     dictType: 'sys_common_status',
   })
-  status: number;
+  status: number
 
   /* 返回参数 */
   @Column({
@@ -167,7 +167,7 @@ export class OperLog {
     length: 2000,
     default: '',
   })
-  errorMsg: string;
+  errorMsg: string
 
   /* 操作时间 */
   @Column({
@@ -179,5 +179,5 @@ export class OperLog {
     name: '操作时间',
     dateFormat: 'YYYY-MM-DD HH:mm:ss',
   })
-  operTime: string;
+  operTime: string
 }

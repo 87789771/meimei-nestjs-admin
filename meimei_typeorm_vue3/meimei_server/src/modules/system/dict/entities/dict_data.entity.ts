@@ -1,9 +1,9 @@
-import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { DictType } from './dict_type.entity';
+import { Type } from 'class-transformer'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { DictType } from './dict_type.entity'
 
 @Entity({
   name: 'dict_data',
@@ -19,7 +19,7 @@ export class DictData extends BaseEntity {
   @Excel({
     name: '字典编码',
   })
-  dictCode: number;
+  dictCode: number
 
   /* 字典排序 */
   @Column({
@@ -31,7 +31,7 @@ export class DictData extends BaseEntity {
   @Excel({
     name: '字典排序',
   })
-  dictSort: number;
+  dictSort: number
 
   /* 字典标签 */
   @Column({
@@ -44,7 +44,7 @@ export class DictData extends BaseEntity {
   @Excel({
     name: '字典标签',
   })
-  dictLabel: string;
+  dictLabel: string
 
   /* 字典键值 */
   @Column({
@@ -57,7 +57,7 @@ export class DictData extends BaseEntity {
   @Excel({
     name: '字典键值',
   })
-  dictValue: string;
+  dictValue: string
 
   /* 样式属性（其他样式扩展） */
   @Column({
@@ -72,7 +72,7 @@ export class DictData extends BaseEntity {
   @Excel({
     name: '样式属性（其他样式扩展）',
   })
-  cssClass?: string;
+  cssClass?: string
 
   /* 表格回显样式 */
   @Column({
@@ -87,7 +87,7 @@ export class DictData extends BaseEntity {
   @Excel({
     name: '表格回显样式',
   })
-  listClass?: string;
+  listClass?: string
 
   /* 是否默认（Y是 N否） */
   @Column({
@@ -99,7 +99,7 @@ export class DictData extends BaseEntity {
   })
   @IsOptional()
   @IsString()
-  isDefault?: string;
+  isDefault?: string
 
   /* 状态（0正常 1停用） */
   @Column({
@@ -113,9 +113,9 @@ export class DictData extends BaseEntity {
     dictType: 'sys_normal_disable',
   })
   @IsString()
-  status: string;
+  status: string
 
   /* 字典类型 */
   @ManyToOne(() => DictType, (dictType) => dictType.dictDatas)
-  dictType: DictType;
+  dictType: DictType
 }

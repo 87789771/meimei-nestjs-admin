@@ -1,8 +1,8 @@
-import { Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Type } from 'class-transformer'
+import { IsNumber, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Job extends BaseEntity {
@@ -13,7 +13,7 @@ export class Job extends BaseEntity {
   })
   @Type()
   @IsNumber()
-  jobId: number;
+  jobId: number
 
   /* 任务名称 */
   @Column({
@@ -26,7 +26,7 @@ export class Job extends BaseEntity {
   @Excel({
     name: '任务名称',
   })
-  jobName: string;
+  jobName: string
 
   /* 任务组名 */
   @Column({
@@ -40,7 +40,7 @@ export class Job extends BaseEntity {
     name: '任务组名',
     dictType: 'sys_job_group',
   })
-  jobGroup: string;
+  jobGroup: string
 
   /* 调用目标字符串 */
   @Column({
@@ -53,7 +53,7 @@ export class Job extends BaseEntity {
   @Excel({
     name: '调用目标字符串',
   })
-  invokeTarget: string;
+  invokeTarget: string
 
   /* cron执行表达式 */
   @Column({
@@ -66,7 +66,7 @@ export class Job extends BaseEntity {
     name: 'cron执行表达式',
   })
   @IsString()
-  cronExpression: string;
+  cronExpression: string
 
   /* 计划执行错误策略（1立即执行 2执行一次 3放弃执行） */
   @Column({
@@ -85,7 +85,7 @@ export class Job extends BaseEntity {
       3: '放弃执行',
     },
   })
-  misfirePolicy: string;
+  misfirePolicy: string
 
   /* 是否并发执行（0允许 1禁止） */
   @Column({
@@ -97,7 +97,7 @@ export class Job extends BaseEntity {
   })
   @Type()
   @IsString()
-  concurrent: string;
+  concurrent: string
 
   /* 状态（0正常 1暂停） */
   @Column({
@@ -112,5 +112,5 @@ export class Job extends BaseEntity {
     name: '状态',
     dictType: 'sys_job_status',
   })
-  status: string;
+  status: string
 }

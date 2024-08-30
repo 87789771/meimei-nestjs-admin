@@ -1,15 +1,5 @@
-/*
- * @Author: Sheng.Jiang
- * @Date: 2021-12-13 09:48:49
- * @LastEditTime: 2022-09-18 11:07:52
- * @LastEditors: Please set LastEditors
- * @Description: 返回值放入data属性中的openApi 装饰器
- * @FilePath: /meimei-admin/src/common/decorators/api-data-response.decorator.ts
- * You can you up，no can no bb！！
- */
-
-import { applyDecorators, Type } from '@nestjs/common';
-import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
+import { applyDecorators, Type } from '@nestjs/common'
+import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
 
 export enum typeEnum {
   'string' = 'string',
@@ -22,12 +12,9 @@ export enum typeEnum {
   'objectArr' = 'objectArr',
 }
 
-export const ApiDataResponse = <TModel extends Type<any>>(
-  type: typeEnum,
-  model?: TModel,
-) => {
-  const applyDecoratorArr = [];
-  let data: Object;
+export const ApiDataResponse = <TModel extends Type<any>>(type: typeEnum, model?: TModel) => {
+  const applyDecoratorArr = []
+  let data: Object
 
   switch (type) {
     case typeEnum.string:
@@ -35,8 +22,8 @@ export const ApiDataResponse = <TModel extends Type<any>>(
     case typeEnum.boolean:
       data = {
         type: type,
-      };
-      break;
+      }
+      break
     case typeEnum.stringArr:
     case typeEnum.numberArr:
     case typeEnum.booleanArr:
@@ -45,24 +32,24 @@ export const ApiDataResponse = <TModel extends Type<any>>(
         items: {
           type: type.slice(0, -3),
         },
-      };
-      break;
+      }
+      break
     case typeEnum.object:
-      if (!model) throw Error('返回值为typeEnum.object时请填写类型！');
-      applyDecoratorArr.push(ApiExtraModels(model));
+      if (!model) throw Error('返回值为typeEnum.object时请填写类型！')
+      applyDecoratorArr.push(ApiExtraModels(model))
       data = {
         $ref: getSchemaPath(model),
-      };
-      break;
+      }
+      break
     case typeEnum.objectArr:
-      if (!model) throw Error('返回值为typeEnum.objectArr时请填写类型！');
-      applyDecoratorArr.push(ApiExtraModels(model));
+      if (!model) throw Error('返回值为typeEnum.objectArr时请填写类型！')
+      applyDecoratorArr.push(ApiExtraModels(model))
       data = {
         type: 'array',
         items: { $ref: getSchemaPath(model) },
-      };
+      }
     default:
-      break;
+      break
   }
   applyDecoratorArr.push(
     ApiOkResponse({
@@ -76,6 +63,6 @@ export const ApiDataResponse = <TModel extends Type<any>>(
         ],
       },
     }),
-  );
-  return applyDecorators(...applyDecoratorArr);
-};
+  )
+  return applyDecorators(...applyDecoratorArr)
+}

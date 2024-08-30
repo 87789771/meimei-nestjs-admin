@@ -1,14 +1,5 @@
-/*
- * @Author: Sheng.Jiang
- * @Date: 2021-12-22 16:54:36
- * @LastEditTime: 2022-09-18 11:08:00
- * @LastEditors: Please set LastEditors
- * @Description: 日志记录装饰器
- * @FilePath: /meimei-admin/src/common/decorators/log.decorator.ts
- * You can you up，no can no bb！！
- */
-import { SetMetadata } from '@nestjs/common';
-import { LOG_KEY_METADATA } from '../contants/decorator.contant';
+import { SetMetadata } from '@nestjs/common'
+import { LOG_KEY_METADATA } from '../contants/decorator.contant'
 
 /*
 https://docs.nestjs.com/openapi/decorators#decorators
@@ -44,19 +35,19 @@ export enum BusinessTypeEnum {
 
 export class LogOption {
   /* 操作模块 */
-  title: string;
+  title: string
 
   /* 操作功能 */
-  businessType?: BusinessTypeEnum = BusinessTypeEnum.other;
+  businessType?: BusinessTypeEnum = BusinessTypeEnum.other
 
   /* 是否保存请求的参数 */
-  isSaveRequestData?: boolean = true;
+  isSaveRequestData?: boolean = true
 
   /* 是否保存响应的参数 */
-  isSaveResponseData?: boolean = true;
+  isSaveResponseData?: boolean = true
 }
 
 export const Log = (logOption: LogOption) => {
-  const option = Object.assign(new LogOption(), logOption);
-  return SetMetadata(LOG_KEY_METADATA, option);
-};
+  const option = Object.assign(new LogOption(), logOption)
+  return SetMetadata(LOG_KEY_METADATA, option)
+}

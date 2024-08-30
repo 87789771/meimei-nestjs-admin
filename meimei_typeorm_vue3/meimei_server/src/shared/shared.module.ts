@@ -1,75 +1,106 @@
-/*
- * @Author: Sheng.Jiang
- * @Date: 2021-12-08 16:44:29
- * @LastEditTime: 2022-10-03 23:52:10
- * @LastEditors: Please set LastEditors
- * @Description: 公共模块
- * @FilePath: /meimei-admin/src/shared/shared.module.ts
- * You can you up，no can no bb！！
- */
-import { SharedService } from './shared.service';
-import { Global, Module, ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { RedisModule } from '@nestjs-modules/ioredis';
-import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { ReponseTransformInterceptor } from 'src/common/interceptors/reponse-transform.interceptor';
-import { OperationLogInterceptor } from 'src/common/interceptors/operation-log.interceptor';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { PermissionAuthGuard } from 'src/common/guards/permission-auth.guard';
-import { RoleAuthGuard } from 'src/common/guards/role-auth.guard';
-import { LogModule } from 'src/modules/monitor/log/log.module';
-import { BullModule } from '@nestjs/bull';
-import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interceptor';
-import { RepeatSubmitGuard } from 'src/common/guards/repeat-submit.guard';
-import { DemoEnvironmentGuard } from 'src/common/guards/demo-environment.guard';
-import { AllExceptionsFilter } from 'src/common/filters/all-exception.filter';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ScheduleModule } from '@nestjs/schedule'
+
+import * as kiwi from 'src/kiwi'
+import { SharedService } from './shared.service'
+import { Global, Module, ValidationPipe } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { RedisModule } from '@nestjs-modules/ioredis'
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
+import { ReponseTransformInterceptor } from 'src/common/interceptors/reponse-transform.interceptor'
+import { OperationLogInterceptor } from 'src/common/interceptors/operation-log.interceptor'
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard'
+import { PermissionAuthGuard } from 'src/common/guards/permission-auth.guard'
+import { RoleAuthGuard } from 'src/common/guards/role-auth.guard'
+import { LogModule } from 'src/modules/monitor/log/log.module'
+import { BullModule } from '@nestjs/bull'
+import { DataScopeInterceptor } from 'src/common/interceptors/data-scope.interceptor'
+import { RepeatSubmitGuard } from 'src/common/guards/repeat-submit.guard'
+import { DemoEnvironmentGuard } from 'src/common/guards/demo-environment.guard'
+import { AllExceptionsFilter } from 'src/common/filters/all-exception.filter'
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
+import { LogInterceptor } from 'src/common/interceptors/log.interceptor'
 
 @Global()
 @Module({
   imports: [
     /* 连接mysql数据库 */
-    TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
-        autoLoadEntities: true,
-        type: configService.get<any>('database.type'),
-        host: configService.get<string>('database.host'),
-        port: configService.get<number>('database.port'),
-        username: configService.get<string>('database.username'),
-        password: configService.get<string>('database.password'),
-        database: configService.get<string>('database.database'),
-        autoLoadModels: configService.get<boolean>('database.autoLoadModels'),
-        synchronize: configService.get<boolean>('database.synchronize'),
-        logging: configService.get('database.logging'),
-      }),
-      inject: [ConfigService],
+    // TypeOrmModule.forRootAsync({
+    //   useFactory: () => ({
+    //     autoLoadEntities: true,
+    //     type: configService.get<any>('database.type'),
+    //     host: configService.get<string>('database.host'),
+    //     port: configService.get<number>('database.port'),
+    //     username: configService.get<string>('database.username'),
+    //     password: configService.get<string>('database.password'),
+    //     database: configService.get<string>('database.database'),
+    //     autoLoadModels: configService.get<boolean>('database.autoLoadModels'),
+    //     synchronize: configService.get<boolean>('database.synchronize'),
+    //     logging: configService.get('database.logging'),
+    //   }),
+    // }),
+
+    ScheduleModule.forRoot(),
+
+    TypeOrmModule.forRoot({
+      autoLoadEntities: true,
+      type: 'mysql',
+      // type: kiwi.env.dbType,
+      host: kiwi.env.dbHost,
+      port: kiwi.env.dbPort,
+      username: kiwi.env.dbUser,
+      password: kiwi.env.dbPassword,
+      database: kiwi.env.dbDatabase,
+      // autoLoadModels: getEnv<boolean>('DB_AUTO_LOAD_MODELS'),
+      synchronize: kiwi.env.dbSynchronize,
+      logging: kiwi.env.dbLogging,
     }),
 
     /* 连接redis */
-    RedisModule.forRootAsync({
-      useFactory: (configService: ConfigService) =>
-        configService.get<any>('redis'),
-      inject: [ConfigService],
+    RedisModule.forRoot({
+      type: 'single',
+      url: `redis://:${kiwi.env.redisPassword}@${kiwi.env.redisHost}:${kiwi.env.redisPort}/${kiwi.env.redisDb}`,
+      // config: {
+      //   url: `redis://:${envConfig.REDIS_PASSWORD}@${envConfig.REDIS_HOST}:${envConfig.REDIS_PORT}/${envConfig.REDIS_DB}`,
+      // },
+    }),
+    // RedisModule.forRootAsync({
+    //   useFactory: (configService: ConfigService) => configService.get<any>('redis'),
+    // }),
+
+    /* 启用队列 */
+    // BullModule.forRoot({}),
+    BullModule.forRoot({
+      redis: {
+        host: kiwi.env.redisHost,
+        port: kiwi.env.redisPort,
+        password: kiwi.env.redisPassword,
+      },
     }),
 
     /* 启用队列 */
-    BullModule.forRootAsync({
-      useFactory: async (configService: ConfigService) => ({
-        redis: {
-          host: configService.get<string>('bullRedis.host'),
-          port: configService.get<number>('bullRedis.port'),
-          password: configService.get<string>('bullRedis.password'),
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    // BullModule.forRootAsync({
+    //   useFactory: async (configService: ConfigService) => ({
+    //     redis: {
+    //       host: configService.get<string>('bullRedis.host'),
+    //       port: configService.get<number>('bullRedis.port'),
+    //       password: configService.get<string>('bullRedis.password'),
+    //     },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
 
+    /* 导入速率限制模块   ttl:单位毫秒（新版本）， 表示ttl秒内最多只能请求 limit 次， 避免暴力攻击。*/
     /* 导入速率限制模块   ttl:单位秒钟， 表示ttl秒内最多只能请求 limit 次， 避免暴力攻击。*/
-    ThrottlerModule.forRoot({
-      ttl: 60,
-      limit: 60,
-    }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 6000,
+      },
+    ]),
+    // ThrottlerModule.forRoot({
+    //   ttl: 60,
+    //   limit: 60,
+    // }),
 
     /* 导入系统日志模块 */
     LogModule,
@@ -77,6 +108,11 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
   controllers: [],
   providers: [
     SharedService,
+
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LogInterceptor,
+    },
 
     //全局异常过滤器
     {

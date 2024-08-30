@@ -1,10 +1,10 @@
-import { ApiHideProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
-import { BaseEntity } from 'src/common/entities/base.entity';
-import { Excel } from 'src/modules/common/excel/excel.decorator';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../../user/entities/user.entity';
+import { ApiHideProperty } from '@nestjs/swagger'
+import { Type } from 'class-transformer'
+import { IsNumber, IsString } from 'class-validator'
+import { BaseEntity } from 'src/common/entities/base.entity'
+import { Excel } from 'src/modules/common/excel/excel.decorator'
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { User } from '../../user/entities/user.entity'
 
 @Entity()
 export class Post extends BaseEntity {
@@ -18,7 +18,7 @@ export class Post extends BaseEntity {
   @Excel({
     name: '岗位ID',
   })
-  postId: number;
+  postId: number
 
   /* 岗位编码 */
   @Column({
@@ -31,7 +31,7 @@ export class Post extends BaseEntity {
   @Excel({
     name: '岗位编码',
   })
-  postCode: string;
+  postCode: string
 
   /* 岗位名称 */
   @Column({
@@ -43,7 +43,7 @@ export class Post extends BaseEntity {
   @Excel({
     name: '岗位名称',
   })
-  postName: string;
+  postName: string
 
   /* 显示顺序 */
   @Column({
@@ -54,7 +54,7 @@ export class Post extends BaseEntity {
   @Excel({
     name: '显示顺序',
   })
-  postSort: number;
+  postSort: number
 
   /* 状态（0正常 1停用 */
   @Column({
@@ -68,9 +68,9 @@ export class Post extends BaseEntity {
     name: '状态',
     dictType: 'sys_normal_disable',
   })
-  status: string;
+  status: string
 
   @ApiHideProperty()
   @ManyToMany(() => User, (user) => user.posts)
-  users: User[];
+  users: User[]
 }
