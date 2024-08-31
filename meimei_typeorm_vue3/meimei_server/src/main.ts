@@ -80,8 +80,8 @@ async function bootstrap() {
   // 启动信息
   const runningInfo = `
      App running at:
-     - Local:   ${kleur.green(`http://localhost:${port}/${globalPrefix}/`)}
-     - Network: ${kleur.green(`http://${localIpAddresses[0]}:${port}/${globalPrefix}/`)}
+     - Local:   ${kleur.green(`http://localhost:${port}${globalPrefix}/`)}
+     - Network: ${kleur.green(`http://${localIpAddresses[0]}:${port}${globalPrefix}/`)}
      ${docTips}
      `
 
