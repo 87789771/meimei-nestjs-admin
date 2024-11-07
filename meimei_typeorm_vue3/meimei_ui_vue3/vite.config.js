@@ -14,12 +14,11 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // import createVitePlugins from './vite/plugins'
 
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
   const isBuild = command.includes('build')
-  const { VITE_APP_ENV,VITE_BUILD_COMPRESS } = env
+  const { VITE_APP_ENV, VITE_BUILD_COMPRESS } = env
 
   const plugins = [
     nodePolyfills(),
@@ -112,9 +111,9 @@ export default defineConfig(({ mode, command }) => {
         '/dev-api': {
           target: 'http://localhost:3000',
           changeOrigin: true,
-          rewrite: (p) => p.replace(/^\/dev-api/, '')
-        }
-      }
+          rewrite: (p) => p.replace(/^\/dev-api/, ''),
+        },
+      },
     },
     //fix:error:stdin>:7356:1: warning: "@charset" must be the first rule in the file
     css: {
@@ -125,13 +124,13 @@ export default defineConfig(({ mode, command }) => {
             AtRule: {
               charset: (atRule) => {
                 if (atRule.name === 'charset') {
-                  atRule.remove();
+                  atRule.remove()
                 }
-              }
-            }
-          }
-        ]
-      }
-    }
+              },
+            },
+          },
+        ],
+      },
+    },
   }
 })
