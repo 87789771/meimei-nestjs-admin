@@ -3,11 +3,79 @@
 
 该版本从 [4e71788999965e325ba1f5545a663869be222664](https://github.com/87789771/meimei-nestjs-admin/commit/4e71788999965e325ba1f5545a663869be222664) 抽取出来，后续由 [SunSeekerX](https://github.com/SunSeekerX) 维护，随缘修改，不建议用在生产环境。
 
+相对于 meimei-prisma-vue3 区别
 
-## 在线体验
-  - [演示地址](http://203.25.211.232:888/meimei/#/login)
-  - [文档地址](https://87789771.github.io/#/)
-  - [码源地址](https://github.com/87789771/meimei-nestjs-admin)
+- 更加激进的版本更新策略，依赖最新版本
+- 使用 dotenv 进行环境变量配置
+
+## 在线演示
+
+https://meimei.yoouu.cn/
+
+admin
+
+admin123
+
+https://meimei-doc.yoouu.cn/swagger-ui
+
+## 开发部署
+
+### 开发
+
+依赖 docker 开发环境，使用 docker 启动 mysql 和 redis，当然你有配置好的数据库和 redis 也可以
+
+```shell
+# 停止开发环境
+docker-compose down
+# 启动开发环境
+docker-compose up -d
+# 访问 http://localhost:8080/ 找到 meimei 数据库导入 meimei_server 下面的 init.sql 文件
+```
+
+进入 meimei_server
+
+```shell
+# 安装依赖
+yarn
+# 启动 
+yarn dev
+```
+
+进入 meimei_ui_vue3
+
+```shell
+# 安装依赖
+yarn
+# 启动 
+yarn dev
+```
+
+访问 localhost
+
+### 部署
+
+确保 .env.production 存在，配置没问题，跟开发差不多。
+
+### nginx 规则
+
+后台管理面板 api 反向代理，13000 是你启动的 server 端的端口
+
+```nginx
+location /prod-api/ {
+        proxy_pass http://localhost:13000/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+```
+
+后台管理面板伪静态规则
+
+```nginx
+location / {
+  try_files $uri $uri/ /index.html;
+}
+```
 
 
 ## 技术要求
