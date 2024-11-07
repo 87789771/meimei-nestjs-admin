@@ -15,10 +15,17 @@ module.exports = {
       env: {
         NODE_ENV: 'development',
         APP_ENV: 'development',
+        TZ: 'Asia/Shanghai', // 设置时区为上海时间（CST）
+      },
+      env_test: {
+        NODE_ENV: 'test',
+        APP_ENV: 'test',
+        TZ: 'Asia/Shanghai', // 设置时区为上海时间（CST）
       },
       env_production: {
         NODE_ENV: 'production',
         APP_ENV: 'production',
+        TZ: 'Asia/Shanghai', // 设置时区为上海时间（CST）
       },
     },
   ],
