@@ -10,7 +10,7 @@ export class DemoEnvironmentGuard implements CanActivate {
     const isDemoEnvironment = kiwi.env.isDemoEnv
     if (!isDemoEnvironment) return true
     const request: Request = context.switchToHttp().getRequest()
-    const allowUrlArr = ['/login', '/logout'] //放过的路由
+    const allowUrlArr = [`${kiwi.env.apiGlobalPrefix}/login`, `${kiwi.env.apiGlobalPrefix}/logout`] //放过的路由
     if (request.method.toLocaleLowerCase() != 'get' && !allowUrlArr.includes(request.url))
       throw new ApiException('演示环境,不允许操作')
     return true
