@@ -8,6 +8,14 @@
 - 更加激进的版本更新策略，依赖最新版本
 - 使用 dotenv 进行环境变量配置
 
+QQ 交流群 807126708
+
+点击链接加入群聊【槑槑后台管理系统交流群】：https://qm.qq.com/q/mAVhtnp4Oe
+
+<img src="./qrcode_1731082953335.jpg" style="zoom:25%;" />
+
+微信交流群：请添加微信 finwiz 邀请进群
+
 ## 在线演示
 
 https://meimei.yoouu.cn/
