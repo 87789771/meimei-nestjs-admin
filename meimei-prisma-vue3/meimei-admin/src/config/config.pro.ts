@@ -1,9 +1,9 @@
 /*
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2024-04-22 19:22:42
- * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-05-19 00:50:43
- * @FilePath: /meimei-admin/src/config/config.pro.ts
+ * @LastEditors: JiangSheng 87789771@qq.com
+ * @LastEditTime: 2024-11-08 14:00:00
+ * @FilePath: \goods-admin\src\config\config.pro.ts
  * @Description: 开发环境配置文件
  *
  */
@@ -16,7 +16,7 @@ export default {
   /**
    * 服务启动的端口
    */
-  port: 3000,
+  port: process.env.NODE_PORT || 3000,
 
   /**
    * token加密的密匙
@@ -34,10 +34,10 @@ export default {
    * reids 配置
    */
   redis: {
-    host: 'localhost',
-    port: '6379',
-    password: '123456',
-    db: 0,
+    host: process.env.NODE_REDIS_HOST || 'localhost',
+    port: process.env.NODE_REDIS_PORT || '6379',
+    password: process.env.NODE_REDIS_PASSWORD || '123456',
+    db: process.env.NODE_REDIS_DB || 0,
   },
 
   /**
@@ -46,12 +46,12 @@ export default {
    * 如果不设置，就是项目根目录下 /static/upload/
    * 项目根目录下/static文件夹默认为静态资源目录
    */
-  uploadPath: '',
+  uploadPath: process.env.NODE_UPLOAD_PATH || '',
 
   /**
    * 是否演示环境
    */
-  isDemoEnvironment: false,
+  isDemoEnvironment: process.env.NODE_UPLOAD_IS_DEMO_ENVIRONMENT === 'true',
 
   /**
    * 是否启用cors
