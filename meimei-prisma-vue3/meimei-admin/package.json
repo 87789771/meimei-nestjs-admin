@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nestjs-modules/ioredis": "^2.0.2",
-    "@nestjs/bull": "^10.1.1",
+    "@nestjs/bullmq": "^10.2.2",
     "@nestjs/common": "^10.3.8",
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.3.8",
@@ -39,7 +39,7 @@
     "@types/ua-parser-js": "^0.7.39",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
-    "bull": "^4.12.2",
+    "bullmq": "^5.25.4",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "crypto-js": "^4.2.0",

@@ -1,11 +1,15 @@
 /*
-https://docs.nestjs.com/providers#services
-*/
+ * @Author: jiang.sheng 87789771@qq.com
+ * @Date: 2024-07-01 22:04:04
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2024-11-11 21:02:22
+ * @FilePath: /meimei-admin/src/modules/monitor/job/job.service.ts
+ * @Description: 定时任务
+ *
+ */
 
-import { InjectQueue } from '@nestjs/bull';
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { CronRepeatOptions, Queue } from 'bull';
 import { JOB_BULL_KEY } from 'src/common/contants/bull.contants';
 import { ApiException } from 'src/common/exceptions/api.exception';
 import {
@@ -20,6 +24,10 @@ import {
 import { CustomPrismaService, PrismaService } from 'nestjs-prisma';
 import { ExtendedPrismaClient } from 'src/shared/prisma/prisma.extension';
 import { SysJob } from '@prisma/client';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Job, Queue } from 'bullmq';
+import * as parser from 'cron-parser';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class JobService {
@@ -35,9 +43,63 @@ export class JobService {
     private readonly customPrisma: CustomPrismaService<ExtendedPrismaClient>,
   ) {}
 
-  async onModuleInit() {
-    /* 模块加载好就初始化任务列表 */
-    await this.initJob();
+  /* 项目每次启动时初始化定时任务 */
+  async initJob() {
+    /* 查询所有延时任务， 先查询延时作业，在删除重复任务，否则查不到 */
+    const delayedList = await this.jobQueue.getDelayed();
+    /* 查询所有重复作业 */
+    const jobSchedulers = await this.jobQueue.getJobSchedulers();
+    /* 删除所有重复作业 */
+    await Promise.all(
+      jobSchedulers.map((item) => this.jobQueue.removeJobScheduler(item.key)),
+    );
+    /* 查询数据库中所有启动的任务 */
+    const sysJobList = await this.prisma.sysJob.findMany({
+      where: {
+        status: '0',
+      },
+    });
+    /* 根据执行策略来决定宕机过程时未按时执行的任务该如何执行 */
+    await Promise.all(
+      delayedList.map(async (job: Job<SysJob>) => {
+        const { opts, data } = job;
+        const hasJob = sysJobList.find((item) => item.jobId === data.jobId);
+        /* 如果该任务已经删除或者停止 就不触发执行策略了 */
+        if (!hasJob) return;
+        /* 执行策略是放弃执行 */
+        if (hasJob.misfirePolicy === '3') return;
+        const prevMillis = opts.prevMillis; //当时任务设定的执行时间
+        //如果时间在此时之前,说明宕机期间存在未执行的任务
+        if (dayjs(prevMillis).isBefore(dayjs())) {
+          /* 执行策略是执行一次 */
+          if (hasJob.misfirePolicy === '2') {
+            await this.once(hasJob);
+          }
+          /* 执行策略是立即执行，所有未执行的重复任务都执行一遍 */
+          if (hasJob.misfirePolicy === '1') {
+            const pattern = opts.repeat?.pattern; //获取任务正则表达式
+            if (pattern) {
+              /* 解析正则表达， 从当时任务设定的执行时间开始解析, 此时此刻结束, 启动迭代模式 */
+              let interval = parser.parseExpression(pattern, {
+                currentDate: dayjs(prevMillis - 1).format(),
+                endDate: dayjs().format(),
+                iterator: true,
+              });
+              while (true) {
+                try {
+                  interval.next(); //如果不存在下一个迭代对象就会抛出错误
+                  await this.once(hasJob);
+                } catch (e) {
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }),
+    );
+    /* 重新启动重复任务 */
+    await Promise.all(sysJobList.map((item) => this.start(item)));
   }
 
   /* 新增任务 */
@@ -61,7 +123,6 @@ export class JobService {
       data: updateJobDto,
     });
     if (job.status == '0') {
-      await this.stop(job);
       await this.start(job);
     } else {
       await this.stop(job);
@@ -84,11 +145,22 @@ export class JobService {
 
   /* 通过id查询任务 */
   async oneJob(jobId: number) {
-    return await this.prisma.sysJob.findUnique({
+    const job = await this.prisma.sysJob.findUnique({
       where: {
         jobId,
       },
     });
+    let nextValidTime = '';
+    if (job.cronExpression) {
+      try {
+        let interval = parser.parseExpression(job.cronExpression);
+        nextValidTime = dayjs(interval.next().toString()).format();
+      } catch (error) {}
+    }
+    return {
+      ...job,
+      nextValidTime,
+    };
   }
 
   /* 执行一次 */
@@ -184,90 +256,29 @@ export class JobService {
     return await this.prisma.sysJobLog.deleteMany({});
   }
 
-  /* 初始化定时任务 */
-  async initJob() {
-    //停止所有的任务
-    //getRepeatableJobs() 和 removeRepeatableByKey() 是 Bull 队列库中用于处理重复任务的两个方法。
-    const jobObjArr = await this.jobQueue.getRepeatableJobs();
-    await Promise.all(
-      jobObjArr.map(
-        async (item) => await this.jobQueue.removeRepeatableByKey(item.key),
-      ),
-    );
-    await this.jobQueue.empty();
-
-    //查找执行错误的任务,并且执行错误策略后，清空错误情况
-    const failJobArr = await this.jobQueue.getFailed();
-    await this.misfirePolicy(failJobArr.map((item) => item.data));
-    await this.jobQueue.clean(0, 'failed'); //清空错误记录
-
-    //查找需要执行的任务，并执行
-    const reqJobListDto = new JobListDto();
-    reqJobListDto.status = '0';
-    const { rows } = await this.jobList(reqJobListDto);
-    await Promise.all(rows.map((job) => this.start(job)));
-  }
-
-  /* 启动定时任务 */
+  /* 启动一个重复任务 */
   async start(job: SysJob) {
-    const repeat: CronRepeatOptions = {
-      cron: job.cronExpression,
-    };
-    await this.jobQueue.add(job, {
-      jobId: job.jobId,
-      removeOnComplete: true,
-      removeOnFail: false, //出错记录
-      repeat: repeat,
-    });
+    //先尝试删除这个任务
+    await this.jobQueue.removeJobScheduler(`bull_job_${job.jobId}`);
+    await this.jobQueue.upsertJobScheduler(
+      `bull_job_${job.jobId}`,
+      { pattern: job.cronExpression },
+      {
+        data: job,
+      },
+    );
   }
 
-  /* 停止定时任务 */
+  /* 删除重复任务 */
   async stop(job: SysJob) {
-    const jobObjArr = await this.jobQueue.getRepeatableJobs();
-    const hasObj = jobObjArr.find((item) => item.id == job.jobId.toString());
-    if (hasObj) {
-      await this.jobQueue.removeRepeatableByKey(hasObj.key);
-    }
+    await this.jobQueue.removeJobScheduler(`bull_job_${job.jobId}`);
   }
 
   /* 直接执行一次 */
   async once(job: SysJob) {
-    await this.jobQueue.add(job, {
-      jobId: job.jobId,
-      removeOnComplete: true,
-      removeOnFail: false, //出错记录
+    await this.jobQueue.add(`bull_job_${job.jobId}`, job, {
+      lifo: true, //后进先出
     });
-  }
-
-  /* 任务错误策略 */
-  async misfirePolicy(jobArr: SysJob[]) {
-    //查询所有数据库还在的并且还启用的任务
-    const hasJobArr = await this.prisma.sysJob.findMany({
-      where: {
-        jobId: {
-          in: jobArr.map((item) => Number(item.jobId)),
-        },
-        status: '0',
-      },
-    });
-    // 立即执行的
-    const immediately: SysJob[] = [];
-    // 执行一次的
-    const executeOnce: SysJob[] = [];
-    hasJobArr.forEach((job) => {
-      if (job.misfirePolicy == '1') {
-        immediately.push(job);
-      }
-      if (
-        job.misfirePolicy == '2' &&
-        !executeOnce.find((job2) => job.jobId == job2.jobId)
-      ) {
-        executeOnce.push(job);
-      }
-    });
-    await Promise.all(
-      [...immediately, ...executeOnce].map(async (job) => await this.once(job)),
-    );
   }
 
   /* 解析类和方法和参数  "A.cc(22,true,'0')" */
