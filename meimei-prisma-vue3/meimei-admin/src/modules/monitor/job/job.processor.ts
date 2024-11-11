@@ -2,8 +2,8 @@
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2024-07-01 22:04:04
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-11-11 21:01:21
- * @FilePath: /meimei-admin/src/modules/monitor/job/job.processor.ts
+ * @LastEditTime: 2024-11-11 21:57:59
+ * @FilePath: /meimei-prisma-vue3/meimei-admin/src/modules/monitor/job/job.processor.ts
  * @Description:
  *
  */
@@ -27,8 +27,6 @@ export class JobConsumer extends WorkerHost {
   }
 
   async process(job: Job<SysJob>) {
-    console.log(job);
-
     try {
       const { serviceName, funName, argumens } =
         await this.jobService.analysisinvokeTarget(job.data);
