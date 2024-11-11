@@ -351,7 +351,7 @@
               jobGroupFormat(form)
             }}</el-form-item>
             <el-form-item label="创建时间：">{{
-              form.createTime
+              parseTime(form.createTime)
             }}</el-form-item>
           </el-col>
           <el-col :span="12">
