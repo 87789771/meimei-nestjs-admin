@@ -1,9 +1,9 @@
 /*
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-04-23 08:48:10
- * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-05-17 14:06:02
- * @FilePath: \meimei-new\src\shared\shared.module.ts
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2024-11-11 21:06:42
+ * @FilePath: /meimei-admin/src/shared/shared.module.ts
  * @Description: 系统工具模块
  *
  */
@@ -12,7 +12,6 @@ import { SharedService } from './shared.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from '../config/index';
 import { RedisModule } from '@nestjs-modules/ioredis';
-import { BullModule } from '@nestjs/bull';
 import { ThrottlerModule } from '@nestjs/throttler';
 import {
   APP_FILTER,
@@ -37,6 +36,7 @@ import { PrismaConfigService } from './prisma/prisma-config.service';
 import { ExtendedPrismaConfigService } from './prisma/extended-prisma-config.service';
 import { PermissionAuthGuard } from 'src/common/guards/permission-auth.guard';
 import { OperationLogInterceptor } from 'src/common/interceptors/operation-log.interceptor';
+import { BullModule } from '@nestjs/bullmq';
 
 @Global()
 @Module({
@@ -88,8 +88,8 @@ import { OperationLogInterceptor } from 'src/common/interceptors/operation-log.i
      * 启用队列模块
      */
     BullModule.forRootAsync({
-      useFactory: async (configService: ConfigService) => ({
-        redis: configService.get('redis'),
+      useFactory: (configService: ConfigService) => ({
+        connection: configService.get('redis'),
       }),
       inject: [ConfigService],
     }),
