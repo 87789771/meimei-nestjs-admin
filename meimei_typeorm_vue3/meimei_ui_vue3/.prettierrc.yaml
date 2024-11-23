@@ -9,7 +9,8 @@ trailingComma: all
 bracketSpacing: true
 arrowParens: always
 proseWrap: never
-htmlWhitespaceSensitivity: strict
+# htmlWhitespaceSensitivity: strict
+htmlWhitespaceSensitivity: ignore
 vueIndentScriptAndStyle: false
 endOfLine: auto
 overrides:

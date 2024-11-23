@@ -1,0 +1,5 @@
+* text=auto
+*.sh text eol=lf
+*.bat text eol=crlf
+/.yarn/releases/** binary
+/.yarn/plugins/** binary

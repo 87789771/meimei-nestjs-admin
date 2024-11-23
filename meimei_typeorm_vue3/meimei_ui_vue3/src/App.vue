@@ -15,9 +15,14 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
 
 body {
   -webkit-font-smoothing: antialiased;

@@ -20,6 +20,7 @@ import { JobModule } from './modules/monitor/job/job.module'
 import { ServerModule } from './modules/monitor/server/server.module'
 import { AppCacheModule } from './modules/cache/cache.module'
 import { JobService } from './modules/monitor/job/job.service'
+import { NavModule } from './biz/nav/nav.module'
 
 /* 将 provider的类名作为别名，方便定时器调用 */
 const providers = [JobService]
@@ -46,6 +47,8 @@ const aliasProviders = createAliasProviders()
     /* 公共模块 */
     SharedModule,
     AppCacheModule,
+
+    NavModule,
 
     /* 业务模块 */
     CommonModule,

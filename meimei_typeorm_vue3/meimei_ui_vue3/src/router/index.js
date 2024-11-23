@@ -131,6 +131,20 @@ export const dynamicRoutes = [
     ],
   },
   {
+    path: '/biz/nav/websites',
+    component: Layout,
+    hidden: true,
+    permissions: ['biz:nav:list'],
+    children: [
+      {
+        path: 'index/:id(\\d+)',
+        component: () => import('@/views/biz/nav/websites'),
+        name: 'Websites',
+        meta: { title: '网站数据', activeMenu: '/biz/nav' },
+      },
+    ],
+  },
+  {
     path: '/monitor/job-log',
     component: Layout,
     hidden: true,

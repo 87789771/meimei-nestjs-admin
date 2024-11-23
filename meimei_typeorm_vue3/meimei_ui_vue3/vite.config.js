@@ -11,13 +11,15 @@ import setupExtend from 'unplugin-vue-setup-extend-plus/vite'
 import compression from 'vite-plugin-compression'
 // import VueDevTools from 'vite-plugin-vue-devtools'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
-
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 // import createVitePlugins from './vite/plugins'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
   const isBuild = command.includes('build')
+  const isProduction = mode === 'production'
   const { VITE_APP_ENV, VITE_BUILD_COMPRESS } = env
 
   const plugins = [
@@ -42,7 +44,7 @@ export default defineConfig(({ mode, command }) => {
     // }),
     setupExtend({}),
     createSvgIconsPlugin({
-      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/svg')],
+      iconDirs: [path.resolve(process.cwd(), 'src/components/SvgIcon/svg')],
       symbolId: 'icon-[dir]-[name]',
       svgoOptions: command === 'build',
       // customDomId: '__svg__icons__dom__',
@@ -68,13 +70,36 @@ export default defineConfig(({ mode, command }) => {
       )
     }
   }
-  return {
+  /** @type {import('vite').UserConfig} */
+  const config = {
     build: {
       target: 'es2020',
+      chunkSizeWarningLimit: 5000, // 单位是 kB
+      sourcemap: !isProduction,
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (warning.code === 'EVAL' && warning.id.includes('bip39-libs.js')) {
+            return
+          }
+          warn(warning)
+        },
+      },
+      commonjsOptions: {
+        transformMixedEsModules: true,
+      },
     },
     optimizeDeps: {
       esbuildOptions: {
         target: 'es2020',
+        define: {
+          global: 'globalThis',
+        },
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true,
+          }),
+        ],
       },
     },
     // 部署生产环境和开发环境下的URL。
@@ -92,14 +117,35 @@ export default defineConfig(({ mode, command }) => {
         // 设置别名
         // '@': path.resolve(__dirname, './src')
         '@': fileURLToPath(new URL('./src', import.meta.url)),
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
         process: 'process/browser',
-        util: 'util',
+        crypto: 'crypto-browserify',
+        stream: 'stream-browserify',
+        zlib: 'browserify-zlib',
+        util: 'rollup-plugin-node-polyfills/polyfills/util',
+        sys: 'util',
+        events: 'rollup-plugin-node-polyfills/polyfills/events',
+        path: 'rollup-plugin-node-polyfills/polyfills/path',
+        querystring: 'rollup-plugin-node-polyfills/polyfills/qs',
+        url: 'rollup-plugin-node-polyfills/polyfills/url',
+        http: 'rollup-plugin-node-polyfills/polyfills/http',
+        https: 'rollup-plugin-node-polyfills/polyfills/http',
+        os: 'rollup-plugin-node-polyfills/polyfills/os',
+        assert: 'rollup-plugin-node-polyfills/polyfills/assert',
+        constants: 'rollup-plugin-node-polyfills/polyfills/constants',
+        _stream_duplex: 'rollup-plugin-node-polyfills/polyfills/readable-stream/duplex',
+        _stream_passthrough: 'rollup-plugin-node-polyfills/polyfills/readable-stream/passthrough',
+        _stream_readable: 'rollup-plugin-node-polyfills/polyfills/readable-stream/readable',
+        _stream_writable: 'rollup-plugin-node-polyfills/polyfills/readable-stream/writable',
+        _stream_transform: 'rollup-plugin-node-polyfills/polyfills/readable-stream/transform',
+        timers: 'rollup-plugin-node-polyfills/polyfills/timers',
+        console: 'rollup-plugin-node-polyfills/polyfills/console',
+        vm: 'rollup-plugin-node-polyfills/polyfills/vm',
+        tty: 'rollup-plugin-node-polyfills/polyfills/tty',
+        domain: 'rollup-plugin-node-polyfills/polyfills/domain',
       },
       // https://cn.vitejs.dev/config/#resolve-extensions
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
-    },
-    esbuild: {
-      drop: ['console', 'debugger'],
     },
     // vite 相关配置
     server: {
@@ -117,20 +163,35 @@ export default defineConfig(({ mode, command }) => {
     },
     //fix:error:stdin>:7356:1: warning: "@charset" must be the first rule in the file
     css: {
-      postcss: {
-        plugins: [
-          {
-            postcssPlugin: 'internal:charset-removal',
-            AtRule: {
-              charset: (atRule) => {
-                if (atRule.name === 'charset') {
-                  atRule.remove()
-                }
-              },
-            },
-          },
-        ],
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler', // or 'modern'
+          // But if you want to just silence deprecation warnings, use silenceDeprecations option:
+          // silenceDeprecations: ['legacy-js-api'],
+        },
       },
+      // postcss: {
+      //   plugins: [
+      //     {
+      //       postcssPlugin: 'internal:charset-removal',
+      //       AtRule: {
+      //         charset: (atRule) => {
+      //           if (atRule.name === 'charset') {
+      //             atRule.remove()
+      //           }
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
     },
   }
+
+  if (isProduction) {
+    config.esbuild = {
+      drop: ['console', 'debugger'],
+    }
+  }
+
+  return config
 })
