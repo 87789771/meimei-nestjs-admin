@@ -1,25 +1,32 @@
-import {
-  OnQueueCompleted,
-  OnQueueFailed,
-  Process,
-  Processor,
-} from '@nestjs/bull';
+/*
+ * @Author: jiang.sheng 87789771@qq.com
+ * @Date: 2024-07-01 22:04:04
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2024-11-11 21:57:59
+ * @FilePath: /meimei-prisma-vue3/meimei-admin/src/modules/monitor/job/job.processor.ts
+ * @Description:
+ *
+ */
 import { ModuleRef } from '@nestjs/core';
-import { Job } from 'bull';
 import { JOB_BULL_KEY } from 'src/common/contants/bull.contants';
 import { ApiException } from 'src/common/exceptions/api.exception';
 import { JobService } from './job.service';
 import { SysJob } from '@prisma/client';
 import { AddJobLogDto } from './dto/req-job.dto';
+import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
+import { Job } from 'bullmq';
+import dayjs from 'dayjs';
 
 @Processor(JOB_BULL_KEY)
-export class JobConsumer {
+export class JobConsumer extends WorkerHost {
   constructor(
     private jobService: JobService,
     private readonly moduleRef: ModuleRef,
-  ) {}
-  @Process()
-  async handle(job: Job<SysJob>) {
+  ) {
+    super();
+  }
+
+  async process(job: Job<SysJob>) {
     try {
       const { serviceName, funName, argumens } =
         await this.jobService.analysisinvokeTarget(job.data);
@@ -39,7 +46,7 @@ export class JobConsumer {
     }
   }
 
-  @OnQueueCompleted()
+  @OnWorkerEvent('completed')
   /* 记录成功日志 */
   async onCompleted(job: Job<SysJob>) {
     const jobLog = new AddJobLogDto();
@@ -49,10 +56,10 @@ export class JobConsumer {
     jobLog.invokeTarget = oneJob.invokeTarget;
     jobLog.jobMessage = '执行成功';
     jobLog.status = '0';
-    jobLog.createTime = new Date();
+    jobLog.createTime = dayjs().toISOString();
     await this.jobService.addJobLog(jobLog);
   }
-  @OnQueueFailed()
+  @OnWorkerEvent('failed')
   /* 记录失败日志 */
   async onFailed(job: Job<SysJob>, err: Error) {
     const jobLog = new AddJobLogDto();
@@ -64,7 +71,7 @@ export class JobConsumer {
     jobLog.exceptionInfo =
       err instanceof ApiException ? err.getResponse().toString() : err.message;
     jobLog.status = '1';
-    jobLog.createTime = new Date();
+    jobLog.createTime = dayjs().toISOString();
     await this.jobService.addJobLog(jobLog);
   }
 }
