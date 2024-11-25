@@ -26,6 +26,10 @@ admin123
 
 https://meimei-doc.yoouu.cn/swagger-ui
 
+
+
+里面自带了一个简单的导航项目，可以查看这个效果 [https://demo-navify.yoouu.cn/](https://demo-navify.yoouu.cn/) 项目地址在 [https://github.com/SunSeekerX/navify_nuxtjs](https://github.com/SunSeekerX/navify_nuxtjs)
+
 ## 开发部署
 
 ### 开发
