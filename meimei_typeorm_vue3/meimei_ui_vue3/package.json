@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.3.1",
+    "@nuxtjs/sitemap": "^7.0.0",
     "@vueup/vue-quill": "1.2.0",
     "@vueuse/core": "11.2.0",
     "axios": "1.7.7",

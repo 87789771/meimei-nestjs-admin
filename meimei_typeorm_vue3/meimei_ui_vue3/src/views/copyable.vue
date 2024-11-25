@@ -1,6 +1,4 @@
-<script setup>
-import * as god from '@/god'
-</script>
+<script setup></script>
 
 <template>
   <div>Copyable component</div>
