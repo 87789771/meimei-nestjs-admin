@@ -1,21 +1,111 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost no pwd
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80402 (8.4.2)
+ Source Server Version : 80403 (8.4.3)
  Source Host           : localhost:3306
  Source Schema         : meimei
 
  Target Server Type    : MySQL
- Target Server Version : 80402 (8.4.2)
+ Target Server Version : 80403 (8.4.3)
  File Encoding         : 65001
 
- Date: 30/08/2024 12:59:11
+ Date: 25/11/2024 23:48:17
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for biz_nav_category
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_nav_category`;
+CREATE TABLE `biz_nav_category`  (
+  `create_time` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
+  `update_time` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
+  `create_by` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '创建人',
+  `update_by` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '更新人',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '备注',
+  `version` int NOT NULL COMMENT '版本号',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '分类ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '分类名称和图标',
+  `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of biz_nav_category
+-- ----------------------------
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 1, '🤖 AI 工具', 0);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 2, '👥 社区资讯', 1);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 3, '🎨 设计资源', 2);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 4, '🔧 开发工具', 3);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 5, '📚 学习平台', 4);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 6, '⚡ 效率工具', 5);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 7, '📖 阅读资源', 6);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 8, '💻 前端开发', 7);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 9, '🔋 后端开发', 8);
+INSERT INTO `biz_nav_category` VALUES ('2024-11-25 15:44:38.329114', '2024-11-25 15:44:38.329114', 'system', 'system', '', 1, 10, '📱 移动开发', 9);
+
+-- ----------------------------
+-- Table structure for biz_nav_website
+-- ----------------------------
+DROP TABLE IF EXISTS `biz_nav_website`;
+CREATE TABLE `biz_nav_website`  (
+  `create_time` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '创建时间',
+  `update_time` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新时间',
+  `create_by` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '创建人',
+  `update_by` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '更新人',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '备注',
+  `version` int NOT NULL COMMENT '版本号',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '网站ID',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '网站名称',
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '网站描述',
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '网站链接',
+  `color` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '图标背景色',
+  `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
+  `categoryId` int NOT NULL COMMENT '分类ID',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of biz_nav_website
+-- ----------------------------
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 1, 'ChatGPT', 'OpenAI 开发的 AI 助手', 'https://chat.openai.com', '#74AA9C', 0, 1);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 2, 'Midjourney', 'AI 绘画工具', '#', '#0000FF', 1, 1);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 3, 'Claude', 'Anthropic 开发的 AI 助手', '#', '#8E44AD', 2, 1);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 4, 'Stable Diffusion', 'AI 图像生成模型', '#', '#E74C3C', 3, 1);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 5, 'Bard', 'Google 开发的 AI 助手', '#', '#4285F4', 4, 1);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 6, 'DALL-E', 'OpenAI 图像生成模型', '#', '#FF6B6B', 5, 1);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 7, '掘金', '开发者社区', '#', '#007FFF', 0, 2);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 8, '36kr', '创业资讯、科技新闻', '#', '#4ECDC4', 1, 2);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 9, 'V2EX', '创意工作者社区', '#', '#333333', 2, 2);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 10, 'InfoQ', '软件开发资讯', '#', '#FF5733', 3, 2);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 11, 'Figma', '在线设计工具', '#', '#FF4785', 0, 3);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 12, 'Dribbble', '设计师作品分享平台', '#', '#EA4C89', 1, 3);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 13, 'Behance', '创意设计社区', '#', '#1769FF', 2, 3);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 14, 'GitHub', '代码托管平台', '#', '#333', 0, 4);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 15, 'VS Code', '代码编辑器', '#', '#007ACC', 1, 4);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 16, 'GitLab', '代码托管平台', '#', '#FCA121', 2, 4);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 17, 'Coursera', '全球在线教育平台', '#', '#0056D2', 0, 5);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 18, 'Udemy', '在线课程平台', '#', '#A435F0', 1, 5);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 19, 'edX', '免费在线课程', '#', '#02262B', 2, 5);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 20, 'Notion', '全能工作空间', '#', '#000000', 0, 6);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 21, 'Trello', '项目管理工具', '#', '#0079BF', 1, 6);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 22, 'Slack', '团队协作平台', '#', '#4A154B', 2, 6);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 23, 'Vue.js', '渐进式 JavaScript 框架', '#', '#42b883', 0, 8);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 24, 'React', 'JavaScript UI 库', '#', '#61dafb', 1, 8);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 25, 'Angular', 'Web 应用框架', '#', '#dd1b16', 2, 8);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 26, 'Node.js', 'JavaScript 运行时', '#', '#339933', 0, 9);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 27, 'Django', 'Python Web 框架', '#', '#092E20', 1, 9);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 28, 'Spring Boot', 'Java 应用框架', '#', '#6DB33F', 2, 9);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 29, 'Flutter', '跨平台开发框架', '#', '#02569B', 0, 10);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 30, 'React Native', '移动应用开发框架', '#', '#61dafb', 1, 10);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 31, 'Swift', 'iOS 开发语言', '#', '#FA7343', 2, 10);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 32, 'Medium', '优质文章平台', '#', '#000000', 0, 7);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 33, 'Dev.to', '开发者博客平台', '#', '#0A0A0A', 1, 7);
+INSERT INTO `biz_nav_website` VALUES ('2024-11-25 15:44:38.344333', '2024-11-25 15:44:38.344333', 'system', 'system', '', 1, 34, 'HashNode', '技术博客社区', '#', '#2962FF', 2, 7);
 
 -- ----------------------------
 -- Table structure for config
@@ -224,7 +314,7 @@ CREATE TABLE `logininfor`  (
   `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '提示消息',
   `login_time` datetime NOT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of logininfor
@@ -259,7 +349,7 @@ CREATE TABLE `menu`  (
   PRIMARY KEY (`menu_id`) USING BTREE,
   INDEX `FK_fbe2023241bd4c612415c080cc6`(`parentMenuId` ASC) USING BTREE,
   CONSTRAINT `FK_fbe2023241bd4c612415c080cc6` FOREIGN KEY (`parentMenuId`) REFERENCES `menu` (`menu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of menu
@@ -333,6 +423,8 @@ INSERT INTO `menu` VALUES ('2021-12-29 15:36:36.070927', '2021-12-29 15:36:36.00
 INSERT INTO `menu` VALUES ('2021-12-29 15:36:47.605200', '2021-12-29 15:37:14.000000', '', 71, '任务删除', 4, '', NULL, NULL, 1, 'F', '0', '0', 'monitor:job:remove', '#', '2.46.71.', 46, 0, '', '', '0');
 INSERT INTO `menu` VALUES ('2021-12-29 15:36:57.920063', '2021-12-29 15:37:18.000000', '', 72, '状态修改', 5, '', NULL, NULL, 1, 'F', '0', '0', 'monitor:job:changeStatus', '#', '2.46.72.', 46, 0, '', '', '0');
 INSERT INTO `menu` VALUES ('2021-12-29 15:37:31.201464', '2021-12-29 15:37:31.000000', '', 73, '任务导出', 7, '', NULL, NULL, 1, 'F', '0', '0', 'monitor:job:export', '#', '2.46.73.', 46, 0, '', '', '0');
+INSERT INTO `menu` VALUES ('2024-11-15 10:48:41.818687', '2024-11-15 10:53:36.000000', '', 74, '业务管理', 3, 'biz', NULL, NULL, 1, 'M', '0', '0', NULL, 'guide', '74.', NULL, 10, 'admin', 'admin', '0');
+INSERT INTO `menu` VALUES ('2024-11-15 10:52:26.949389', '2024-11-15 10:53:51.000000', '', 75, '导航管理', 1, 'nav', 'biz/nav/index', NULL, 1, 'C', '0', '0', 'biz:nav:list', 'tab', '74.75.', 74, 6, 'admin', 'admin', '0');
 
 -- ----------------------------
 -- Table structure for notice
@@ -379,7 +471,12 @@ CREATE TABLE `oper_log`  (
   `errorMsg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '返回参数',
   `oper_time` datetime NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of oper_log
+-- ----------------------------
+INSERT INTO `oper_log` VALUES (7, '日志管理', '9', 'LogController.cleanOperLog()', 'DELETE', '0', 'admin', '槑槑总部', '/api/monitor/operlog/clean', '127.0.0.1', '内网IP', '{\"params\":{},\"query\":{},\"body\":{}}', '{\"code\":200,\"msg\":\"Ok\"}', 0, '', '2024-11-25 23:36:23');
 
 -- ----------------------------
 -- Table structure for post
@@ -404,7 +501,7 @@ CREATE TABLE `post`  (
 -- ----------------------------
 -- Records of post
 -- ----------------------------
-INSERT INTO `post` VALUES ('2022-01-06 13:39:28.615762', '2022-01-06 13:39:28.615762', '', 1, 'ceo', '董事长', 1, '0', 0, '', '');
+INSERT INTO `post` VALUES ('2022-01-06 13:39:28.615762', '2024-11-15 16:20:50.000000', '', 1, 'ceo', '董事长', 1, '0', 2, '', 'admin');
 
 -- ----------------------------
 -- Table structure for role
