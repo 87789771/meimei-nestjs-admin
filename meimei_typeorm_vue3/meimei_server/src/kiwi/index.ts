@@ -2,14 +2,13 @@ import Decimal from 'decimal.js'
 import axios from 'axios'
 import { CronTime } from 'cron'
 
-
 Decimal.set({ toExpNeg: -100, toExpPos: 100 })
 
 export const toDecimal = (val) => {
   return new Decimal(val)
 }
 
-export {  Decimal, axios }
+export { Decimal, axios }
 
 // Env
 export const env = {
@@ -18,6 +17,7 @@ export const env = {
   uploadPath: process.env.UPLOAD_PATH,
   apiGlobalPrefix: process.env.API_GLOBAL_PREFIX,
   isOpenDoc: process.env.IS_OPEN_DOC === 'true',
+  appEnv: process.env.APP_ENV,
 
   dbType: process.env.DB_TYPE || 'mysql',
   dbHost: process.env.DB_HOST || 'localhost',

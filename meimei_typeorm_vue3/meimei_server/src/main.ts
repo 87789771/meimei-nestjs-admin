@@ -80,6 +80,7 @@ async function bootstrap() {
   // 启动信息
   const runningInfo = `
      App running at:
+     - APP_ENV:  ${kleur.green(kiwi.env.appEnv || '')}
      - Locale:  ${kleur.green(new Date().toString())}
      - Local:   ${kleur.green(`http://localhost:${port}${globalPrefix}/`)}
      - Network: ${kleur.green(`http://${localIpAddresses[0]}:${port}${globalPrefix}/`)}
