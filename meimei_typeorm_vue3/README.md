@@ -44,6 +44,8 @@
 ```bash
 # 停止开发环境
 docker-compose down
+# -v 参数会同时删除 volumes，这样就会删除数据库中的所有数据。
+docker-compose down -v
 # 启动开发环境
 docker-compose up -d
 # 访问 http://localhost:8080/，找到 meimei 数据库导入 meimei_server 里的 init.sql 文件
