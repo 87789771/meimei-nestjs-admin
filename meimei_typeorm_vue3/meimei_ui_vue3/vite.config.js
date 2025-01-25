@@ -1,5 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
+
 import { defineConfig, loadEnv } from 'vite'
 
 import vue from '@vitejs/plugin-vue'
