@@ -1,3 +1,5 @@
+name: meimei-dev-environment
+
 services:
   db:
     image: mysql:8
