@@ -1,9 +1,9 @@
 /*
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-04-30 14:43:37
- * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-05-15 16:01:09
- * @FilePath: \meimei-new\src\modules\common\excel\excel.service.ts
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2025-05-24 13:41:45
+ * @FilePath: /meimei-admin/src/modules/common/excel/excel.service.ts
  * @Description: 公共导出模块
  *
  */
@@ -24,14 +24,14 @@ export class ExcelService {
   async export<TModel>(model: TModel, list: any[]) {
     const exportObjArr = Reflect.getMetadata(EXCEL_ARR_KRY, model) ?? [];
     const data = await this.formatExport(exportObjArr, list);
-    const arrBuffer = xlsx.build([
+    const fileBuffer = xlsx.build([
       {
         name: '表格1',
         data,
         options: {},
       },
     ]);
-    return Buffer.from(arrBuffer);
+    return new Uint8Array(fileBuffer)
   }
 
   /* 导入 */
@@ -90,14 +90,14 @@ export class ExcelService {
   async importTemplate<TModel extends Type<any>>(model: TModel) {
     const importObjArr = Reflect.getMetadata(EXCEL_ARR_KRY, model) ?? [];
     const data = await this.formatImport(importObjArr);
-    const arrBuffer = xlsx.build([
+    const fileBuffer = xlsx.build([
       {
         name: '表格1',
         data,
         options: {},
       },
     ]);
-    return Buffer.from(arrBuffer);
+    return new Uint8Array(fileBuffer)
   }
 
   /* 整理导出数据 */
