@@ -1,9 +1,9 @@
 /*
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-05-17 11:07:14
- * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-05-17 13:52:03
- * @FilePath: \meimei-new\src\modules\monitor\cache\cache.service.ts
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2025-05-31 11:05:03
+ * @FilePath: /meimei-admin/src/modules/monitor/cache/cache.service.ts
  * @Description:
  *
  */
@@ -25,7 +25,28 @@ export class CacheService {
   }
 
   async getValue(cacheName: string, cacheKey: string) {
-    const cacheValue = await this.redis.get(cacheKey);
+    // 根据key的类型来判断使用哪种方法读取值
+    let cacheValue = undefined;
+    const keyType = await this.redis.type(cacheKey);
+
+    switch (keyType) {
+      case 'hash':
+        // hash类型使用hgetall读取
+        const obj = await this.redis.hgetall(cacheKey);
+        cacheValue = JSON.stringify(obj);
+        break;
+      case 'set':
+        // set类型使用smembers读取
+        cacheValue = await this.redis.smembers(cacheKey);
+        break;
+      case 'string':
+        // string类型使用get读取
+        cacheValue = await this.redis.get(cacheKey);
+        break;
+      default:
+        cacheValue = null;
+    }
+
     return { cacheValue, cacheName, cacheKey };
   }
 
