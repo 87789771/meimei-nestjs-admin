@@ -1,9 +1,9 @@
 /*
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-04-30 14:43:37
- * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-05-15 15:29:44
- * @FilePath: \meimei-new\src\modules\common\excel\excel.decorator.ts
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2025-06-14 23:26:56
+ * @FilePath: /goods-nest-admin/src/modules/common/excel/excel.decorator.ts
  * @Description: 
  * 
  */
@@ -21,15 +21,20 @@ export const Excel = (option: ExcelOption): PropertyDecorator => {
   return (target: any, propertyKey: string | symbol) => {
     const old = Reflect.getMetadata(`${EXCEL_ARR_KRY}`, target.constructor);
     const obj = Object.assign(
-      { sort: 1, type: ExcelTypeEnum.ALL, t: ColumnTypeEnum.string },
+      {
+        sort: 1,
+        type: ExcelTypeEnum.ALL,
+        t: ColumnTypeEnum.string,
+      },
       option,
       {
         propertyKey,
       },
     ); //添加默认值
+
     if (old) {
-      const exportArr = JSON.parse(JSON.stringify(old));
-      exportArr.push(obj);
+      // 使用数组的 concat 方法创建新数组，避免修改原数组
+      const exportArr = old.concat([obj]);
       Reflect.defineMetadata(`${EXCEL_ARR_KRY}`, exportArr, target.constructor);
     } else {
       Reflect.defineMetadata(`${EXCEL_ARR_KRY}`, [obj], target.constructor);

@@ -2,12 +2,12 @@
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-04-30 14:43:37
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2025-05-24 13:41:45
+ * @LastEditTime: 2025-06-15 08:39:02
  * @FilePath: /meimei-admin/src/modules/common/excel/excel.service.ts
  * @Description: 公共导出模块
  *
  */
-import { Injectable, Type } from '@nestjs/common';
+import { Injectable, StreamableFile, Type } from '@nestjs/common';
 import { EXCEL_ARR_KRY } from './excel.constant';
 import xlsx from 'node-xlsx';
 import dayjs from 'dayjs';
@@ -16,6 +16,7 @@ import { ColumnTypeEnum, ExcelTypeEnum } from './excel.enum';
 import * as fs from 'fs';
 import { ApiException } from 'src/common/exceptions/api.exception';
 import { SysDictService } from 'src/modules/sys/sys-dict/sys-dict.service';
+import { Stream } from 'stream';
 
 @Injectable()
 export class ExcelService {
@@ -26,12 +27,12 @@ export class ExcelService {
     const data = await this.formatExport(exportObjArr, list);
     const fileBuffer = xlsx.build([
       {
-        name: '表格1',
+        name: 'sheet1',
         data,
         options: {},
       },
     ]);
-    return new Uint8Array(fileBuffer)
+    return new Uint8Array(fileBuffer);
   }
 
   /* 导入 */
@@ -97,7 +98,7 @@ export class ExcelService {
         options: {},
       },
     ]);
-    return new Uint8Array(fileBuffer)
+    return new Uint8Array(fileBuffer);
   }
 
   /* 整理导出数据 */
@@ -124,7 +125,7 @@ export class ExcelService {
       const element = list[index];
       const inArr = optionArr.map((option) => {
         let dataItem = element[option.propertyKey];
-        if (option.dateFormat) {
+        if (option.dateFormat && dataItem) {
           dataItem = dayjs(dataItem).format(option.dateFormat);
         }
         if (option.dictType) {
@@ -145,15 +146,22 @@ export class ExcelService {
         if (option.defaultValue) {
           dataItem = dataItem ?? option.defaultValue;
         }
+        if (option.formatter && typeof option.formatter === 'function') {
+          dataItem = option.formatter(dataItem, element);
+        }
         switch (option.t) {
           case ColumnTypeEnum.boolean:
             dataItem = Boolean(dataItem);
             break;
           case ColumnTypeEnum.string:
-            dataItem = String(dataItem);
+            if (dataItem) {
+              dataItem = String(dataItem);
+            }
             break;
           case ColumnTypeEnum.number:
-            dataItem = Number(dataItem);
+            if (dataItem) {
+              dataItem = Number(dataItem);
+            }
             break;
           default:
             break;

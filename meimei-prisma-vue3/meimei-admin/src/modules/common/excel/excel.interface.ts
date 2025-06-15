@@ -1,9 +1,9 @@
 /*
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-04-30 14:43:37
- * @LastEditors: JiangSheng 87789771@qq.com
- * @LastEditTime: 2024-05-15 15:26:09
- * @FilePath: \meimei-new\src\modules\common\excel\excel.interface.ts
+ * @LastEditors: jiang.sheng 87789771@qq.com
+ * @LastEditTime: 2025-06-15 08:38:44
+ * @FilePath: /meimei-admin/src/modules/common/excel/excel.interface.ts
  * @Description:
  *
  */
@@ -37,6 +37,9 @@ export interface ExcelOption {
 
   // 字段类型（0：导出导入；1：仅导出；2：仅导入）
   type?: ExcelTypeEnum;
+
+  //格式化函数 value：单元格值   row:当前行
+  formatter?: (value: any, row: any) => any;
 
   t?: ColumnTypeEnum;
 }
