@@ -2,8 +2,8 @@
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-05-13 13:59:22
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-05-16 21:10:17
- * @FilePath: /meimei-new/src/modules/sys/sys-dept/sys-dept.service.ts
+ * @LastEditTime: 2025-07-28 20:29:27
+ * @FilePath: /meimei-admin/src/modules/sys/sys-dept/sys-dept.service.ts
  * @Description:
  *
  */
@@ -119,7 +119,11 @@ export class SysDeptService {
     return await this.prisma.$transaction(async (prisma) => {
       const dept = await prisma.sysDept.findUnique({
         include: {
-          childDept: true,
+          childDept: {
+            where: {
+              delFlag: '0',
+            },
+          },
         },
         where: {
           deptId,

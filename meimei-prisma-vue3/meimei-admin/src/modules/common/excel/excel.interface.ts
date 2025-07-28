@@ -2,7 +2,7 @@
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-04-30 14:43:37
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2025-06-15 08:38:44
+ * @LastEditTime: 2025-07-28 20:30:31
  * @FilePath: /meimei-admin/src/modules/common/excel/excel.interface.ts
  * @Description:
  *
@@ -41,6 +41,10 @@ export interface ExcelOption {
   //格式化函数 value：单元格值   row:当前行
   formatter?: (value: any, row: any) => any;
 
+  // 导入时是否必填
+  required?: boolean;
+
+  // 字段类型
   t?: ColumnTypeEnum;
 }
 export interface ExcelOptionAll extends ExcelOption {

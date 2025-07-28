@@ -2,12 +2,12 @@
  * @Author: JiangSheng 87789771@qq.com
  * @Date: 2024-04-30 14:43:37
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2025-06-15 08:39:02
+ * @LastEditTime: 2025-07-28 20:30:38
  * @FilePath: /meimei-admin/src/modules/common/excel/excel.service.ts
  * @Description: 公共导出模块
  *
  */
-import { Injectable, StreamableFile, Type } from '@nestjs/common';
+import { Injectable, Type } from '@nestjs/common';
 import { EXCEL_ARR_KRY } from './excel.constant';
 import xlsx from 'node-xlsx';
 import dayjs from 'dayjs';
@@ -16,7 +16,6 @@ import { ColumnTypeEnum, ExcelTypeEnum } from './excel.enum';
 import * as fs from 'fs';
 import { ApiException } from 'src/common/exceptions/api.exception';
 import { SysDictService } from 'src/modules/sys/sys-dict/sys-dict.service';
-import { Stream } from 'stream';
 
 @Injectable()
 export class ExcelService {
@@ -125,7 +124,7 @@ export class ExcelService {
       const element = list[index];
       const inArr = optionArr.map((option) => {
         let dataItem = element[option.propertyKey];
-        if (option.dateFormat && dataItem) {
+        if (option.dateFormat) {
           dataItem = dayjs(dataItem).format(option.dateFormat);
         }
         if (option.dictType) {
@@ -146,22 +145,15 @@ export class ExcelService {
         if (option.defaultValue) {
           dataItem = dataItem ?? option.defaultValue;
         }
-        if (option.formatter && typeof option.formatter === 'function') {
-          dataItem = option.formatter(dataItem, element);
-        }
         switch (option.t) {
           case ColumnTypeEnum.boolean:
             dataItem = Boolean(dataItem);
             break;
           case ColumnTypeEnum.string:
-            if (dataItem) {
-              dataItem = String(dataItem);
-            }
+            dataItem = String(dataItem);
             break;
           case ColumnTypeEnum.number:
-            if (dataItem) {
-              dataItem = Number(dataItem);
-            }
+            dataItem = Number(dataItem);
             break;
           default:
             break;
@@ -175,15 +167,28 @@ export class ExcelService {
 
   // 整理导入模板
   private async formatImport(importObjArr: ExcelOptionAll[]): Promise<[][]> {
-    const optionArr: ExcelOptionAll[] = importObjArr
-      .filter(
-        (item) =>
-          item.type === ExcelTypeEnum.ALL || item.type === ExcelTypeEnum.IMPORT,
-      ) //过滤
-      .sort((obj, obj2) => obj.sort - obj2.sort); //排序
+    const optionPromiseArr = importObjArr
+      .filter((item) => item.type === ExcelTypeEnum.ALL || item.type === ExcelTypeEnum.IMPORT) //过滤
+      .sort((obj, obj2) => obj.sort - obj2.sort) //排序
+      .map(async (item) => {
+        //获取字典数据
+        if (item.dictType) {
+          item.dictDataArr = await this.sysDictService.getDictDataByDictType(item.dictType);
+        }
+        return item;
+      });
+
+    const optionArr: ExcelOptionAll[] = await Promise.all(optionPromiseArr);
     const data = [];
     data.push(optionArr.map((item) => item.propertyKey));
-    data.push(optionArr.map((item) => item.name));
+    data.push(
+      optionArr.map((item) => {
+        if (item.required) {
+          return item.name + '（必填）';
+        }
+        return item.name;
+      }),
+    );
     return data;
   }
 }
