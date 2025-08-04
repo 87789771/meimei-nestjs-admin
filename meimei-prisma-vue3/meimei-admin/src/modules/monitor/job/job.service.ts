@@ -2,15 +2,15 @@
  * @Author: jiang.sheng 87789771@qq.com
  * @Date: 2024-07-01 22:04:04
  * @LastEditors: jiang.sheng 87789771@qq.com
- * @LastEditTime: 2024-11-11 21:02:22
- * @FilePath: /meimei-admin/src/modules/monitor/job/job.service.ts
+ * @LastEditTime: 2025-06-27 23:45:50
+ * @FilePath: /goods-nest-admin/src/modules/monitor/job/job.service.ts
  * @Description: 定时任务
  *
  */
 
 import { Inject, Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { JOB_BULL_KEY } from 'src/common/contants/bull.contants';
+import { BULL_JOB, JOB_BULL_KEY } from 'src/common/contants/bull.contants';
 import { ApiException } from 'src/common/exceptions/api.exception';
 import {
   AddJobDto,
@@ -33,7 +33,7 @@ import dayjs from 'dayjs';
 export class JobService {
   /* 所以需要任务调用的Sercice层，需要先在这里导入一下类 */
   ico = {
-    [JobService.name]: JobService,
+    [JobService.name]: JobService
   };
   constructor(
     @InjectQueue(JOB_BULL_KEY) private jobQueue: Queue,
@@ -46,7 +46,7 @@ export class JobService {
   /* 项目每次启动时初始化定时任务 */
   async initJob() {
     /* 查询所有延时任务， 先查询延时作业，在删除重复任务，否则查不到 */
-    const delayedList = await this.jobQueue.getDelayed();
+    const delayedList = await this.jobQueue.getDelayed();    
     /* 查询所有重复作业 */
     const jobSchedulers = await this.jobQueue.getJobSchedulers();
     /* 删除所有重复作业 */
@@ -259,9 +259,9 @@ export class JobService {
   /* 启动一个重复任务 */
   async start(job: SysJob) {
     //先尝试删除这个任务
-    await this.jobQueue.removeJobScheduler(`bull_job_${job.jobId}`);
+    await this.jobQueue.removeJobScheduler(`${BULL_JOB}_${job.jobId}`);
     await this.jobQueue.upsertJobScheduler(
-      `bull_job_${job.jobId}`,
+      `${BULL_JOB}_${job.jobId}`,
       { pattern: job.cronExpression },
       {
         data: job,
@@ -271,12 +271,12 @@ export class JobService {
 
   /* 删除重复任务 */
   async stop(job: SysJob) {
-    await this.jobQueue.removeJobScheduler(`bull_job_${job.jobId}`);
+    await this.jobQueue.removeJobScheduler(`${BULL_JOB}_${job.jobId}`);
   }
 
   /* 直接执行一次 */
   async once(job: SysJob) {
-    await this.jobQueue.add(`bull_job_${job.jobId}`, job, {
+    await this.jobQueue.add(`${BULL_JOB}_${job.jobId}`, job, {
       lifo: true, //后进先出
     });
   }
@@ -320,11 +320,5 @@ export class JobService {
     console.log('该方法会执行5秒');
     // throw new ApiException('错误了')
     console.log(new Date());
-    return new Promise((resolve, reject) => {
-      //测试并发
-      setTimeout(() => {
-        resolve();
-      }, 5 * 1000);
-    });
   }
 }

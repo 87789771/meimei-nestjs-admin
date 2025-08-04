@@ -8,3 +8,4 @@
  * 
  */
 export const JOB_BULL_KEY = 'admin_bull_job';
+export const BULL_JOB = 'bull_job'; //定时任务前缀

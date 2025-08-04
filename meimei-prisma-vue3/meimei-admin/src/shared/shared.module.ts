@@ -37,10 +37,37 @@ import { ExtendedPrismaConfigService } from './prisma/extended-prisma-config.ser
 import { PermissionAuthGuard } from 'src/common/guards/permission-auth.guard';
 import { OperationLogInterceptor } from 'src/common/interceptors/operation-log.interceptor';
 import { BullModule } from '@nestjs/bullmq';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
+import 'winston-daily-rotate-file';
+import dayjs from 'dayjs';
 
 @Global()
 @Module({
   imports: [
+    /**
+     * 日志模块
+     */
+    WinstonModule.forRoot({
+      transports: [
+        // 可添加其他的传输方式，如文件传输，用于将日志保存到文件中
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/info-%DATE%.log',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '20m',
+          maxFiles: '35d',
+          level: 'info',
+          format: winston.format.combine(
+            winston.format.timestamp({
+              //格式化日志记录的时间为当前时区
+              format: () => dayjs().format('YYYY-MM-DDTHH:mm:ss.SSS'),
+            }),
+            winston.format.json(),
+          ),
+        }),
+      ],
+    }),
     /**
      * 配置参数模块
      */
