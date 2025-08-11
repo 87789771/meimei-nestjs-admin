@@ -36,7 +36,11 @@ function storage(uploadPath?: string) {
         await fs.promises.mkdir(path, { recursive: true });
       }
       // 挂载文件存储的路径
-      req.query.fileName = '/upload/' + currentDate;
+      if (uploadPath) {
+        req.query.fileName = '/' + currentDate;
+      } else {
+        req.query.fileName = '/upload/' + currentDate;
+      }
       cd(null, path);
     },
     // 配置上传文件名
